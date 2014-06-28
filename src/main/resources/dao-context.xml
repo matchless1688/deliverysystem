@@ -1,0 +1,33 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/data/jpa
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+		
+	<jpa:repositories base-package="com.delivery.dao"
+		entity-manager-factory-ref="entityManagerFactory"
+		transaction-manager-ref="transactionManager"/>
+	
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.delivery.bo" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="${delivery.jdbc.showsql}" />
+			</bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+</beans>
