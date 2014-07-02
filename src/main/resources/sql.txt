@@ -82,3 +82,12 @@ CREATE TABLE `tb_boxesinfo` (
   `Pwd` varchar(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tb_role` (
+  `id` varchar(32) NOT NULL,
+  `roleName` varchar(30) DEFAULT NULL,
+  `organization` varchar(50) DEFAULT NULL,
+  `authority` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
