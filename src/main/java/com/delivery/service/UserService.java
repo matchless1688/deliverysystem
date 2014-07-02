@@ -11,4 +11,6 @@ public interface UserService {
 	public User saveUser(User user);
 	
 	public void deleteUser(User user);
+	
+	public User queryUser(String id);
 }

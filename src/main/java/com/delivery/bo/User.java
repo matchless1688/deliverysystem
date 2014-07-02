@@ -4,7 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 
@@ -14,8 +18,11 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "Id", length = 10)
-	private int id;
+	@Id
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@Column(name = "Id", length = 32)
+	private String id;
 	
 	@Column(name = "userName", length = 20)
 	private String userName;
@@ -29,8 +36,8 @@ public class User implements Serializable {
 	@Column(name = "type", length=20)
 	private String type;
 	
-	@Column(name = "status", length=1)
-	private int status;
+	@Column(name = "status", nullable = false, columnDefinition = "char(1)")
+	private boolean status;
 	
 	@Column(name = "companyId", length = 10)
 	private String companyId;
@@ -62,12 +69,6 @@ public class User implements Serializable {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
 	public String getInfo() {
 		return info;
 	}
@@ -79,12 +80,6 @@ public class User implements Serializable {
 	}
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getType() {
 		return type;
@@ -103,6 +98,18 @@ public class User implements Serializable {
 	}
 	public void setSmsCodeDateTime(String smsCodeDateTime) {
 		this.smsCodeDateTime = smsCodeDateTime;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	
 }

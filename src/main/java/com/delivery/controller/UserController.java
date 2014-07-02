@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.bo.User;
-import com.delivery.constants.Constants;
 import com.delivery.service.UserService;
+import com.delivery.utils.CommonUtils;
 import com.delivery.utils.JsonUtils;
 
 @Controller
@@ -28,19 +28,20 @@ public class UserController {
 		return JsonUtils.toJson(userList);
 	}
 	
-	@RequestMapping(value = "registerUser.do")
+	@RequestMapping(value = "addUser.do")
 	@ResponseBody
-	public String registerUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String addUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String userName = request.getParameter("userName");
-		String password = request.getParameter("password");
 		String phone = request.getParameter("phone");
 		String company = request.getParameter("company");
+		String type = request.getParameter("role");
 		User user = new User();
 		user.setUserName(userName);
-		user.setPwd(password);
 		user.setTelPhone(phone);
 		user.setCompanyId(company);
-		user.setStatus(Constants.USER_STATUS_ACTIVE);
+		user.setStatus(true);
+		user.setPwd(CommonUtils.genPwdBasedOnTel(phone));
+		user.setType(type);
 		User u = userService.saveUser(user);
 		
 		response.sendRedirect("view/index.html");
@@ -52,10 +53,18 @@ public class UserController {
 	public String deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		User user = new User();
-		user.setId(Integer.valueOf(hid));
+		user.setId(hid);
 		userService.deleteUser(user);
 		
 		response.sendRedirect("view/index.html");
 		return "0";
+	}
+	
+	@RequestMapping(value = "queryUser.do")
+	@ResponseBody
+	public String queryUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String hid = request.getParameter("hid");
+		User user = userService.queryUser(hid);
+		return JsonUtils.toJson(user);
 	}
 }
