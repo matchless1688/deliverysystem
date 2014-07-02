@@ -49,10 +49,10 @@ public class ExpressController {
 		express.setOwnerPhone(ownerPhone);
 		express.setStatus("1");
 		
-		expressService.saveExpress(express);
+		Express e = expressService.saveExpress(express);
 		
 		response.sendRedirect("view/express.html");
-		return String.valueOf(express.getId());
+		return String.valueOf(e.getId());
 	}
 	
 	@RequestMapping(value = "deleteExpress.do")

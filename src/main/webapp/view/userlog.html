@@ -317,7 +317,7 @@ body {
 	<script type="text/javascript">
 		(function ($) {
 			$.ajax({
-		        url:'/delivery/queryUserList.do',
+		        url:'/delivery/queryTcpList.do',
 		        type:'GET',
 		        cache:false,
 		        datatype:'json',
@@ -328,24 +328,14 @@ body {
 	                
 	                for(i=0;i<msg.length;i++)
 	                {
-	                	user = msg[i];
-	                	status = user['status'];
-	                	statusCss = "label label-success";
-	                	if(status == '0') {
-	                		statusCss = "label";
-	                		status = "InActive"
-	                	} else {
-	                		status = "Active";
-	                	}
-	                    $("#userListTable tbody").append("<tr>"
-                            +"<td>"+ user['companyId'] +"</td>"
-                            +"<td>" + user['userName'] +"</td>"
-                            +"<td>" + user['pwd'] +"</td>"
-                            +"<td>" + user['telPhone'] +"</td>"
-                            +"<td class='center'>" + user['type'] + "</td>"
-                            +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='../queryUser.do?hid="+ user['id'] +"'> "
-                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteUser.do?hid="+ user['id'] +"'> "
+	                	tcp = msg[i];
+	                    $("#tcpListTable tbody").append("<tr>"
+                            +"<td>"+ tcp['serialCode'] +"</td>"
+                            +"<td>" + tcp['tcpDirection'] +"</td>"
+                            +"<td>" + tcp['tcpReceive'] +"</td>"
+                            +"<td>" + tcp['tcpSend'] +"</td>"
+                            +"<td class='center'><a class='btn btn-info' href='../queryTcp.do?hid="+ tcp['id'] +"'> "
+                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteTcp.do?hid="+ tcp['id'] +"'> "
                             +"<i class='icon-trash icon-white'></i> Delete</a></td>"
                             +"</tr>");
 	                }

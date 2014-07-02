@@ -324,10 +324,7 @@ body {
 															<label class="control-label" for="role">角色</label>
 															<div class="controls">
 																<select id="role" name="role" data-rel="chosen">
-																	<option>Admin</option>
-																	<option>Deliver</option>
-																	<option>User</option>
-																	<option>Manager</option>
+																	
 																</select>
 															</div>
 														</div>
@@ -500,7 +497,27 @@ body {
                             +"</tr>");
 	                }
 		        }
-			})
+			});
+			
+			$.ajax({
+		        url:'/delivery/queryRoleList.do',
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$("#role").html("");
+	                $("#role").chosen("destroy");
+		        	for(i=0;i<msg.length;i++)
+	                {
+	                	role = msg[i];
+		        		$("#role").append("<option value='"+role['id']+"'>"+role['roleName']+"</option>");
+		        		$("#role").attr("multiple",false); 
+		        		$("#role").trigger("liszt:updated");  
+		        	}
+		        }
+			});
 		  })
 	 	(jQuery);
 	</script>

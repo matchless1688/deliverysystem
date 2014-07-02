@@ -43,10 +43,10 @@ public class StationController {
 		station.setTdd(tdd);
 		station.setTdjh(tdjh);
 		station.setBuildDate(DateUtils.buildDateStr());
-		stationService.saveStation(station);
+		Station s = stationService.saveStation(station);
 		
 		response.sendRedirect("view/station.html");
-		return String.valueOf(station.getId());
+		return String.valueOf(s.getId());
 	}
 	
 	@RequestMapping(value = "deleteStation.do")

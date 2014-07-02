@@ -44,10 +44,10 @@ public class BoxController {
 		box.setBarCode(barCode);
 		box.setOwnerPhone(ownerPhone);
 		box.setStatus("1");
-		boxService.saveBox(box);
+		Box b = boxService.saveBox(box);
 		
 		response.sendRedirect("view/box.html");
-		return String.valueOf(box.getId());
+		return String.valueOf(b.getId());
 	}
 	
 	@RequestMapping(value = "deleteBox.do")

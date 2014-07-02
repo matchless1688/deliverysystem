@@ -1,5 +1,5 @@
 CREATE TABLE `tb_user` (
-  `Id` varchar(20) NOT NULL,
+  `Id` varchar(32) NOT NULL,
   `userName` varchar(20) DEFAULT NULL,
   `telPhone` varchar(11) DEFAULT NULL,
   `pwd` varchar(20) DEFAULT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE `tb_tcpinfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tb_stations` (
-  `StationID` varchar(10) NOT NULL,
+  `StationID` varchar(32) NOT NULL,
   `Address` varchar(100) DEFAULT NULL,
   `StationName` varchar(20) DEFAULT NULL,
   `Boxes` varchar(4) DEFAULT NULL,

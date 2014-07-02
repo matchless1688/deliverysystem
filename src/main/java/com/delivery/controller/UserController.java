@@ -1,5 +1,6 @@
 package com.delivery.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.delivery.bo.Role;
 import com.delivery.bo.User;
+import com.delivery.service.RoleService;
 import com.delivery.service.UserService;
 import com.delivery.utils.CommonUtils;
 import com.delivery.utils.JsonUtils;
@@ -20,12 +23,21 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
 
 	@RequestMapping(value = "queryUserList.do")
 	@ResponseBody
 	public String queryUserList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<User> userList = userService.queryUserList();
-		return JsonUtils.toJson(userList);
+		List<User> returnList = new ArrayList<User>();
+		for(User user : userList) {
+			Role role = roleService.queryRole(user.getType());
+			user.setType(role.getRoleName());
+			returnList.add(user);
+		}
+		return JsonUtils.toJson(returnList);
 	}
 	
 	@RequestMapping(value = "addUser.do")
