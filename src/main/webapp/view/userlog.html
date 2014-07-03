@@ -126,9 +126,9 @@ body {
 						<li class="nav-header hidden-tablet">机构用户</li>
 						<li><a class="ajax-link" href="index.html"><i
 								class="icon-home"></i><span class="hidden-tablet"> 用户管理</span></a></li>
-						<li><a class="ajax-link" href="ui.html"><i
+						<li><a class="ajax-link" href="agency.html"><i
 								class="icon-eye-open"></i><span class="hidden-tablet">
-									区域管理</span></a></li>
+									机构管理</span></a></li>
 						<li class="nav-header hidden-tablet">储物柜</li>
 						<li><a class="ajax-link" href="station.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
@@ -185,6 +185,7 @@ body {
 												<th>TCP方向</th>
 												<th>TCP接收</th>
 												<th>TCP发送</th>
+												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -193,6 +194,16 @@ body {
 												<td class="center"></td>
 												<td class="center"></td>
 												<td class="center"></td>
+												<td class="center">
+													<a class="btn btn-info" href="#">
+														<i class="icon-edit icon-white"></i>  
+														Edit                                            
+													</a>
+													<a class="btn btn-danger" href="#">
+														<i class="icon-trash icon-white"></i> 
+														Delete
+													</a>
+												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -329,7 +340,7 @@ body {
 	                for(i=0;i<msg.length;i++)
 	                {
 	                	tcp = msg[i];
-	                    $("#tcpListTable tbody").append("<tr>"
+	                    $("#userLogTable tbody").append("<tr>"
                             +"<td>"+ tcp['serialCode'] +"</td>"
                             +"<td>" + tcp['tcpDirection'] +"</td>"
                             +"<td>" + tcp['tcpReceive'] +"</td>"

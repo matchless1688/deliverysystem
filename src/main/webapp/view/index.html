@@ -126,9 +126,9 @@ body {
 						<li class="nav-header hidden-tablet">机构用户</li>
 						<li><a class="ajax-link" href="index.html"><i
 								class="icon-home"></i><span class="hidden-tablet"> 用户管理</span></a></li>
-						<li><a class="ajax-link" href="ui.html"><i
+						<li><a class="ajax-link" href="agency.html"><i
 								class="icon-eye-open"></i><span class="hidden-tablet">
-									区域管理</span></a></li>
+									机构管理</span></a></li>
 						<li class="nav-header hidden-tablet">储物柜</li>
 						<li><a class="ajax-link" href="station.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
@@ -255,11 +255,8 @@ body {
 														<div class="control-group">
 															<label class="control-label" for="company">归属公司</label>
 															<div class="controls">
-																<select id="company" name="company">
-																	<option>ctrip</option>
-																	<option>baidu</option>
-																	<option>tecent</option>
-																	<option>ali</option>
+																<select id="company" name="company" data-rel="chosen">
+																
 																</select>
 															</div>
 														</div>
@@ -491,7 +488,8 @@ body {
                             +"<td>" + user['telPhone'] +"</td>"
                             +"<td class='center'>" + user['type'] + "</td>"
                             +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='../queryUser.do?hid="+ user['id'] +"'> "
+                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editUser('" + user['id']+"')>"
                             +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteUser.do?hid="+ user['id'] +"'> "
                             +"<i class='icon-trash icon-white'></i> Delete</a></td>"
                             +"</tr>");
@@ -518,8 +516,48 @@ body {
 		        	}
 		        }
 			});
+			
+			$.ajax({
+		        url:'/delivery/queryAgencyList.do',
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$("#company").html("");
+	                $("#company").chosen("destroy");
+		        	for(i=0;i<msg.length;i++)
+	                {
+	                	agency = msg[i];
+		        		$("#company").append("<option value='"+agency['id']+"'>"+agency['name']+"</option>");
+		        		$("#company").attr("multiple",false); 
+		        		$("#company").trigger("liszt:updated");  
+		        	}
+		        }
+			});
 		  })
 	 	(jQuery);
+
+	 	function editUser(hid) {
+	 		$.ajax({
+		        url:'/delivery/queryUser.do?hid=' + hid,
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$('#userName').val(msg['userName']);
+		        	$('#phone').val(msg['telPhone']);
+		        	$("#company option[value='baidu']").attr("selected","selected");
+		        	$('#company').trigger('chosen:updated');
+		        	$('#role').val(msg['type']);
+		        	$('#role').trigger('chosen:updated');
+		        	$('.nav-tabs a:last').tab('show');
+		        }
+			});
+	 	}
 	</script>
 </body>
 </html>
