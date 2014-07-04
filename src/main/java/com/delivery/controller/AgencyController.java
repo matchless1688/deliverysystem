@@ -75,4 +75,20 @@ public class AgencyController {
 		Agency agency = agencyService.queryAgency(hid);
 		return JsonUtils.toJson(agency);
 	}
+	
+	@RequestMapping(value = "queryAgencyByType.do")
+	@ResponseBody
+	public String queryAgencyByType(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String type = request.getParameter("type");
+		List<Agency> agencyList = agencyService.queryAgencyByType(type);
+		return JsonUtils.toJson(agencyList);
+	}
+	
+	@RequestMapping(value = "queryAgencyByParent.do")
+	@ResponseBody
+	public String queryAgencyByParent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String parent = request.getParameter("parent");
+		List<Agency> agencyList = agencyService.queryAgencyByParent(parent);
+		return JsonUtils.toJson(agencyList);
+	}
 }

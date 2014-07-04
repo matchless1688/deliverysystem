@@ -3,12 +3,13 @@ CREATE TABLE `tb_user` (
   `userName` varchar(20) DEFAULT NULL,
   `telPhone` varchar(11) DEFAULT NULL,
   `pwd` varchar(20) DEFAULT NULL,
-  `type` varchar(20) DEFAULT NULL,
+  `type` varchar(32) DEFAULT NULL,
   `status` char(1) DEFAULT NULL,
-  `companyId` varchar(10) DEFAULT NULL,
+  `companyId` varchar(32) DEFAULT NULL,
   `info` varchar(100) DEFAULT NULL,
   `smsVerifyCode` varchar(6) DEFAULT NULL,
   `smsCodeDateTime` varchar(6) DEFAULT NULL,
+  `departmentId` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

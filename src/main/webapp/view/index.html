@@ -188,6 +188,7 @@ body {
 													<thead>
 														<tr>
 															<th>归属公司</th>
+															<th>归属部门</th>
 															<th>用户名</th>
 															<th>密码</th>
 															<th>手机</th>
@@ -199,6 +200,7 @@ body {
 													<tbody>
 														<tr>
 															<td></td>
+															<td class="center"></td>
 															<td class="center"></td>
 															<td class="center"></td>
 															<td class="center"></td>
@@ -263,57 +265,8 @@ body {
 														<div class="control-group">
 															<label class="control-label" for="department">归属部门</label>
 															<div class="controls">
-																<select data-placeholder="Your Department"
-																	id="department" name="department" data-rel="chosen">
-																	<option value=""></option>
-																	<optgroup label="NFC EAST">
-																		<option>Dallas Cowboys</option>
-																		<option>New York Giants</option>
-																		<option>Philadelphia Eagles</option>
-																		<option>Washington Redskins</option>
-																	</optgroup>
-																	<optgroup label="NFC NORTH">
-																		<option>Chicago Bears</option>
-																		<option>Detroit Lions</option>
-																		<option>Green Bay Packers</option>
-																		<option>Minnesota Vikings</option>
-																	</optgroup>
-																	<optgroup label="NFC SOUTH">
-																		<option>Atlanta Falcons</option>
-																		<option>Carolina Panthers</option>
-																		<option>New Orleans Saints</option>
-																		<option>Tampa Bay Buccaneers</option>
-																	</optgroup>
-																	<optgroup label="NFC WEST">
-																		<option>Arizona Cardinals</option>
-																		<option>St. Louis Rams</option>
-																		<option>San Francisco 49ers</option>
-																		<option>Seattle Seahawks</option>
-																	</optgroup>
-																	<optgroup label="AFC EAST">
-																		<option>Buffalo Bills</option>
-																		<option>Miami Dolphins</option>
-																		<option>New England Patriots</option>
-																		<option>New York Jets</option>
-																	</optgroup>
-																	<optgroup label="AFC NORTH">
-																		<option>Baltimore Ravens</option>
-																		<option>Cincinnati Bengals</option>
-																		<option>Cleveland Browns</option>
-																		<option>Pittsburgh Steelers</option>
-																	</optgroup>
-																	<optgroup label="AFC SOUTH">
-																		<option>Houston Texans</option>
-																		<option>Indianapolis Colts</option>
-																		<option>Jacksonville Jaguars</option>
-																		<option>Tennessee Titans</option>
-																	</optgroup>
-																	<optgroup label="AFC WEST">
-																		<option>Denver Broncos</option>
-																		<option>Kansas City Chiefs</option>
-																		<option>Oakland Raiders</option>
-																		<option>San Diego Chargers</option>
-																	</optgroup>
+																<select id="department" name="department" data-rel="chosen">
+																
 																</select>
 															</div>
 														</div>
@@ -483,6 +436,7 @@ body {
 	                	}
 	                    $("#userListTable tbody").append("<tr>"
                             +"<td>"+ user['companyId'] +"</td>"
+                            +"<td>"+ user['departmentId'] +"</td>"
                             +"<td>" + user['userName'] +"</td>"
                             +"<td>" + user['pwd'] +"</td>"
                             +"<td>" + user['telPhone'] +"</td>"
@@ -518,7 +472,7 @@ body {
 			});
 			
 			$.ajax({
-		        url:'/delivery/queryAgencyList.do',
+		        url:'/delivery/queryAgencyByType.do?type=1',
 		        type:'GET',
 		        cache:false,
 		        datatype:'json',
@@ -534,7 +488,31 @@ body {
 		        		$("#company").attr("multiple",false); 
 		        		$("#company").trigger("liszt:updated");  
 		        	}
+		        	$("#company option:first").change();
 		        }
+			});
+
+			$("#company").chosen().change(function() {
+					var compnaySelect = $("#company").val();
+					$.ajax({
+				        url:'/delivery/queryAgencyByParent.do?parent='+compnaySelect,
+				        type:'GET',
+				        cache:false,
+				        datatype:'json',
+				        success: function (msg)
+				        {
+				        	msg = JSON.parse(msg);
+				        	$("#department").html("");
+			                $("#department").chosen("destroy");
+				        	for(i=0;i<msg.length;i++)
+			                {
+			                	agency = msg[i];
+				        		$("#department").append("<option value='"+agency['id']+"'>"+agency['name']+"</option>");
+				        		$("#department").attr("multiple",false); 
+				        		$("#department").trigger("liszt:updated");  
+				        	}
+				        }
+					});
 			});
 		  })
 	 	(jQuery);
@@ -550,10 +528,6 @@ body {
 		        	msg = JSON.parse(msg);
 		        	$('#userName').val(msg['userName']);
 		        	$('#phone').val(msg['telPhone']);
-		        	$("#company option[value='baidu']").attr("selected","selected");
-		        	$('#company').trigger('chosen:updated');
-		        	$('#role').val(msg['type']);
-		        	$('#role').trigger('chosen:updated');
 		        	$('.nav-tabs a:last').tab('show');
 		        }
 			});

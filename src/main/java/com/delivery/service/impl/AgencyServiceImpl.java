@@ -35,4 +35,14 @@ public class AgencyServiceImpl implements AgencyService{
 		return agencyDaoInf.findOne(id);
 	}
 
+	@Override
+	public List<Agency> queryAgencyByType(String type) {
+		return agencyDaoInf.findByType(type);
+	}
+
+	@Override
+	public List<Agency> queryAgencyByParent(String parent) {
+		return agencyDaoInf.findByParent(parent);
+	}
+
 }

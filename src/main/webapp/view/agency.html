@@ -292,8 +292,8 @@ body {
 															<label class="control-label" for="type">机构类型</label>
 															<div class="controls">
 																<select id="type" name="type">
-																	<option>公司</option>
-																	<option>部门</option>
+																	<option value='1'>公司</option>
+																	<option value='2'>部门</option>
 																</select>
 															</div>
 														</div>
@@ -467,9 +467,18 @@ body {
 	                for(i=0;i<msg.length;i++)
 	                {
 	                	agency = msg[i];
+	                	type = agency['type'];
+	                	if(type == '1') {
+	                		type = '公司';
+	                		$("#parent").append("<option value='"+agency['id']+"'>"+agency['name']+"</option>");
+			        		$("#parent").attr("multiple",false); 
+			        		$("#parent").trigger("liszt:updated");  
+	                	} else if(type == '2') {
+	                		type = '部门';
+	                	}
 	                    $("#agencyListTable tbody").append("<tr>"
                             +"<td>"+ agency['name'] +"</td>"
-                            +"<td>" + agency['type'] +"</td>"
+                            +"<td>" + type +"</td>"
                             +"<td>" + agency['region'] +"</td>"
                             +"<td>" + agency['code'] +"</td>"
                             +"<td class='center'>" + agency['address'] + "</td>"
@@ -480,10 +489,6 @@ body {
                             +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteAgency.do?hid="+ agency['id'] +"'> "
                             +"<i class='icon-trash icon-white'></i> Delete</a></td>"
                             +"</tr>");
-	                    
-	                    $("#parent").append("<option value='"+agency['id']+"'>"+agency['name']+"</option>");
-		        		$("#parent").attr("multiple",false); 
-		        		$("#parent").trigger("liszt:updated");  
 	                }
 		        }
 			});

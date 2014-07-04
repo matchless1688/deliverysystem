@@ -33,7 +33,7 @@ public class User implements Serializable {
 	@Column(name = "pwd", length = 20)
 	private String pwd;
 	
-	@Column(name = "type", length=20)
+	@Column(name = "type", length=32)
 	private String type;
 	
 	@Column(name = "status", nullable = false, columnDefinition = "char(1)")
@@ -50,6 +50,9 @@ public class User implements Serializable {
 	
 	@Column(name = "smsCodeDateTime", length = 6)
 	private String smsCodeDateTime;
+	
+	@Column(name = "departmentId", length = 10)
+	private String departmentId;
 	
 	public String getUserName() {
 		return userName;
@@ -110,6 +113,12 @@ public class User implements Serializable {
 	}
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+	public String getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(String departmentId) {
+		this.departmentId = departmentId;
 	}
 	
 }
