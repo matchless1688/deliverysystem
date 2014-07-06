@@ -30,4 +30,9 @@ public class ExpressServiceImpl implements ExpressService {
 		expressDaoInf.delete(express);
 	}
 
+	@Override
+	public Express queryExpress(int id) {
+		return expressDaoInf.findOne(id);
+	}
+
 }

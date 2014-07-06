@@ -11,4 +11,7 @@ public interface ExpressService {
 	public Express saveExpress(Express express);
 
 	public void deleteExpress(Express express);
+	
+	public Express queryExpress(int id);
+
 }

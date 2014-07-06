@@ -21,7 +21,7 @@ public class StationController {
 	@Autowired
 	private StationService stationService;
 	
-	@RequestMapping(value = "queryStationList.do")
+	@RequestMapping(value = "queryStationList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryStationList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Station> stationList = stationService.queryStationList();
@@ -45,7 +45,7 @@ public class StationController {
 		station.setBuildDate(DateUtils.buildDateStr());
 		Station s = stationService.saveStation(station);
 		
-		response.sendRedirect("view/station.html");
+		response.sendRedirect("station.html");
 		return String.valueOf(s.getId());
 	}
 	
@@ -54,10 +54,18 @@ public class StationController {
 	public String deleteStation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		Station station = new Station();
-		station.setId(hid);
+		station.setId(Integer.valueOf(hid));
 		stationService.deleteStation(station);
 		
-		response.sendRedirect("view/station.html");
+		response.sendRedirect("station.html");
 		return "0";
+	}
+	
+	@RequestMapping(value = "queryStation.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String queryStation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String hid = request.getParameter("hid");
+		Station station = stationService.queryStation(Integer.valueOf(hid));
+		return JsonUtils.toJson(station);
 	}
 }

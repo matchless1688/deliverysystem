@@ -13,12 +13,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.bo.Agency;
 import com.delivery.bo.Role;
+import com.delivery.bo.SmsSend;
+import com.delivery.bo.SmsTemplate;
 import com.delivery.bo.User;
+import com.delivery.constants.Constants;
+import com.delivery.dao.SmsSendDaoInf;
+import com.delivery.dao.SmsTemplateDaoInf;
 import com.delivery.service.AgencyService;
 import com.delivery.service.RoleService;
 import com.delivery.service.UserService;
 import com.delivery.utils.CommonUtils;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.SmsUtils;
 
 @Controller
 public class UserController {
@@ -31,8 +37,14 @@ public class UserController {
 	
 	@Autowired
 	private AgencyService agencyService;
+	
+	@Autowired
+	private SmsTemplateDaoInf smsTemplateDaoInf;
+	
+	@Autowired
+	private SmsSendDaoInf smsSendDaoInf;
 
-	@RequestMapping(value = "queryUserList.do")
+	@RequestMapping(value = "queryUserList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryUserList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<User> userList = userService.queryUserList();
@@ -68,12 +80,17 @@ public class UserController {
 		user.setTelPhone(phone);
 		user.setCompanyId(company);
 		user.setDepartmentId(department);
-		user.setStatus(true);
+		user.setStatus(Constants.STATUS_AVAILABLE);
 		user.setPwd(CommonUtils.genPwdBasedOnTel(phone));
 		user.setType(type);
 		User u = userService.saveUser(user);
+		if(u != null) {
+			SmsTemplate template = smsTemplateDaoInf.findOne(4);
+			SmsSend send = SmsUtils.send(u.getUserName(), u.getTelPhone(), u.getPwd(), template);
+			smsSendDaoInf.save(send);
+		}
 		
-		response.sendRedirect("view/index.html");
+		response.sendRedirect("index.html");
 		return String.valueOf(u.getId());
 	}
 	
@@ -85,11 +102,11 @@ public class UserController {
 		user.setId(hid);
 		userService.deleteUser(user);
 		
-		response.sendRedirect("view/index.html");
+		response.sendRedirect("index.html");
 		return "0";
 	}
 	
-	@RequestMapping(value = "queryUser.do")
+	@RequestMapping(value = "queryUser.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");

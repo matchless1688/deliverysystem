@@ -105,3 +105,17 @@ CREATE TABLE `tb_agency` (
   `parent` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tb_company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `companyname` varchar(30) DEFAULT NULL,
+  `status` varchar(2) DEFAULT NULL,
+  `province` varchar(20) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `contact` varchar(20) DEFAULT NULL,
+  `telphone` varchar(20) DEFAULT NULL,
+  `remark` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+

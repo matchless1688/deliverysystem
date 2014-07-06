@@ -4,11 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "tb_stations")
@@ -17,10 +14,11 @@ public class Station implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	@Column(name = "StationId", length = 32)
-	private String id;
+	@Column(name = "id", length = 32)
+	private int id;
+	
+	@Column(name = "StationId", length = 100)
+	private String stationId;
 	
 	@Column(name = "Address", length = 100)
 	private String address;
@@ -70,16 +68,22 @@ public class Station implements Serializable{
 	public void setTdd(String tdd) {
 		this.tdd = tdd;
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public String getBuildDate() {
 		return buildDate;
 	}
 	public void setBuildDate(String buildDate) {
 		this.buildDate = buildDate;
+	}
+	public String getStationId() {
+		return stationId;
+	}
+	public void setStationId(String stationId) {
+		this.stationId = stationId;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

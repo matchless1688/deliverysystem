@@ -126,9 +126,12 @@ body {
 						<li class="nav-header hidden-tablet">机构用户</li>
 						<li><a class="ajax-link" href="index.html"><i
 								class="icon-home"></i><span class="hidden-tablet"> 用户管理</span></a></li>
+						<li><a class="ajax-link" href="company.html"><i
+								class="icon-eye-open"></i><span class="hidden-tablet">
+									公司管理</span></a></li>
 						<li><a class="ajax-link" href="agency.html"><i
 								class="icon-eye-open"></i><span class="hidden-tablet">
-									机构管理</span></a></li>
+									部门管理</span></a></li>
 						<li class="nav-header hidden-tablet">储物柜</li>
 						<li><a class="ajax-link" href="station.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
@@ -162,7 +165,7 @@ body {
 					<div class="box span4" style="width: 100%;">
 						<div class="box-header well">
 							<h2>
-								<i class="icon-th"></i> 用户日志
+								<i class="icon-th"></i> 部门管理
 							</h2>
 							<div class="box-icon">
 								<a href="#" class="btn btn-setting btn-round"><i
@@ -172,83 +175,197 @@ body {
 									class="btn btn-close btn-round"><i class="icon-remove"></i></a>
 							</div>
 						</div>
+						<div class="box-content">
+							<ul class="nav nav-tabs" id="myTab">
+								<li class="active"><a href="#agencylist">部门列表</a></li>
+								<li><a href="#agencyadd">部门添加</a></li>
+							</ul>
 
-						<div class="row-fluid sortable">
-							<div class="box span12">
-								<div class="box-content">
-									<table
-										class="table table-striped table-bordered bootstrap-datatable datatable"
-										id="userLogTable">
-										<thead>
-											<tr>
-												<th>序列号</th>
-												<th>TCP方向</th>
-												<th>TCP接收</th>
-												<th>TCP发送</th>
-												<th>操作</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td></td>
-												<td class="center"></td>
-												<td class="center"></td>
-												<td class="center"></td>
-												<td class="center">
-													<a class="btn btn-info" href="#">
-														<i class="icon-edit icon-white"></i>  
-														Edit                                            
-													</a>
-													<a class="btn btn-danger" href="#">
-														<i class="icon-trash icon-white"></i> 
-														Delete
-													</a>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+							<div id="myTabContent" class="tab-content">
+								<div class="tab-pane active" id="agencylist">
+									<div class="row-fluid sortable">
+										<div class="box span12">
+											<div class="box-content">
+												<table
+													class="table table-striped table-bordered bootstrap-datatable datatable" id="agencyListTable">
+													<thead>
+														<tr>
+															<th>部门名称</th>
+															<th>归属区域</th>
+															<th>部门编码</th>
+															<th>联系地址</th>
+															<th>负责人</th>
+															<th>负责人手机</th>
+															<th>操作</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td></td>
+															<td class="center"></td>
+															<td class="center"></td>
+															<td class="center"></td>
+															<td class="center"></td>
+															<td class="center"></td>
+															<td class="center"></td>
+															<td class="center">
+																<a class="btn btn-info" href="#">
+																	<i class="icon-edit icon-white"></i>  
+																	Edit                                            
+																</a>
+																<a class="btn btn-danger" href="#">
+																	<i class="icon-trash icon-white"></i> 
+																	Delete
+																</a>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<!--/span-->
+
+									</div>
+									<!--/row-->
+								</div>
+								<div class="tab-pane" id="agencyadd">
+									<div class="row-fluid sortable">
+										<div class="box span12">
+											<div class="box-content">
+												<form class="form-horizontal" name='agencyForm' action="/delivery/addAgency.do" method="POST">
+													<fieldset>
+														<div class="control-group">
+															<label class="control-label" for="company">公司</label>
+															<div class="controls">
+																<select id="company" name="company" data-rel="chosen">
+																</select>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="region">归属区域</label>
+															<div class="controls">
+																<select id="region" name="region" data-rel="chosen" data-placeholder="上海市">
+																	<option>北京市</option>
+																	<option>上海市</option>
+																	<option>天津市</option>
+																	<option>重庆市</option>
+																	<option>黑龙江省</option>
+																	<option>辽宁省</option>
+																	<option>吉林省</option>
+																	<option>河北省</option>
+																	<option>河南省</option>
+																	<option>湖北省</option>
+																	<option>湖南省</option>
+																	<option>山东省</option>
+																	<option>山西省</option>
+																	<option>陕西省</option>
+																	<option>安徽省</option>
+																	<option>浙江省</option>
+																	<option>江苏省</option>
+																	<option>福建省</option>
+																	<option>广东省</option>
+																	<option>海南省</option>
+																	<option>四川省</option>
+																	<option>云南省</option>
+																	<option>贵州省</option>
+																	<option>青海省</option>
+																	<option>甘肃省</option>
+																	<option>江西省</option>
+																</select>
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="name">部门名称</label>
+															<div class="controls">
+																<input class="input-xlarge focused" id="name"
+																	type="text"  name="name">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="code">部门编码</label>
+															<div class="controls">
+																<input class="input-xlarge focused" id="code"
+																	type="text"  name="code">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="address">联系地址</label>
+															<div class="controls">
+																<input class="input-xlarge focused" id="address"
+																	type="text"  name="address">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="manager">负责人</label>
+															<div class="controls">
+																<input class="input-xlarge focused" id="manager"
+																	type="text"  name="manager">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="managerPhone">负责人手机号码</label>
+															<div class="controls">
+																<input type="text" id="managerPhone" name="managerPhone"> <span
+																	class="help-inline">输入合法手机号码</span>
+															</div>
+														</div>
+														<div class="form-actions">
+															<button type="submit" class="btn btn-primary" name='agencySubmit'>Save
+																changes</button>
+															<button class="btn">Cancel</button>
+														</div>
+													</fieldset>
+												</form>
+
+											</div>
+										</div>
+										<!--/span-->
+
+									</div>
+									<!--/row-->
 								</div>
 							</div>
-							<!--/span-->
-
 						</div>
-						<!--/row-->
-
 					</div>
+					<!--/span-->
+
 				</div>
+				<!--/row-->
+
+				<!-- content ends -->
+			</div>
+			<!--/#content.span10-->
+		</div>
+		<!--/fluid-row-->
+
+		<hr>
+
+		<div class="modal hide fade" id="myModal">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3>Settings</h3>
+			</div>
+			<div class="modal-body">
+				<p>Here settings can be configured...</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal">Close</a> <a href="#"
+					class="btn btn-primary">Save changes</a>
 			</div>
 		</div>
-		<!--/span-->
+
+		<footer>
+			<p class="pull-left">
+				&copy; <a href="#" target="_blank">Wander Work</a>
+				2012
+			</p>
+			<p class="pull-right">
+				Powered by: <a href="#">Wander</a>
+			</p>
+		</footer>
 
 	</div>
-	<!--/row-->
-	<!--/fluid-row-->
-
-	<hr>
-
-	<div class="modal hide fade" id="myModal">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Settings</h3>
-		</div>
-		<div class="modal-body">
-			<p>Here settings can be configured...</p>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Close</a> <a href="#"
-				class="btn btn-primary">Save changes</a>
-		</div>
-	</div>
-
-	<footer>
-		<p class="pull-left">
-			&copy; <a href="#" target="_blank">Wander Work</a> 2012
-		</p>
-		<p class="pull-right">
-			Powered by: <a href="#">Wander</a>
-		</p>
-	</footer>
-
+	
 	<!--/.fluid-container-->
 
 	<!-- external javascript
@@ -325,10 +442,10 @@ body {
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
 
-	<script type="text/javascript">
+	<script type="text/javascript"> 
 		(function ($) {
 			$.ajax({
-		        url:'/delivery/queryTcpList.do',
+		        url:'/delivery/queryAgencyList.do',
 		        type:'GET',
 		        cache:false,
 		        datatype:'json',
@@ -339,21 +456,65 @@ body {
 	                
 	                for(i=0;i<msg.length;i++)
 	                {
-	                	tcp = msg[i];
-	                    $("#userLogTable tbody").append("<tr>"
-                            +"<td>"+ tcp['serialCode'] +"</td>"
-                            +"<td>" + tcp['tcpDirection'] +"</td>"
-                            +"<td>" + tcp['tcpReceive'] +"</td>"
-                            +"<td>" + tcp['tcpSend'] +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='../queryTcp.do?hid="+ tcp['id'] +"'> "
-                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteTcp.do?hid="+ tcp['id'] +"'> "
+	                	agency = msg[i];
+	                    $("#agencyListTable tbody").append("<tr>"
+                            +"<td>"+ agency['name'] +"</td>"
+                            +"<td>" + agency['region'] +"</td>"
+                            +"<td>" + agency['code'] +"</td>"
+                            +"<td class='center'>" + agency['address'] + "</td>"
+                            +"<td class='center'>" + agency['manager'] + "</td>"
+                            +"<td class='center'>" + agency['managerPhone'] + "</td>"
+                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editAgency('" + agency['id']+"')>"
+                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='deleteAgency.do?hid="+ agency['id'] +"'> "
                             +"<i class='icon-trash icon-white'></i> Delete</a></td>"
                             +"</tr>");
 	                }
 		        }
-			})
+			});
+
+			$.ajax({
+		        url:'/delivery/queryCompanyList.do',
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$("#company").html("");
+	                $("#company").chosen("destroy");
+		        	for(i=0;i<msg.length;i++)
+	                {
+	                	company = msg[i];
+		        		$("#company").append("<option value='"+company['id']+"'>"+company['name']+"</option>");
+		        		$("#company").attr("multiple",false); 
+		        		$("#company").trigger("liszt:updated");  
+		        	}
+		        	$("#company option:first").change();
+		        }
+			});
 		  })
 	 	(jQuery);
+		
+		function editAgency(hid) {
+	 		$.ajax({
+		        url:'/delivery/queryAgency.do?hid=' + hid,
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$('#name').val(msg['name']);
+		        	$('#region').val(msg['region']);
+		        	$('#code').val(msg['code']);
+		        	$('#address').val(msg['address']);
+		        	$('#manager').val(msg['manager']);
+		        	$('#managerPhone').val(msg['managerPhone']);
+		        	$('.nav-tabs a:last').tab('show');
+		        }
+			});
+	 	}
 	</script>
 </body>
 </html>

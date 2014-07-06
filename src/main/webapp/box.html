@@ -126,9 +126,12 @@ body {
 						<li class="nav-header hidden-tablet">机构用户</li>
 						<li><a class="ajax-link" href="index.html"><i
 								class="icon-home"></i><span class="hidden-tablet"> 用户管理</span></a></li>
+						<li><a class="ajax-link" href="company.html"><i
+								class="icon-eye-open"></i><span class="hidden-tablet">
+									公司管理</span></a></li>
 						<li><a class="ajax-link" href="agency.html"><i
 								class="icon-eye-open"></i><span class="hidden-tablet">
-									机构管理</span></a></li>
+									部门管理</span></a></li>
 						<li class="nav-header hidden-tablet">储物柜</li>
 						<li><a class="ajax-link" href="station.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
@@ -272,12 +275,12 @@ body {
 															</div>
 														</div>
 														<div class="control-group">
-															<label class="control-label" for="type">类型</label>
+															<label class="control-label" for="status">状态</label>
 															<div class="controls">
-																<select id="type" name="type">
-																	<option>可用</option>
-																	<option>不可用</option>
-																	<option>未知</option>
+																<select id="type" name="status">
+																	<option value='0'>可用</option>
+																	<option value='1'>不可用</option>
+																	<option value='2'>未知</option>
 																</select>
 															</div>
 														</div>
@@ -285,10 +288,7 @@ body {
 															<label class="control-label" for="station">储物柜</label>
 															<div class="controls">
 																<select id="station" name="station">
-																	<option>ctrip</option>
-																	<option>baidu</option>
-																	<option>tecent</option>
-																	<option>ali</option>
+																	
 																</select>
 															</div>
 														</div>
@@ -442,7 +442,7 @@ body {
 	                	box = msg[i];
 	                	status = box['status'];
 	                	statusCss = "label label-success";
-	                	if(status == '0') {
+	                	if(status != '0') {
 	                		statusCss = "label";
 	                		status = "InActive"
 	                	} else {
@@ -457,15 +457,58 @@ body {
                             +"<td class='center'>" + box['barCode'] + "</td>"
                             +"<td class='center'>" + box['ownerPhone'] + "</td>"
                             +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='../queryBox.do?hid="+ box['id'] +"'> "
-                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteBox.do?hid="+ box['id'] +"'> "
+                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editBox('" + box['id']+"')>"
+                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='deleteBox.do?hid="+ box['id'] +"'> "
                             +"<i class='icon-trash icon-white'></i> Delete</a></td>"
                             +"</tr>");
 	                }
 		        }
-			})
+			});
+
+			$.ajax({
+		        url:'/delivery/queryStationList.do',
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$("#station").html("");
+	                $("#station").chosen("destroy");
+		        	for(i=0;i<msg.length;i++)
+	                {
+	                	station = msg[i];
+		        		$("#station").append("<option value='"+station['id']+"'>"+station['name']+"</option>");
+		        		$("#station").attr("multiple",false); 
+		        		$("#station").trigger("liszt:updated");  
+		        	}
+		        	$("#station option:first").change();
+		        }
+			});
+			
 		  })
 	 	(jQuery);
+		
+		function editBox(hid) {
+	 		$.ajax({
+		        url:'/delivery/queryBox.do?hid=' + hid,
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$('#length').val(msg['length']);
+		        	$('#height').val(msg['height']);
+		        	$('#width').val(msg['width']);
+		        	$('#type').val(msg['type']);
+		        	$('#barCode').val(msg['barCode']);
+		        	$('#ownerPhone').val(msg['ownerPhone']);
+		        	$('.nav-tabs a:last').tab('show');
+		        }
+			});
+	 	}
 	</script>
 </body>
 </html>

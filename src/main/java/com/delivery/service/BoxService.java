@@ -11,4 +11,8 @@ public interface BoxService {
 	public Box saveBox(Box box);
 
 	public void deleteBox(Box box);
+	
+	public Box queryBox(int id);
+	
+	public List<Box> queryBoxByStationId(String stationId);
 }

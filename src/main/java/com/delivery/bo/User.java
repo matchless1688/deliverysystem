@@ -36,8 +36,8 @@ public class User implements Serializable {
 	@Column(name = "type", length=32)
 	private String type;
 	
-	@Column(name = "status", nullable = false, columnDefinition = "char(1)")
-	private boolean status;
+	@Column(name = "status", length=2)
+	private String status;
 	
 	@Column(name = "companyId", length = 10)
 	private String companyId;
@@ -108,17 +108,17 @@ public class User implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public boolean isStatus() {
-		return status;
-	}
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
 	public String getDepartmentId() {
 		return departmentId;
 	}
 	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

@@ -20,7 +20,7 @@ public class AgencyController {
 	@Autowired
 	private AgencyService agencyService;
 
-	@RequestMapping(value = "queryAgencyList.do")
+	@RequestMapping(value = "queryAgencyList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryAgencyList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Agency> agencyList = agencyService.queryAgencyList();
@@ -52,7 +52,7 @@ public class AgencyController {
 	
 		Agency a = agencyService.saveAgency(agency);
 		
-		response.sendRedirect("view/agency.html");
+		response.sendRedirect("agency.html");
 		return String.valueOf(a.getId());
 	}
 	
@@ -64,11 +64,11 @@ public class AgencyController {
 		agency.setId(hid);
 		agencyService.deleteAgency(agency);
 		
-		response.sendRedirect("view/agency.html");
+		response.sendRedirect("agency.html");
 		return "0";
 	}
 	
-	@RequestMapping(value = "queryAgency.do")
+	@RequestMapping(value = "queryAgency.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryAgency(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
@@ -76,7 +76,7 @@ public class AgencyController {
 		return JsonUtils.toJson(agency);
 	}
 	
-	@RequestMapping(value = "queryAgencyByType.do")
+	@RequestMapping(value = "queryAgencyByType.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryAgencyByType(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String type = request.getParameter("type");
@@ -84,7 +84,7 @@ public class AgencyController {
 		return JsonUtils.toJson(agencyList);
 	}
 	
-	@RequestMapping(value = "queryAgencyByParent.do")
+	@RequestMapping(value = "queryAgencyByParent.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryAgencyByParent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String parent = request.getParameter("parent");

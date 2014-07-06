@@ -11,4 +11,6 @@ public interface StationService {
 	public Station saveStation(Station station);
 
 	public void deleteStation(Station station);
+	
+	public Station queryStation(int id);
 }

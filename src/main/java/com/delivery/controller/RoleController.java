@@ -1,5 +1,6 @@
 package com.delivery.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.delivery.bo.Agency;
 import com.delivery.bo.Role;
+import com.delivery.service.AgencyService;
 import com.delivery.service.RoleService;
 import com.delivery.utils.JsonUtils;
 
@@ -19,12 +22,23 @@ public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private AgencyService agencyService;
 
-	@RequestMapping(value = "queryRoleList.do")
+	@RequestMapping(value = "queryRoleList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryRoleList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Role> roleList = roleService.queryRoleList();
-		return JsonUtils.toJson(roleList);
+		List<Role> returnList = new ArrayList<Role>();
+		for(Role role : roleList) {
+			Agency agency = agencyService.queryAgency(role.getOrganization());
+			if(agency != null) {
+				role.setOrganization(agency.getName());
+			}
+			returnList.add(role);
+		}
+		return JsonUtils.toJson(returnList);
 	}
 	
 	@RequestMapping(value = "addRole.do")
@@ -39,7 +53,7 @@ public class RoleController {
 		role.setAuthority(authority);
 		Role r = roleService.saveRole(role);
 		
-		response.sendRedirect("view/role.html");
+		response.sendRedirect("role.html");
 		return r.getId();
 	}
 	
@@ -51,11 +65,11 @@ public class RoleController {
 		role.setId(hid);
 		roleService.deleteRole(role);
 		
-		response.sendRedirect("view/role.html");
+		response.sendRedirect("role.html");
 		return "0";
 	}
 	
-	@RequestMapping(value = "queryRole.do")
+	@RequestMapping(value = "queryRole.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryRole(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");

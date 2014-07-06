@@ -29,4 +29,9 @@ public class StationServiceImpl implements StationService {
 	public void deleteStation(Station station) {
 		stationDaoInf.delete(station);
 	}
+
+	@Override
+	public Station queryStation(int id) {
+		return stationDaoInf.findOne(id);
+	}
 }

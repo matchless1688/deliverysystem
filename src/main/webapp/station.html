@@ -126,9 +126,12 @@ body {
 						<li class="nav-header hidden-tablet">机构用户</li>
 						<li><a class="ajax-link" href="index.html"><i
 								class="icon-home"></i><span class="hidden-tablet"> 用户管理</span></a></li>
+						<li><a class="ajax-link" href="company.html"><i
+								class="icon-eye-open"></i><span class="hidden-tablet">
+									公司管理</span></a></li>
 						<li><a class="ajax-link" href="agency.html"><i
 								class="icon-eye-open"></i><span class="hidden-tablet">
-									机构管理</span></a></li>
+									部门管理</span></a></li>
 						<li class="nav-header hidden-tablet">储物柜</li>
 						<li><a class="ajax-link" href="station.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
@@ -162,7 +165,7 @@ body {
 					<div class="box span4" style="width: 100%;">
 						<div class="box-header well">
 							<h2>
-								<i class="icon-th"></i> 快件管理
+								<i class="icon-th"></i> 储物柜管理
 							</h2>
 							<div class="box-icon">
 								<a href="#" class="btn btn-setting btn-round"><i
@@ -174,28 +177,25 @@ body {
 						</div>
 						<div class="box-content">
 							<ul class="nav nav-tabs" id="myTab">
-								<li class="active"><a href="#expresslist">快件列表</a></li>
-								<li><a href="#expressadd">快件添加</a></li>
+								<li class="active"><a href="#stationlist">储物柜列表</a></li>
+								<li><a href="#stationadd">储物柜添加</a></li>
 							</ul>
 
 							<div id="myTabContent" class="tab-content">
-								<div class="tab-pane active" id="expresslist">
+								<div class="tab-pane active" id="stationlist">
 									<div class="row-fluid sortable">
 										<div class="box span12">
 											<div class="box-content">
 												<table
-													class="table table-striped table-bordered bootstrap-datatable datatable" id="expressListTable">
+													class="table table-striped table-bordered bootstrap-datatable datatable" id="stationListTable">
 													<thead>
 														<tr>
-															<th>BarCode</th>
-															<th>TDJH</th>
-															<th>日期</th>
-															<th>Deli_Tel</th>
-															<th>储物柜</th>
+															<th>名称</th>
+															<th>地址</th>
 															<th>箱子</th>
-															<th>快件公司</th>
-															<th>收件人手机号</th>
-															<th>状态</th>
+															<th>TDJH</th>
+															<th>TDD</th>
+															<th>创建日期</th>
 															<th>操作</th>
 														</tr>
 													</thead>
@@ -207,11 +207,6 @@ body {
 															<td class="center"></td>
 															<td class="center"></td>
 															<td class="center"></td>
-															<td class="center"></td>
-															<td class="center"></td>
-															<td class="center">
-																<span class="label label-success">Active</span>
-															</td>
 															<td class="center">
 																<a class="btn btn-info" href="#">
 																	<i class="icon-edit icon-white"></i>  
@@ -232,17 +227,31 @@ body {
 									</div>
 									<!--/row-->
 								</div>
-								<div class="tab-pane" id="expressadd">
+								<div class="tab-pane" id="stationadd">
 									<div class="row-fluid sortable">
 										<div class="box span12">
 											<div class="box-content">
-												<form class="form-horizontal" name='expressForm' action="/delivery/addExpress.do" method="POST">
+												<form class="form-horizontal" name='stationForm' action="/delivery/addStation.do" method="POST">
 													<fieldset>
 														<div class="control-group">
-															<label class="control-label" for="barCode">BarCode</label>
+															<label class="control-label" for="name">名称</label>
 															<div class="controls">
-																<input class="input-xlarge focused" id="barCode"
-																	type="text"  name="barCode">
+																<input class="input-xlarge focused" id="name"
+																	type="text"  name="name">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="address">地址</label>
+															<div class="controls">
+																<input class="input-xlarge focused" id="address"
+																	type="text"  name="address">
+															</div>
+														</div>
+														<div class="control-group">
+															<label class="control-label" for="boxes">箱子</label>
+															<div class="controls">
+																<input class="input-xlarge focused" id="boxes"
+																	type="text"  name="boxes">
 															</div>
 														</div>
 														<div class="control-group">
@@ -253,49 +262,14 @@ body {
 															</div>
 														</div>
 														<div class="control-group">
-															<label class="control-label" for="dateTime">日期</label>
+															<label class="control-label" for="tdd">TDD</label>
 															<div class="controls">
-																<input class="input-xlarge focused" id="dateTime"
-																	type="text"  name="dateTime">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="deliTel">Deli_Tel</label>
-															<div class="controls">
-																<input class="input-xlarge focused" id="deliTel"
-																	type="text"  name="deliTel">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="station">储物柜</label>
-															<div class="controls">
-																<input class="input-xlarge focused" id="station"
-																	type="text"  name="station">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="box">箱子</label>
-															<div class="controls">
-																<input class="input-xlarge focused" id="box"
-																	type="text"  name="box">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="expressCompanyCode">快件公司代码</label>
-															<div class="controls">
-																<input class="input-xlarge focused" id="expressCompanyCode"
-																	type="text"  name="expressCompanyCode">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="ownerPhone">收件人手机</label>
-															<div class="controls">
-																<input class="input-xlarge focused" id="ownerPhone"
-																	type="text"  name="ownerPhone">
+																<input class="input-xlarge focused" id="tdd"
+																	type="text"  name="tdd">
 															</div>
 														</div>
 														<div class="form-actions">
-															<button type="submit" class="btn btn-primary" name='expressSubmit'>Save
+															<button type="submit" class="btn btn-primary" name='stationSubmit'>Save
 																changes</button>
 															<button class="btn">Cancel</button>
 														</div>
@@ -430,7 +404,7 @@ body {
 	<script type="text/javascript">
 		(function ($) {
 			$.ajax({
-		        url:'/delivery/queryExpressList.do',
+		        url:'/delivery/queryStationList.do',
 		        type:'GET',
 		        cache:false,
 		        datatype:'json',
@@ -441,27 +415,17 @@ body {
 	                
 	                for(i=0;i<msg.length;i++)
 	                {
-	                	express = msg[i];
-	                	status = express['status'];
-	                	statusCss = "label label-success";
-	                	if(status == '0') {
-	                		statusCss = "label";
-	                		status = "InActive"
-	                	} else {
-	                		status = "Active";
-	                	}
-	                    $("#expressListTable tbody").append("<tr>"
-                            +"<td>"+ express['barCode'] +"</td>"
-                            +"<td>" + express['tdjh'] +"</td>"
-                            +"<td>" + express['dateTime'] +"</td>"
-                            +"<td>" + express['deliTel'] +"</td>"
-                            +"<td class='center'>" + express['stationId'] + "</td>"
-                            +"<td class='center'>" + express['boxId'] + "</td>"
-                            +"<td class='center'>" + express['expressCompanyCode'] + "</td>"
-                            +"<td class='center'>" + express['ownerPhone'] + "</td>"
-                            +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='../queryExpress.do?hid="+ express['id'] +"'> "
-                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteExpress.do?hid="+ express['id'] +"'> "
+	                	station = msg[i];
+	                    $("#stationListTable tbody").append("<tr>"
+                            +"<td>"+ station['name'] +"</td>"
+                            +"<td>" + station['address'] +"</td>"
+                            +"<td>" + station['boxes'] +"</td>"
+                            +"<td>" + station['tdjh'] +"</td>"
+                            +"<td class='center'>" + station['tdd'] + "</td>"
+                            +"<td class='center'>" + station['buildDate'] +"</td>"
+                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editStation('" + station['id']+"')>"
+                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='deleteStation.do?hid="+ station['id'] +"'> "
                             +"<i class='icon-trash icon-white'></i> Delete</a></td>"
                             +"</tr>");
 	                }
@@ -469,6 +433,26 @@ body {
 			})
 		  })
 	 	(jQuery);
+
+	 	function editStation(hid) {
+	 		$.ajax({
+		        url:'/delivery/queryStation.do?hid=' + hid,
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$('#name').val(msg['name']);
+		        	$('#address').val(msg['address']);
+		        	$('#boxes').val(msg['boxes']);
+		        	$('#tdjh').val(msg['tdjh']);
+		        	$('#tdd').val(msg['tdd']);
+		        	$('#buildDate').val(msg['buildDate']);
+		        	$('.nav-tabs a:last').tab('show');
+		        }
+			});
+	 	}
 	</script>
 </body>
 </html>

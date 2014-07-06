@@ -30,4 +30,14 @@ public class BoxServiceImpl implements BoxService{
 		boxDaoInf.delete(box);
 	}
 
+	@Override
+	public Box queryBox(int id) {
+		return boxDaoInf.findOne(id);
+	}
+
+	@Override
+	public List<Box> queryBoxByStationId(String stationId) {
+		return boxDaoInf.findByStationId(stationId);
+	}
+
 }

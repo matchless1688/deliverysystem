@@ -1,5 +1,6 @@
 package com.delivery.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.bo.Box;
+import com.delivery.bo.Station;
 import com.delivery.service.BoxService;
+import com.delivery.service.StationService;
 import com.delivery.utils.JsonUtils;
 
 @Controller
@@ -20,11 +23,22 @@ public class BoxController {
 	@Autowired
 	private BoxService boxService;
 	
-	@RequestMapping(value = "queryBoxList.do")
+	@Autowired
+	private StationService stationService;
+	
+	@RequestMapping(value = "queryBoxList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryBoxList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Box> boxList = boxService.queryBoxList();
-		return JsonUtils.toJson(boxList);
+		List<Box> returnList = new ArrayList<Box>();
+		for(Box box : boxList) {
+			Station station = stationService.queryStation(Integer.valueOf(box.getStationId()));
+			if(station != null) {
+				box.setStationId(station.getName());
+			}
+			returnList.add(box);
+		}
+		return JsonUtils.toJson(returnList);
 	}
 	
 	@RequestMapping(value = "addBox.do")
@@ -36,6 +50,7 @@ public class BoxController {
 		String station = request.getParameter("station");
 		String barCode = request.getParameter("barCode");
 		String ownerPhone = request.getParameter("ownerPhone");
+		String status = request.getParameter("status");
 		Box box = new Box();
 		box.setLength(length);
 		box.setHeight(height);
@@ -43,10 +58,10 @@ public class BoxController {
 		box.setStationId(station);
 		box.setBarCode(barCode);
 		box.setOwnerPhone(ownerPhone);
-		box.setStatus("1");
+		box.setStatus(status);
 		Box b = boxService.saveBox(box);
 		
-		response.sendRedirect("view/box.html");
+		response.sendRedirect("box.html");
 		return String.valueOf(b.getId());
 	}
 	
@@ -58,7 +73,23 @@ public class BoxController {
 		box.setId(Integer.valueOf(hid));
 		boxService.deleteBox(box);
 		
-		response.sendRedirect("view/box.html");
+		response.sendRedirect("box.html");
 		return "0";
+	}
+	
+	@RequestMapping(value = "queryBox.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String queryBox(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String hid = request.getParameter("hid");
+		Box box = boxService.queryBox(Integer.valueOf(hid));
+		return JsonUtils.toJson(box);
+	}
+	
+	@RequestMapping(value = "queryBoxByStationId.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String queryBoxByStationId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String stationId = request.getParameter("stationId");
+		List<Box> boxList = boxService.queryBoxByStationId(stationId);
+		return JsonUtils.toJson(boxList);
 	}
 }

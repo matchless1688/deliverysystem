@@ -20,7 +20,7 @@ public class ExpressController {
 	@Autowired
 	private ExpressService expressService;
 	
-	@RequestMapping(value = "queryExpressList.do")
+	@RequestMapping(value = "queryExpressList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryExpressList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Express> expressList = expressService.queryExpressList();
@@ -38,6 +38,7 @@ public class ExpressController {
 		String box = request.getParameter("box");
 		String expressCompanyCode = request.getParameter("expressCompanyCode");
 		String ownerPhone = request.getParameter("ownerPhone");
+		String status = request.getParameter("status");
 		Express express = new Express();
 		express.setBarCode(barCode);
 		express.setTdjh(tdjh);
@@ -47,11 +48,11 @@ public class ExpressController {
 		express.setBoxId(box);
 		express.setExpressCompanyCode(expressCompanyCode);
 		express.setOwnerPhone(ownerPhone);
-		express.setStatus("1");
+		express.setStatus(status);
 		
 		Express e = expressService.saveExpress(express);
 		
-		response.sendRedirect("view/express.html");
+		response.sendRedirect("express.html");
 		return String.valueOf(e.getId());
 	}
 	
@@ -63,7 +64,15 @@ public class ExpressController {
 		express.setId(Integer.valueOf(hid));
 		expressService.deleteExpress(express);
 		
-		response.sendRedirect("view/express.html");
+		response.sendRedirect("express.html");
 		return "0";
+	}
+	
+	@RequestMapping(value = "queryExpress.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String queryExpress(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String hid = request.getParameter("hid");
+		Express express = expressService.queryExpress(Integer.valueOf(hid));
+		return JsonUtils.toJson(express);
 	}
 }

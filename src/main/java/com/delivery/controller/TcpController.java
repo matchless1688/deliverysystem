@@ -20,7 +20,7 @@ public class TcpController {
 	@Autowired
 	private TcpService tcpService;
 
-	@RequestMapping(value = "queryTcpList.do")
+	@RequestMapping(value = "queryTcpList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryTcpList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Tcp> tcpList = tcpService.queryTcpList();
@@ -33,7 +33,7 @@ public class TcpController {
 		Tcp tcp = new Tcp();
 		Tcp t = tcpService.saveTcp(tcp);
 		
-		response.sendRedirect("view/userlog.html");
+		response.sendRedirect("userlog.html");
 		return String.valueOf(t.getId());
 	}
 	
@@ -45,11 +45,11 @@ public class TcpController {
 		tcp.setId(Integer.valueOf(hid));
 		tcpService.deleteTcp(tcp);
 		
-		response.sendRedirect("view/userlog.html");
+		response.sendRedirect("userlog.html");
 		return "0";
 	}
 	
-	@RequestMapping(value = "queryTcp.do")
+	@RequestMapping(value = "queryTcp.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryTcp(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");

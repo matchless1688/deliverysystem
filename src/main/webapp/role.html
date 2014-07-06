@@ -126,9 +126,12 @@ body {
 						<li class="nav-header hidden-tablet">机构用户</li>
 						<li><a class="ajax-link" href="index.html"><i
 								class="icon-home"></i><span class="hidden-tablet"> 用户管理</span></a></li>
+						<li><a class="ajax-link" href="company.html"><i
+								class="icon-eye-open"></i><span class="hidden-tablet">
+									公司管理</span></a></li>
 						<li><a class="ajax-link" href="agency.html"><i
 								class="icon-eye-open"></i><span class="hidden-tablet">
-									机构管理</span></a></li>
+									部门管理</span></a></li>
 						<li class="nav-header hidden-tablet">储物柜</li>
 						<li><a class="ajax-link" href="station.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
@@ -162,7 +165,7 @@ body {
 					<div class="box span4" style="width: 100%;">
 						<div class="box-header well">
 							<h2>
-								<i class="icon-th"></i> 机构管理
+								<i class="icon-th"></i> 角色管理
 							</h2>
 							<div class="box-icon">
 								<a href="#" class="btn btn-setting btn-round"><i
@@ -174,26 +177,23 @@ body {
 						</div>
 						<div class="box-content">
 							<ul class="nav nav-tabs" id="myTab">
-								<li class="active"><a href="#agencylist">机构列表</a></li>
-								<li><a href="#agencyadd">机构添加</a></li>
+								<li class="active"><a href="#rolelist">角色列表</a></li>
+								<li><a href="#roleadd">角色添加</a></li>
 							</ul>
 
 							<div id="myTabContent" class="tab-content">
-								<div class="tab-pane active" id="agencylist">
+								<div class="tab-pane active" id="rolelist">
 									<div class="row-fluid sortable">
 										<div class="box span12">
 											<div class="box-content">
 												<table
-													class="table table-striped table-bordered bootstrap-datatable datatable" id="agencyListTable">
+													class="table table-striped table-bordered bootstrap-datatable datatable"
+													id="roleListTable">
 													<thead>
 														<tr>
-															<th>机构名称</th>
-															<th>机构类型</th>
-															<th>归属区域</th>
-															<th>机构编码</th>
-															<th>联系地址</th>
-															<th>负责人</th>
-															<th>负责人手机</th>
+															<th>角色名称</th>
+															<th>归属机构</th>
+															<th>权限范围</th>
 															<th>操作</th>
 														</tr>
 													</thead>
@@ -202,21 +202,11 @@ body {
 															<td></td>
 															<td class="center"></td>
 															<td class="center"></td>
-															<td class="center"></td>
-															<td class="center"></td>
-															<td class="center"></td>
-															<td class="center"></td>
-															<td class="center"></td>
-															<td class="center">
-																<a class="btn btn-info" href="#">
-																	<i class="icon-edit icon-white"></i>  
-																	Edit                                            
-																</a>
-																<a class="btn btn-danger" href="#">
-																	<i class="icon-trash icon-white"></i> 
-																	Delete
-																</a>
-															</td>
+															<td class="center"><a class="btn btn-info" href="#">
+																	<i class="icon-edit icon-white"></i> Edit
+															</a> <a class="btn btn-danger" href="#"> <i
+																	class="icon-trash icon-white"></i> Delete
+															</a></td>
 														</tr>
 													</tbody>
 												</table>
@@ -227,100 +217,42 @@ body {
 									</div>
 									<!--/row-->
 								</div>
-								<div class="tab-pane" id="agencyadd">
+								<div class="tab-pane" id="roleadd">
 									<div class="row-fluid sortable">
 										<div class="box span12">
 											<div class="box-content">
-												<form class="form-horizontal" name='agencyForm' action="/delivery/addAgency.do" method="POST">
+												<form class="form-horizontal" name='roleForm'
+													action="/delivery/addRole.do" method="POST">
 													<fieldset>
 														<div class="control-group">
-															<label class="control-label" for="parent">上级机构</label>
-															<div class="controls">
-																<select id="parent" name="parent" data-rel="chosen" data-placeholder="机构根节点">
-																	<option>机构根节点</option>
-																</select>
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="region">归属区域</label>
-															<div class="controls">
-																<select id="region" name="region" data-rel="chosen" data-placeholder="上海市">
-																	<option>北京市</option>
-																	<option>上海市</option>
-																	<option>天津市</option>
-																	<option>重庆市</option>
-																	<option>黑龙江省</option>
-																	<option>辽宁省</option>
-																	<option>吉林省</option>
-																	<option>河北省</option>
-																	<option>河南省</option>
-																	<option>湖北省</option>
-																	<option>湖南省</option>
-																	<option>山东省</option>
-																	<option>山西省</option>
-																	<option>陕西省</option>
-																	<option>安徽省</option>
-																	<option>浙江省</option>
-																	<option>江苏省</option>
-																	<option>福建省</option>
-																	<option>广东省</option>
-																	<option>海南省</option>
-																	<option>四川省</option>
-																	<option>云南省</option>
-																	<option>贵州省</option>
-																	<option>青海省</option>
-																	<option>甘肃省</option>
-																	<option>江西省</option>
-																</select>
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="name">机构名称</label>
+															<label class="control-label" for="name">角色名称</label>
 															<div class="controls">
 																<input class="input-xlarge focused" id="name"
-																	type="text"  name="name">
+																	type="text" name="name">
 															</div>
 														</div>
 														<div class="control-group">
-															<label class="control-label" for="code">机构编码</label>
+															<label class="control-label" for="organization">归属机构</label>
 															<div class="controls">
-																<input class="input-xlarge focused" id="code"
-																	type="text"  name="code">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="type">机构类型</label>
-															<div class="controls">
-																<select id="type" name="type">
-																	<option value='1'>公司</option>
-																	<option value='2'>部门</option>
+																<select id="organization" name="organization">
+																	
 																</select>
 															</div>
 														</div>
 														<div class="control-group">
-															<label class="control-label" for="address">联系地址</label>
+															<label class="control-label" for="authority">权限范围</label>
 															<div class="controls">
-																<input class="input-xlarge focused" id="address"
-																	type="text"  name="address">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="manager">负责人</label>
-															<div class="controls">
-																<input class="input-xlarge focused" id="manager"
-																	type="text"  name="manager">
-															</div>
-														</div>
-														<div class="control-group">
-															<label class="control-label" for="managerPhone">负责人手机号码</label>
-															<div class="controls">
-																<input type="text" id="managerPhone" name="managerPhone"> <span
-																	class="help-inline">输入合法手机号码</span>
+																<select id="authority" name="authority" multiple data-rel="chosen">
+																	<option>修改</option>
+																	<option selected>查看</option>
+																	<option>删除</option>
+																	<option>添加</option>
+																</select>
 															</div>
 														</div>
 														<div class="form-actions">
-															<button type="submit" class="btn btn-primary" name='agencySubmit'>Save
-																changes</button>
+															<button type="submit" class="btn btn-primary"
+																name='roleSubmit'>Save changes</button>
 															<button class="btn">Cancel</button>
 														</div>
 													</fieldset>
@@ -365,8 +297,7 @@ body {
 
 		<footer>
 			<p class="pull-left">
-				&copy; <a href="#" target="_blank">Wander Work</a>
-				2012
+				&copy; <a href="#" target="_blank">Wander Work</a> 2012
 			</p>
 			<p class="pull-right">
 				Powered by: <a href="#">Wander</a>
@@ -374,7 +305,7 @@ body {
 		</footer>
 
 	</div>
-	
+
 	<!--/.fluid-container-->
 
 	<!-- external javascript
@@ -451,10 +382,10 @@ body {
 	<!-- application script for Charisma demo -->
 	<script src="js/charisma.js"></script>
 
-	<script type="text/javascript"> 
+	<script type="text/javascript">
 		(function ($) {
 			$.ajax({
-		        url:'/delivery/queryAgencyList.do',
+		        url:'/delivery/queryRoleList.do',
 		        type:'GET',
 		        cache:false,
 		        datatype:'json',
@@ -463,49 +394,56 @@ body {
 		        	msg = JSON.parse(msg);
 	        		$("tbody tr").remove();
 	                
-	                $("#parent").chosen("destroy");
 	                for(i=0;i<msg.length;i++)
 	                {
-	                	agency = msg[i];
-	                	type = agency['type'];
-	                	if(type == '1') {
-	                		type = '公司';
-	                		$("#parent").append("<option value='"+agency['id']+"'>"+agency['name']+"</option>");
-			        		$("#parent").attr("multiple",false); 
-			        		$("#parent").trigger("liszt:updated");  
-	                	} else if(type == '2') {
-	                		type = '部门';
-	                	}
-	                    $("#agencyListTable tbody").append("<tr>"
-                            +"<td>"+ agency['name'] +"</td>"
-                            +"<td>" + type +"</td>"
-                            +"<td>" + agency['region'] +"</td>"
-                            +"<td>" + agency['code'] +"</td>"
-                            +"<td class='center'>" + agency['address'] + "</td>"
-                            +"<td class='center'>" + agency['manager'] + "</td>"
-                            +"<td class='center'>" + agency['managerPhone'] + "</td>"
-                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
-                            +"editAgency('" + agency['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteAgency.do?hid="+ agency['id'] +"'> "
+	                	role = msg[i];
+	                    $("#roleListTable tbody").append("<tr>"
+                            +"<td>"+ role['roleName'] +"</td>"
+                            +"<td>" + role['organization'] +"</td>"
+                            +"<td>" + role['authority'] +"</td>"
+                            +"<td class='center'><a class='btn btn-info' href='#'onclick="
+                            +"editRole('" + role['id']+"')>"
+                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteRole.do?hid="+ role['id'] +"'> "
                             +"<i class='icon-trash icon-white'></i> Delete</a></td>"
                             +"</tr>");
 	                }
 		        }
 			});
-		  })
-	 	(jQuery);
-		
-		function editAgency(hid) {
-	 		$.ajax({
-		        url:'/delivery/queryAgency.do?hid=' + hid,
+			
+			$.ajax({
+		        url:'/delivery/queryCompanyList.do',
 		        type:'GET',
 		        cache:false,
 		        datatype:'json',
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	$('#name').val(msg['name']);
-		        	$('#type').val(msg['type']);
+		        	$("#organization").html("");
+	                $("#organization").chosen("destroy");
+		        	for(i=0;i<msg.length;i++)
+	                {
+	                	company = msg[i];
+		        		$("#organization").append("<option value='"+company['id']+"'>"+company['name']+"</option>");
+		        		$("#organization").attr("multiple",false); 
+		        		$("#organization").trigger("liszt:updated");  
+		        	}
+		        }
+			});
+		  })
+	 	(jQuery);
+
+	 	function editRole(hid) {
+	 		$.ajax({
+		        url:'/delivery/queryRole.do?hid=' + hid,
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	$('#name').val(msg['roleName']);
+		        	$('#organization').val(msg['organization']);
+		        	$('#authority').val(msg['authority']);
 		        	$('.nav-tabs a:last').tab('show');
 		        }
 			});
