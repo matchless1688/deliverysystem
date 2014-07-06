@@ -1,5 +1,6 @@
 package com.delivery.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.bo.Agency;
+import com.delivery.bo.Company;
 import com.delivery.service.AgencyService;
+import com.delivery.service.CompanyService;
 import com.delivery.utils.JsonUtils;
 
 @Controller
@@ -19,18 +22,29 @@ public class AgencyController {
 	
 	@Autowired
 	private AgencyService agencyService;
+	
+	@Autowired
+	private CompanyService companyService;
 
 	@RequestMapping(value = "queryAgencyList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryAgencyList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Agency> agencyList = agencyService.queryAgencyList();
-		return JsonUtils.toJson(agencyList);
+		List<Agency> returnList = new ArrayList<Agency>();
+		for(Agency agency : agencyList) {
+			Company company = companyService.queryCompany(Integer.valueOf(agency.getParent()));
+			if(company != null) {
+				agency.setParent(company.getName());
+			}
+			returnList.add(agency);
+		}
+		return JsonUtils.toJson(returnList);
 	}
 	
 	@RequestMapping(value = "addAgency.do")
 	@ResponseBody
 	public String addAgency(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String parent = request.getParameter("parent");
+		String company = request.getParameter("company");
 		String region = request.getParameter("region");
 		String name = request.getParameter("name");
 		String code = request.getParameter("code");
@@ -40,7 +54,7 @@ public class AgencyController {
 		String managerPhone = request.getParameter("managerPhone");
 		
 		Agency agency = new Agency();
-		agency.setParent(parent);
+		agency.setParent(company);
 		agency.setRegion(region);
 		agency.setName(name);
 		agency.setCode(code);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.bo.Agency;
+import com.delivery.bo.Company;
 import com.delivery.bo.Role;
 import com.delivery.bo.SmsSend;
 import com.delivery.bo.SmsTemplate;
@@ -20,6 +21,7 @@ import com.delivery.constants.Constants;
 import com.delivery.dao.SmsSendDaoInf;
 import com.delivery.dao.SmsTemplateDaoInf;
 import com.delivery.service.AgencyService;
+import com.delivery.service.CompanyService;
 import com.delivery.service.RoleService;
 import com.delivery.service.UserService;
 import com.delivery.utils.CommonUtils;
@@ -39,6 +41,9 @@ public class UserController {
 	private AgencyService agencyService;
 	
 	@Autowired
+	private CompanyService companyService;
+	
+	@Autowired
 	private SmsTemplateDaoInf smsTemplateDaoInf;
 	
 	@Autowired
@@ -54,13 +59,13 @@ public class UserController {
 			if(role != null) {
 				user.setType(role.getRoleName());
 			}
-			Agency agencyC = agencyService.queryAgency(user.getCompanyId());
-			if(agencyC != null) {
-				user.setCompanyId(agencyC.getName());
+			Company company = companyService.queryCompany(Integer.valueOf(user.getCompanyId()));
+			if(company != null) {
+				user.setCompanyId(company.getName());
 			}
-			Agency agencyD = agencyService.queryAgency(user.getDepartmentId());
-			if(agencyD != null) {
-				user.setDepartmentId(agencyD.getName());
+			Agency department = agencyService.queryAgency(user.getDepartmentId());
+			if(department != null) {
+				user.setDepartmentId(department.getName());
 			}
 			returnList.add(user);
 		}

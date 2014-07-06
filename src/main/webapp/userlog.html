@@ -151,6 +151,9 @@ body {
 						<li><a class="ajax-link" href="userlog.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
 									用户日志</span></a></li>
+						<li><a class="ajax-link" href="sms.html"><i
+								class="icon-align-justify"></i><span class="hidden-tablet">
+									用户短信</span></a></li>
 					</ul>
 				</div>
 				<!--/.well -->
@@ -198,10 +201,6 @@ body {
 												<td class="center"></td>
 												<td class="center"></td>
 												<td class="center">
-													<a class="btn btn-info" href="#">
-														<i class="icon-edit icon-white"></i>  
-														Edit                                            
-													</a>
 													<a class="btn btn-danger" href="#">
 														<i class="icon-trash icon-white"></i> 
 														Delete
@@ -348,8 +347,7 @@ body {
                             +"<td>" + tcp['tcpDirection'] +"</td>"
                             +"<td>" + tcp['tcpReceive'] +"</td>"
                             +"<td>" + tcp['tcpSend'] +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='../queryTcp.do?hid="+ tcp['id'] +"'> "
-                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='../deleteTcp.do?hid="+ tcp['id'] +"'> "
+                            +"<td class='center'><a class='btn btn-danger' href='deleteTcp.do?hid="+ tcp['id'] +"'> "
                             +"<i class='icon-trash icon-white'></i> Delete</a></td>"
                             +"</tr>");
 	                }

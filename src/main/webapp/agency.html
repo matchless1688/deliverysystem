@@ -151,6 +151,9 @@ body {
 						<li><a class="ajax-link" href="userlog.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
 									用户日志</span></a></li>
+						<li><a class="ajax-link" href="sms.html"><i
+								class="icon-align-justify"></i><span class="hidden-tablet">
+									用户短信</span></a></li>
 					</ul>
 				</div>
 				<!--/.well -->
@@ -191,6 +194,7 @@ body {
 													<thead>
 														<tr>
 															<th>部门名称</th>
+															<th>归属公司</th>
 															<th>归属区域</th>
 															<th>部门编码</th>
 															<th>联系地址</th>
@@ -202,6 +206,7 @@ body {
 													<tbody>
 														<tr>
 															<td></td>
+															<td class="center"></td>
 															<td class="center"></td>
 															<td class="center"></td>
 															<td class="center"></td>
@@ -459,6 +464,7 @@ body {
 	                	agency = msg[i];
 	                    $("#agencyListTable tbody").append("<tr>"
                             +"<td>"+ agency['name'] +"</td>"
+                            +"<td>" + agency['parent'] +"</td>"
                             +"<td>" + agency['region'] +"</td>"
                             +"<td>" + agency['code'] +"</td>"
                             +"<td class='center'>" + agency['address'] + "</td>"
@@ -487,9 +493,9 @@ body {
 	                {
 	                	company = msg[i];
 		        		$("#company").append("<option value='"+company['id']+"'>"+company['name']+"</option>");
-		        		$("#company").attr("multiple",false); 
-		        		$("#company").trigger("liszt:updated");  
 		        	}
+	        		$("#company").attr("multiple",false); 
+	        		$("#company").trigger("liszt:updated");  
 		        	$("#company option:first").change();
 		        }
 			});

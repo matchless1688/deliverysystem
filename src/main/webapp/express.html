@@ -151,6 +151,9 @@ body {
 						<li><a class="ajax-link" href="userlog.html"><i
 								class="icon-align-justify"></i><span class="hidden-tablet">
 									用户日志</span></a></li>
+						<li><a class="ajax-link" href="sms.html"><i
+								class="icon-align-justify"></i><span class="hidden-tablet">
+									用户短信</span></a></li>
 					</ul>
 				</div>
 				<!--/.well -->
@@ -498,9 +501,9 @@ body {
 	                {
 	                	station = msg[i];
 		        		$("#station").append("<option value='"+station['id']+"'>"+station['name']+"</option>");
-		        		$("#station").attr("multiple",false); 
-		        		$("#station").trigger("liszt:updated");  
 		        	}
+	        		$("#station").attr("multiple",false); 
+	        		$("#station").trigger("liszt:updated");  
 		        	$("#station option:first").change();
 		        }
 			});
@@ -521,9 +524,10 @@ body {
 			                {
 			                	box = msg[i];
 				        		$("#box").append("<option value='"+box['id']+"'>"+box['barCode']+"</option>");
-				        		$("#box").attr("multiple",false); 
-				        		$("#box").trigger("liszt:updated");  
 				        	}
+			        		$("#box").attr("multiple",false); 
+			        		$("#box").trigger("liszt:updated");  
+			        		$("#box option:first").change();
 				        }
 					});
 			});
