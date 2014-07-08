@@ -60,8 +60,7 @@ body {
 				<!-- theme selector starts -->
 				<div class="btn-group pull-right theme-container">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-tint"></i><span class="hidden-phone"> Change
-							Theme / Skin</span> <span class="caret"></span>
+						<i class="icon-tint"></i><span class="hidden-phone"> 更改主题/皮肤</span> <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" id="themes">
 						<li><a data-value="classic" href="#"><i
@@ -216,11 +215,11 @@ body {
 															<td class="center">
 																<a class="btn btn-info" href="#">
 																	<i class="icon-edit icon-white"></i>  
-																	Edit                                            
+																	修改                                            
 																</a>
 																<a class="btn btn-danger" href="#">
 																	<i class="icon-trash icon-white"></i> 
-																	Delete
+																	删除
 																</a>
 															</td>
 														</tr>
@@ -239,6 +238,7 @@ body {
 											<div class="box-content">
 												<form class="form-horizontal" name='agencyForm' action="/delivery/addAgency.do" method="POST">
 													<fieldset>
+														<input type="hidden" id="agencyId" name="agencyId" />
 														<div class="control-group">
 															<label class="control-label" for="company">公司</label>
 															<div class="controls">
@@ -472,8 +472,8 @@ body {
                             +"<td class='center'>" + agency['managerPhone'] + "</td>"
                             +"<td class='center'><a class='btn btn-info' href='#' onclick="
                             +"editAgency('" + agency['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='deleteAgency.do?hid="+ agency['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> Delete</a></td>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteAgency.do?hid="+ agency['id'] +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
                             +"</tr>");
 	                }
 		        }
@@ -511,6 +511,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
+		        	$('#agencyId').val(msg['id']);
 		        	$('#name').val(msg['name']);
 		        	$('#region').val(msg['region']);
 		        	$('#code').val(msg['code']);

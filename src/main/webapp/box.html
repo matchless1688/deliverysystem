@@ -60,8 +60,7 @@ body {
 				<!-- theme selector starts -->
 				<div class="btn-group pull-right theme-container">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-tint"></i><span class="hidden-phone"> Change
-							Theme / Skin</span> <span class="caret"></span>
+						<i class="icon-tint"></i><span class="hidden-phone"> 更改主题/皮肤</span> <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" id="themes">
 						<li><a data-value="classic" href="#"><i
@@ -99,18 +98,6 @@ body {
 					</ul>
 				</div>
 				<!-- user dropdown ends -->
-
-				<div class="top-nav nav-collapse">
-					<ul class="nav">
-						<li><a href="#">Visit Site</a></li>
-						<li>
-							<form class="navbar-search pull-left">
-								<input placeholder="Search" class="search-query span2"
-									name="query" type="text">
-							</form>
-						</li>
-					</ul>
-				</div>
 				<!--/.nav-collapse -->
 			</div>
 		</div>
@@ -219,11 +206,11 @@ body {
 															<td class="center">
 																<a class="btn btn-info" href="#">
 																	<i class="icon-edit icon-white"></i>  
-																	Edit                                            
+																	修改                                            
 																</a>
 																<a class="btn btn-danger" href="#">
 																	<i class="icon-trash icon-white"></i> 
-																	Delete
+																	删除
 																</a>
 															</td>
 														</tr>
@@ -242,6 +229,7 @@ body {
 											<div class="box-content">
 												<form class="form-horizontal" name='boxForm' action="/delivery/addBox.do" method="POST">
 													<fieldset>
+														<input type="hidden" id="boxId" name="boxId" />
 														<div class="control-group">
 															<label class="control-label" for="length">长度</label>
 															<div class="controls">
@@ -462,8 +450,8 @@ body {
                             +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
                             +"<td class='center'><a class='btn btn-info' href='#' onclick="
                             +"editBox('" + box['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> Edit</a><a class='btn btn-danger' href='deleteBox.do?hid="+ box['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> Delete</a></td>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteBox.do?hid="+ box['id'] +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
                             +"</tr>");
 	                }
 		        }
@@ -502,6 +490,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
+		        	$('#boxId').val(msg['id']);
 		        	$('#length').val(msg['length']);
 		        	$('#height').val(msg['height']);
 		        	$('#width').val(msg['width']);

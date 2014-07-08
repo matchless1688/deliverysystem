@@ -47,10 +47,22 @@ public class RoleController {
 		String name = request.getParameter("name");
 		String organization = request.getParameter("organization");
 		String authority = request.getParameter("authority");
-		Role role = new Role();
-		role.setRoleName(name);
-		role.setOrganization(organization);
-		role.setAuthority(authority);
+		String roleId = request.getParameter("roleId");
+		
+		Role role;
+		if(roleId == null) {
+			role = new Role();
+			role.setRoleName(name);
+			role.setOrganization(organization);
+			role.setAuthority(authority);
+		} else {
+			role = roleService.queryRole(roleId);
+			role.setRoleName(name);
+			role.setOrganization(organization);
+			role.setAuthority(authority);
+			
+		}
+		
 		Role r = roleService.saveRole(role);
 		
 		response.sendRedirect("role.html");

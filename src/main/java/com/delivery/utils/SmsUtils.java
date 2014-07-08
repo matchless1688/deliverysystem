@@ -16,13 +16,13 @@ public class SmsUtils {
 
 	private final static String smsTemplate_tail = "&ScheduleTime=&f=1"; // MessageContent=短信内&UserNumber=18616330318&SerialNumber=20byte
 
-	public static SmsSend send(String userName, String phone, String pwd,
+	public static SmsSend send(String phone, String pwd,
 			SmsTemplate template) throws UnsupportedEncodingException {
 		SmsSend send = new SmsSend();
 		StringBuilder sb = new StringBuilder();
 		
 		String sn = generateSN();
-		String context = template.getPart1() + userName + template.getPart2()
+		String context = template.getPart1() + phone + template.getPart2()
 				+ pwd + template.getPart3();
 		send.setSn(sn);
 		send.setContext(context);

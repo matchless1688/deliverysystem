@@ -51,14 +51,28 @@ public class BoxController {
 		String barCode = request.getParameter("barCode");
 		String ownerPhone = request.getParameter("ownerPhone");
 		String status = request.getParameter("status");
-		Box box = new Box();
-		box.setLength(length);
-		box.setHeight(height);
-		box.setWidth(width);
-		box.setStationId(station);
-		box.setBarCode(barCode);
-		box.setOwnerPhone(ownerPhone);
-		box.setStatus(status);
+		String boxId = request.getParameter("boxId");
+		
+		Box box;
+		if(boxId == null) {
+			box = new Box();
+			box.setLength(length);
+			box.setHeight(height);
+			box.setWidth(width);
+			box.setStationId(station);
+			box.setBarCode(barCode);
+			box.setOwnerPhone(ownerPhone);
+			box.setStatus(status);
+		} else {
+			box = boxService.queryBox(Integer.valueOf(boxId));
+			box.setLength(length);
+			box.setHeight(height);
+			box.setWidth(width);
+			box.setStationId(station);
+			box.setBarCode(barCode);
+			box.setOwnerPhone(ownerPhone);
+			box.setStatus(status);
+		}
 		Box b = boxService.saveBox(box);
 		
 		response.sendRedirect("box.html");

@@ -39,16 +39,32 @@ public class ExpressController {
 		String expressCompanyCode = request.getParameter("expressCompanyCode");
 		String ownerPhone = request.getParameter("ownerPhone");
 		String status = request.getParameter("status");
-		Express express = new Express();
-		express.setBarCode(barCode);
-		express.setTdjh(tdjh);
-		express.setDateTime(dateTime);
-		express.setDeliTel(deliTel);
-		express.setStationId(station);
-		express.setBoxId(box);
-		express.setExpressCompanyCode(expressCompanyCode);
-		express.setOwnerPhone(ownerPhone);
-		express.setStatus(status);
+		String expressId = request.getParameter("expressId");
+		
+		Express express;
+		if(expressId == null) {
+			express = new Express();
+			express.setBarCode(barCode);
+			express.setTdjh(tdjh);
+			express.setDateTime(dateTime);
+			express.setDeliTel(deliTel);
+			express.setStationId(station);
+			express.setBoxId(box);
+			express.setExpressCompanyCode(expressCompanyCode);
+			express.setOwnerPhone(ownerPhone);
+			express.setStatus(status);
+		} else {
+			express = expressService.queryExpress(Integer.valueOf(expressId));
+			express.setBarCode(barCode);
+			express.setTdjh(tdjh);
+			express.setDateTime(dateTime);
+			express.setDeliTel(deliTel);
+			express.setStationId(station);
+			express.setBoxId(box);
+			express.setExpressCompanyCode(expressCompanyCode);
+			express.setOwnerPhone(ownerPhone);
+			express.setStatus(status);
+		}
 		
 		Express e = expressService.saveExpress(express);
 		

@@ -38,17 +38,30 @@ public class CompanyController {
 		String contact = request.getParameter("contact");
 		String telPhone = request.getParameter("telPhone");
 		String remark = request.getParameter("remark");
+		String companyId = request.getParameter("companyId");
 		
-		Company company = new Company();
-		company.setName(name);
-		company.setProvince(province);
-		company.setCity(city);
-		company.setAddress(address);
-		company.setContact(contact);
-		company.setTelPhone(telPhone);
-		company.setRemark(remark);
-		company.setStatus(Constants.STATUS_AVAILABLE);
-	
+		Company company;
+		if(companyId == null) {
+			company = new Company();
+			company.setName(name);
+			company.setProvince(province);
+			company.setCity(city);
+			company.setAddress(address);
+			company.setContact(contact);
+			company.setTelPhone(telPhone);
+			company.setRemark(remark);
+			company.setStatus(Constants.STATUS_AVAILABLE);
+		} else {
+			company = companyService.queryCompany(Integer.valueOf(companyId));
+			company.setName(name);
+			company.setProvince(province);
+			company.setCity(city);
+			company.setAddress(address);
+			company.setContact(contact);
+			company.setTelPhone(telPhone);
+			company.setRemark(remark);
+			company.setStatus(Constants.STATUS_AVAILABLE);
+		}
 		Company c = companyService.saveCompany(company);
 		
 		response.sendRedirect("company.html");

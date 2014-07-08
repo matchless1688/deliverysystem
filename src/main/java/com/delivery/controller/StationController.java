@@ -36,13 +36,30 @@ public class StationController {
 		String boxes = request.getParameter("boxes");
 		String tdjh = request.getParameter("tdjh");
 		String tdd = request.getParameter("tdd");
-		Station station = new Station();
-		station.setAddress(address);
-		station.setName(name);
-		station.setBoxes(boxes);
-		station.setTdd(tdd);
-		station.setTdjh(tdjh);
-		station.setBuildDate(DateUtils.buildDateStr());
+		String stationKeyId = request.getParameter("stationKeyId");
+		String stationId = request.getParameter("stationId");
+		
+		Station station;
+		if(stationId == null) {
+			station = new Station();
+			station.setAddress(address);
+			station.setName(name);
+			station.setBoxes(boxes);
+			station.setTdd(tdd);
+			station.setTdjh(tdjh);
+			station.setStationId(stationKeyId);
+			station.setBuildDate(DateUtils.buildDateStr());
+		} else {
+			station = stationService.queryStation(Integer.valueOf(stationId));
+			station.setAddress(address);
+			station.setName(name);
+			station.setBoxes(boxes);
+			station.setTdd(tdd);
+			station.setTdjh(tdjh);
+			station.setStationId(stationKeyId);
+			station.setBuildDate(DateUtils.buildDateStr());
+		}
+		
 		Station s = stationService.saveStation(station);
 		
 		response.sendRedirect("station.html");

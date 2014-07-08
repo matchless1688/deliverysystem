@@ -80,23 +80,40 @@ public class UserController {
 		String company = request.getParameter("company");
 		String department = request.getParameter("department");
 		String type = request.getParameter("role");
-		User user = new User();
-		user.setUserName(userName);
-		user.setTelPhone(phone);
-		user.setCompanyId(company);
-		user.setDepartmentId(department);
-		user.setStatus(Constants.STATUS_AVAILABLE);
-		user.setPwd(CommonUtils.genPwdBasedOnTel(phone));
-		user.setType(type);
-		User u = userService.saveUser(user);
-		if(u != null) {
-			SmsTemplate template = smsTemplateDaoInf.findOne(4);
-			SmsSend send = SmsUtils.send(u.getUserName(), u.getTelPhone(), u.getPwd(), template);
-			smsSendDaoInf.save(send);
+		String info = request.getParameter("info");
+		String userId = request.getParameter("userId");
+		User user;
+		if(userId == null) {
+			user = new User();
+			user.setUserName(userName);
+			user.setTelPhone(phone);
+			user.setCompanyId(company);
+			user.setDepartmentId(department);
+			user.setStatus(Constants.STATUS_AVAILABLE);
+			user.setPwd(CommonUtils.genPwdBasedOnTel(phone));
+			user.setType(type);
+			user.setInfo(info);
+			user = userService.saveUser(user);
+			if(user != null) {
+				SmsTemplate template = smsTemplateDaoInf.findOne(4);
+				SmsSend send = SmsUtils.send(user.getTelPhone(), user.getPwd(), template);
+				smsSendDaoInf.save(send);
+			}
+		} else {
+			user = userService.queryUser(userId);
+			user.setUserName(userName);
+			user.setTelPhone(phone);
+			user.setCompanyId(company);
+			user.setDepartmentId(department);
+			user.setStatus(Constants.STATUS_AVAILABLE);
+			user.setPwd(CommonUtils.genPwdBasedOnTel(phone));
+			user.setType(type);
+			user.setInfo(info);
+			user = userService.saveUser(user);
 		}
 		
 		response.sendRedirect("index.html");
-		return String.valueOf(u.getId());
+		return String.valueOf(user.getId());
 	}
 	
 	@RequestMapping(value = "deleteUser.do")

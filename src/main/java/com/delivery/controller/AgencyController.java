@@ -52,17 +52,30 @@ public class AgencyController {
 		String address = request.getParameter("address");
 		String manager = request.getParameter("manager");
 		String managerPhone = request.getParameter("managerPhone");
+		String agencyId = request.getParameter("agencyId");
 		
-		Agency agency = new Agency();
-		agency.setParent(company);
-		agency.setRegion(region);
-		agency.setName(name);
-		agency.setCode(code);
-		agency.setType(type);
-		agency.setAddress(address);
-		agency.setManager(manager);
-		agency.setManagerPhone(managerPhone);
-		
+		Agency agency;
+		if(agencyId == null) {
+			agency = new Agency();
+			agency.setParent(company);
+			agency.setRegion(region);
+			agency.setName(name);
+			agency.setCode(code);
+			agency.setType(type);
+			agency.setAddress(address);
+			agency.setManager(manager);
+			agency.setManagerPhone(managerPhone);
+		} else {
+			agency = agencyService.queryAgency(agencyId);
+			agency.setParent(company);
+			agency.setRegion(region);
+			agency.setName(name);
+			agency.setCode(code);
+			agency.setType(type);
+			agency.setAddress(address);
+			agency.setManager(manager);
+			agency.setManagerPhone(managerPhone);
+		}
 	
 		Agency a = agencyService.saveAgency(agency);
 		
