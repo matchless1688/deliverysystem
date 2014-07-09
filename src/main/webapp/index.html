@@ -88,13 +88,13 @@ body {
 				<!-- user dropdown starts -->
 				<div class="btn-group pull-right">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user"></i><span class="hidden-phone"> admin</span>
+						<i class="icon-user"></i><span class="hidden-phone" id="loginUser"> 未登陆</span>
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Profile</a></li>
+						<li><a href="#">个人资料</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html">Logout</a></li>
+						<li><a href="/delivery/logout.do">注销</a></li>
 					</ul>
 				</div>
 				<!-- user dropdown ends -->
@@ -244,10 +244,10 @@ body {
 																<span class="input-xlarge uneditable-input">Active</span>
 															</div>
 														</div>
-														<div class="control-group">
+														<div class="control-group" id="phoneDiv">
 															<label class="control-label" for="phone">手机号码</label>
 															<div class="controls">
-																<input type="text" id="phone" name="phone"> <span
+																<input type="text" id="phone" name="phone"> <span id="phoneTip"
 																	class="help-inline">输入合法手机号码</span>
 															</div>
 														</div>
@@ -282,7 +282,7 @@ body {
 														  </div>
 														</div>
 														<div class="form-actions">
-															<button type="submit" class="btn btn-primary" name='userSubmit'>Save
+															<button type="submit" class="btn btn-primary" name='userSubmit' id="userSubmit">Save
 																changes</button>
 															<button class="btn">Cancel</button>
 														</div>
@@ -417,6 +417,22 @@ body {
 	<script type="text/javascript"> 
 		(function ($) {
 			$.ajax({
+				url:'/delivery/querySession.do',
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	if(msg['loginUser'] != null) {
+		        		$("#loginUser").text(msg['loginUser']);
+		        	} else {
+		        		window.location = "login.html";
+		        	}
+		        }
+			});
+
+			$.ajax({
 		        url:'/delivery/queryUserList.do',
 		        type:'GET',
 		        cache:false,
@@ -530,7 +546,13 @@ body {
 				        success: function (msg)
 				        {
 				        	  if(msg != '0') {
-				        	  		
+			        	  		$("#phoneTip").text("手机号码已被注册");
+			        	  		$("#phoneDiv").addClass("error");
+			        	  		$("#userSubmit").attr("disabled", true);
+				        	  } else {
+			        	  		$("#phoneTip").text("");
+			        	  		$("#phoneDiv").removeClass("error");
+			        	  		$("#userSubmit").attr("disabled", false);
 				        	  }
 				        }
 					});

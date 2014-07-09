@@ -88,13 +88,13 @@ body {
 				<!-- user dropdown starts -->
 				<div class="btn-group pull-right">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user"></i><span class="hidden-phone"> admin</span>
+						<i class="icon-user"></i><span class="hidden-phone" id="loginUser"> 未登陆</span>
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Profile</a></li>
+						<li><a href="#">个人资料</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html">Logout</a></li>
+						<li><a href="/delivery/logout.do">注销</a></li>
 					</ul>
 				</div>
 				<!-- user dropdown ends -->
@@ -463,6 +463,22 @@ body {
 			               ['西宁','海东','海北','黄南','海南','果洛','玉树','海西'],
 			               ['兰州','嘉峪关','金昌','白银','天水','武威','张掖','平凉','酒泉','庆阳','定西','陇南','临夏','甘南'],
 			               ['南昌','景德镇','萍乡','九江','新余','鹰潭','赣州','吉安','宜春','抚州','上饶']];
+			$.ajax({
+				url:'/delivery/querySession.do',
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	if(msg['loginUser'] != null) {
+		        		$("#loginUser").text(msg['loginUser']);
+		        	} else {
+		        		window.location = "login.html";
+		        	}
+		        }
+			});
+			
 			$.ajax({
 		        url:'/delivery/queryCompanyList.do',
 		        type:'GET',

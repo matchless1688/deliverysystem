@@ -88,13 +88,13 @@ body {
 				<!-- user dropdown starts -->
 				<div class="btn-group pull-right">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-						<i class="icon-user"></i><span class="hidden-phone"> admin</span>
+						<i class="icon-user"></i><span class="hidden-phone" id="loginUser"> 未登陆</span>
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Profile</a></li>
+						<li><a href="#">个人资料</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html">Logout</a></li>
+						<li><a href="/delivery/logout.do">注销</a></li>
 					</ul>
 				</div>
 				<!-- user dropdown ends -->
@@ -269,9 +269,9 @@ body {
 															<label class="control-label" for="status">状态</label>
 															<div class="controls">
 																<select id="type" name="status">
-																	<option value='0'>可用</option>
-																	<option value='1'>不可用</option>
-																	<option value='2'>未知</option>
+																	<option value='0'>空箱</option>
+																	<option value='1'>有物</option>
+																	<option value='2'>错误</option>
 																</select>
 															</div>
 														</div>
@@ -419,6 +419,22 @@ body {
 	<script type="text/javascript">
 		(function ($) {
 			$.ajax({
+				url:'/delivery/querySession.do',
+		        type:'GET',
+		        cache:false,
+		        datatype:'json',
+		        success: function (msg)
+		        {
+		        	msg = JSON.parse(msg);
+		        	if(msg['loginUser'] != null) {
+		        		$("#loginUser").text(msg['loginUser']);
+		        	} else {
+		        		window.location = "login.html";
+		        	}
+		        }
+			});
+			
+			$.ajax({
 		        url:'/delivery/queryBoxList.do',
 		        type:'GET',
 		        cache:false,
@@ -433,11 +449,14 @@ body {
 	                	box = msg[i];
 	                	status = box['status'];
 	                	statusCss = "label label-success";
-	                	if(status != '0') {
+	                	if(status == '0') {
+	                		status = "空箱";
+	                	} else if(status == '1'){
 	                		statusCss = "label";
-	                		status = "InActive"
+	                		status = "有物";
 	                	} else {
-	                		status = "Active";
+	                		statusCss = "label label-important";
+	                		status = "错误";
 	                	}
 	                    $("#boxListTable tbody").append("<tr>"
                             +"<td>"+ box['length'] +"</td>"

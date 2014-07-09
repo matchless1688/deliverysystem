@@ -12,9 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.delivery.bo.Agency;
+import com.delivery.bo.Company;
 import com.delivery.bo.Role;
-import com.delivery.service.AgencyService;
+import com.delivery.service.CompanyService;
 import com.delivery.service.RoleService;
 import com.delivery.utils.JsonUtils;
 
@@ -25,7 +25,7 @@ public class RoleController {
 	private RoleService roleService;
 	
 	@Autowired
-	private AgencyService agencyService;
+	private CompanyService companyService;
 
 	@RequestMapping(value = "queryRoleList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
@@ -34,9 +34,9 @@ public class RoleController {
 		List<Role> returnList = new ArrayList<Role>();
 		for(Role role : roleList) {
 			if(StringUtils.isNotEmpty(role.getOrganization())) {
-				Agency agency = agencyService.queryAgency(role.getOrganization());
-				if(agency != null) {
-					role.setOrganization(agency.getName());
+				Company company = companyService.queryCompany(Integer.valueOf(role.getOrganization()));
+				if(company != null) {
+					role.setOrganization(company.getName());
 				}
 			}
 			returnList.add(role);

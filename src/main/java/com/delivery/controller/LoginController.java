@@ -1,9 +1,12 @@
 package com.delivery.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.bo.User;
+import com.delivery.exception.ApplicationException;
 import com.delivery.service.UserService;
+import com.delivery.utils.JsonUtils;
 
 @Controller
 public class LoginController {
@@ -19,26 +24,48 @@ public class LoginController {
 	@Autowired
 	private UserService userService;
 	
+	private final static String LOGIN_MESSAGE = "loginMsg";
+	private final static String LOGIN_USER = "loginUser";
+	
 	@RequestMapping(value = "login.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
-	public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String userName = request.getParameter("username");
+	public void login(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+		String userphone = request.getParameter("userphone");
 		String password = request.getParameter("password");
-		String result = "ok";
+		String result = "login.html";
 		
-		User user = userService.queryUserByUserName(userName);
+		session.removeAttribute(LOGIN_MESSAGE);
+		session.removeAttribute(LOGIN_USER);
+		User user = userService.queryUserByTelPhone(userphone);
 		if(user == null) {
-			result = "not exist";
+			session.setAttribute(LOGIN_MESSAGE, "用户不存在.");
 		} else {
 			if(!user.getPwd().equals(password)) {
-				result = "username or password is not correct!";
+				session.setAttribute(LOGIN_MESSAGE, "用户名或者密码错误.");
+			} else {
+				session.setAttribute(LOGIN_USER, user.getUserName());
+				result = "index.html";
 			}
 		}
-		if(result.equals("ok")) {
-			response.sendRedirect("index.html");
-		} else {
-			response.sendRedirect("login.html");
-		}
-		return result;
+		response.sendRedirect(result);
+	}
+	
+	@RequestMapping(value = "logout.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+		session.removeAttribute(LOGIN_MESSAGE);
+		session.removeAttribute(LOGIN_USER);
+		response.sendRedirect("login.html");
+	}
+	
+	@RequestMapping(value = "querySession.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String querySession(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException, ApplicationException {
+		String loginUser = (String) session.getAttribute(LOGIN_USER);
+		String loginMsg = (String) session.getAttribute(LOGIN_MESSAGE);
+		Map<String, String> sessionMap = new HashMap<String, String>();
+		sessionMap.put(LOGIN_USER, loginUser);
+		sessionMap.put(LOGIN_MESSAGE, loginMsg);
+		return JsonUtils.toJson(sessionMap);
 	}
 }
