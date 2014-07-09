@@ -519,6 +519,22 @@ body {
 				        }
 					});
 			});
+			
+			$("#phone").change(function() {
+				var inputPhone = $("#phone").val();
+				$.ajax({
+				        url:'/delivery/queryUserByPhone.do?phone='+inputPhone,
+				        type:'GET',
+				        cache:false,
+				        datatype:'json',
+				        success: function (msg)
+				        {
+				        	  if(msg != '0') {
+				        	  		
+				        	  }
+				        }
+					});
+			});
 		  })
 	 	(jQuery);
 
