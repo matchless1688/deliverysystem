@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,17 +56,25 @@ public class UserController {
 		List<User> userList = userService.queryUserList();
 		List<User> returnList = new ArrayList<User>();
 		for(User user : userList) {
-			Role role = roleService.queryRole(user.getType());
-			if(role != null) {
-				user.setType(role.getRoleName());
+			if(StringUtils.isNotEmpty(user.getType())) {
+				Role role = roleService.queryRole(user.getType());
+				if(role != null) {
+					user.setType(role.getRoleName());
+				}
 			}
-			Company company = companyService.queryCompany(Integer.valueOf(user.getCompanyId()));
-			if(company != null) {
-				user.setCompanyId(company.getName());
+			
+			if(StringUtils.isNotEmpty(user.getCompanyId())) {
+				Company company = companyService.queryCompany(Integer.valueOf(user.getCompanyId()));
+				if(company != null) {
+					user.setCompanyId(company.getName());
+				}
 			}
-			Agency department = agencyService.queryAgency(user.getDepartmentId());
-			if(department != null) {
-				user.setDepartmentId(department.getName());
+			
+			if(StringUtils.isNotEmpty(user.getDepartmentId())) {
+				Agency department = agencyService.queryAgency(user.getDepartmentId());
+				if(department != null) {
+					user.setDepartmentId(department.getName());
+				}
 			}
 			returnList.add(user);
 		}
@@ -83,7 +92,7 @@ public class UserController {
 		String info = request.getParameter("info");
 		String userId = request.getParameter("userId");
 		User user;
-		if(userId == null) {
+		if(StringUtils.isEmpty(userId)) {
 			user = new User();
 			user.setUserName(userName);
 			user.setTelPhone(phone);
@@ -96,8 +105,10 @@ public class UserController {
 			user = userService.saveUser(user);
 			if(user != null) {
 				SmsTemplate template = smsTemplateDaoInf.findOne(4);
-				SmsSend send = SmsUtils.send(user.getTelPhone(), user.getPwd(), template);
-				smsSendDaoInf.save(send);
+				if(template != null) {
+					SmsSend send = SmsUtils.send(user.getTelPhone(), user.getPwd(), template);
+					smsSendDaoInf.save(send);
+				}
 			}
 		} else {
 			user = userService.queryUser(userId);

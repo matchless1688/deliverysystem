@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +33,11 @@ public class RoleController {
 		List<Role> roleList = roleService.queryRoleList();
 		List<Role> returnList = new ArrayList<Role>();
 		for(Role role : roleList) {
-			Agency agency = agencyService.queryAgency(role.getOrganization());
-			if(agency != null) {
-				role.setOrganization(agency.getName());
+			if(StringUtils.isNotEmpty(role.getOrganization())) {
+				Agency agency = agencyService.queryAgency(role.getOrganization());
+				if(agency != null) {
+					role.setOrganization(agency.getName());
+				}
 			}
 			returnList.add(role);
 		}
@@ -50,7 +53,7 @@ public class RoleController {
 		String roleId = request.getParameter("roleId");
 		
 		Role role;
-		if(roleId == null) {
+		if(StringUtils.isEmpty(roleId)) {
 			role = new Role();
 			role.setRoleName(name);
 			role.setOrganization(organization);

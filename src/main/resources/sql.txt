@@ -23,15 +23,17 @@ CREATE TABLE `tb_tcpinfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `tb_stations` (
-  `StationID` varchar(32) NOT NULL,
+  `StationID` varchar(32) DEFAULT NULL,
   `Address` varchar(100) DEFAULT NULL,
   `StationName` varchar(20) DEFAULT NULL,
   `Boxes` varchar(4) DEFAULT NULL,
   `TDJH` varchar(100) DEFAULT NULL,
   `TDD` varchar(100) DEFAULT NULL,
   `BuildDate` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`StationID`)
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE `tb_smsteplate` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
@@ -117,5 +119,5 @@ CREATE TABLE `tb_company` (
   `telphone` varchar(20) DEFAULT NULL,
   `remark` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

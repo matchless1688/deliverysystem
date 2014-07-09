@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +33,11 @@ public class BoxController {
 		List<Box> boxList = boxService.queryBoxList();
 		List<Box> returnList = new ArrayList<Box>();
 		for(Box box : boxList) {
-			Station station = stationService.queryStation(Integer.valueOf(box.getStationId()));
-			if(station != null) {
-				box.setStationId(station.getName());
+			if(StringUtils.isNotEmpty(box.getStationId())) {
+				Station station = stationService.queryStation(Integer.valueOf(box.getStationId()));
+				if(station != null) {
+					box.setStationId(station.getName());
+				}
 			}
 			returnList.add(box);
 		}
@@ -54,7 +57,7 @@ public class BoxController {
 		String boxId = request.getParameter("boxId");
 		
 		Box box;
-		if(boxId == null) {
+		if(StringUtils.isEmpty(boxId)) {
 			box = new Box();
 			box.setLength(length);
 			box.setHeight(height);

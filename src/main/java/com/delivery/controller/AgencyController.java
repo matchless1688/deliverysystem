@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +33,11 @@ public class AgencyController {
 		List<Agency> agencyList = agencyService.queryAgencyList();
 		List<Agency> returnList = new ArrayList<Agency>();
 		for(Agency agency : agencyList) {
-			Company company = companyService.queryCompany(Integer.valueOf(agency.getParent()));
-			if(company != null) {
-				agency.setParent(company.getName());
+			if(StringUtils.isNotEmpty(agency.getParent())) {
+				Company company = companyService.queryCompany(Integer.valueOf(agency.getParent()));
+				if(company != null) {
+					agency.setParent(company.getName());
+				}
 			}
 			returnList.add(agency);
 		}
@@ -55,7 +58,7 @@ public class AgencyController {
 		String agencyId = request.getParameter("agencyId");
 		
 		Agency agency;
-		if(agencyId == null) {
+		if(StringUtils.isEmpty(agencyId)) {
 			agency = new Agency();
 			agency.setParent(company);
 			agency.setRegion(region);
