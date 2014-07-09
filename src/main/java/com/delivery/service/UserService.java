@@ -15,4 +15,6 @@ public interface UserService {
 	public User queryUser(String id);
 	
 	public User queryUserByUserName(String userName);
+	
+	public User queryUserByTelPhone(String phone);
 }

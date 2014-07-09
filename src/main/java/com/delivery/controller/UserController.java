@@ -146,4 +146,16 @@ public class UserController {
 		User user = userService.queryUser(hid);
 		return JsonUtils.toJson(user);
 	}
+	
+	@RequestMapping(value = "queryUserByPhone.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String queryUserByPhone(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String phone = request.getParameter("phone");
+		User user = userService.queryUserByTelPhone(phone);
+		String result = "0";
+		if(user != null) {
+			result = "1";
+		}
+		return result;
+	}
 }

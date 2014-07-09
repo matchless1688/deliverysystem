@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
 		return userDaoInf.findByUserName(userName);
 	}
 
+	@Override
+	public User queryUserByTelPhone(String phone) {
+		return userDaoInf.findByTelPhone(phone);
+	}
+
 }
