@@ -416,25 +416,6 @@ body {
 
 	<script type="text/javascript"> 
 		(function ($) {
-			$('.datatable').dataTable({
-				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {
-				"sLengthMenu": "_MENU_ records per page"
-				},
-				'bLengthChange': true,
-				"sAjaxSource": "/delivery/queryUserList.do",
-				"aoColumns": [
-					{ "mDataProp": "companyId" },
-					{ "mDataProp": "departmentId" },
-					{ "mDataProp": "userName" },
-					{ "mDataProp": "pwd" },
-					{ "mDataProp": "telPhone" },
-					{ "mDataProp": "type" },
-					{ "mDataProp": "info" },
-					{ "mDataProp": "status" }
-				]
-			} );
 			
 			$.ajax({
 				url:'/delivery/querySession.do',
@@ -451,45 +432,53 @@ body {
 		        	}
 		        }
 			});
-
-			/* $.ajax({
-		        url:'/delivery/queryUserList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	user = msg[i];
-	                	status = user['status'];
-	                	statusCss = "label label-success";
+			
+			$('#userListTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryUserList.do",
+				"aoColumns": [
+					{ "mDataProp": "companyId" },
+					{ "mDataProp": "departmentId" },
+					{ "mDataProp": "userName" },
+					{ "mDataProp": "pwd" },
+					{ "mDataProp": "telPhone" },
+					{ "mDataProp": "type" },
+					{ "mDataProp": "info" }
+				],
+				"aoColumnDefs": [
+				 {
+				 	"aTargets": [7],
+                    "mDataProp": "status",
+                    "fnRender": function (data, type, full) {
+                     	var status = type;
+	                	var statusCss = "label label-success";
 	                	if(status != '0') {
 	                		statusCss = "label";
 	                		status = "InActive"
 	                	} else {
 	                		status = "Active";
 	                	}
-	                    $("#userListTable tbody").append("<tr>"
-                            +"<td>"+ user['companyId'] +"</td>"
-                            +"<td>"+ user['departmentId'] +"</td>"
-                            +"<td>" + user['userName'] +"</td>"
-                            +"<td>" + user['pwd'] +"</td>"
-                            +"<td>" + user['telPhone'] +"</td>"
-                            +"<td class='center'>" + user['type'] + "</td>"
-                            +"<td class='center'>" + user['info'] + "</td>"
-                            +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
-                            +"editUser('" + user['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteUser.do?hid="+ user['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			}); */
+                        return "<td class='center'><span class='" + statusCss + "'>" + status +"</td>";
+                     }
+				 },
+                 {
+                     "aTargets": [8],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editUser('" + hid+"')>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteUser.do?hid="+ hid +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
 			
 			$.ajax({
 		        url:'/delivery/queryRoleList.do',

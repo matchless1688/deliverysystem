@@ -1,6 +1,8 @@
 package com.delivery.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +26,9 @@ public class SmsSendController {
 	@ResponseBody
 	public String querySmsSendList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<SmsSend> smsSendList = smsSendService.querySmsSendList();
-		return JsonUtils.toJson(smsSendList);
+		Map<String, List<SmsSend>> map = new HashMap<String, List<SmsSend>>();
+		map.put("aaData", smsSendList);
+		return JsonUtils.toJson(map);
 	}
 	
 	@RequestMapping(value = "addSmsSend.do")

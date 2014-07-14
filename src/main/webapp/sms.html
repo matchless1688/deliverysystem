@@ -337,32 +337,35 @@ body {
 		        }
 			});
 			
-			$.ajax({
-		        url:'/delivery/querySmsSendList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	sms = msg[i];
-	                    $("#smsSendTable tbody").append("<tr>"
-                            +"<td>"+ sms['sn'] +"</td>"
-                            +"<td>" + sms['type'] +"</td>"
-                            +"<td>" + sms['telPhone'] +"</td>"
-                            +"<td>" + sms['context'] +"</td>"
-                            +"<td>" + sms['status'] +"</td>"
-                            +"<td>" + sms['deliveryConfirmation'] +"</td>"
-                            +"<td class='center'><a class='btn btn-danger' href='deleteSmsSend.do?hid="+ sms['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			})
+			$('#smsSendTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/querySmsSendList.do",
+				"aoColumns": [
+					{ "mDataProp": "sn" },
+					{ "mDataProp": "type" },
+					{ "mDataProp": "telPhone" },
+					{ "mDataProp": "context" },
+					{ "mDataProp": "status" },
+					{ "mDataProp": "deliveryConfirmation" }
+				],
+				"aoColumnDefs": [
+                 {
+                     "aTargets": [6],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-danger' href='deleteSmsSend.do?hid="+ hid +"'> "
+                        +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
+			
 		  })
 	 	(jQuery);
 	</script>

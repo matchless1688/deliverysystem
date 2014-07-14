@@ -419,35 +419,38 @@ body {
 		        }
 			});
 			
-			$.ajax({
-		        url:'/delivery/queryStationList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	station = msg[i];
-	                    $("#stationListTable tbody").append("<tr>"
-                            +"<td>"+ station['stationId'] +"</td>"
-                            +"<td>"+ station['name'] +"</td>"
-                            +"<td>" + station['address'] +"</td>"
-                            +"<td>" + station['boxes'] +"</td>"
-                            +"<td>" + station['tdjh'] +"</td>"
-                            +"<td class='center'>" + station['tdd'] + "</td>"
-                            +"<td class='center'>" + station['buildDate'] +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
-                            +"editStation('" + station['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteStation.do?hid="+ station['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			})
+			$('#stationListTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryStationList.do",
+				"aoColumns": [
+					{ "mDataProp": "stationId" },
+					{ "mDataProp": "name" },
+					{ "mDataProp": "address" },
+					{ "mDataProp": "boxes" },
+					{ "mDataProp": "tdjh" },
+					{ "mDataProp": "tdd" },
+					{ "mDataProp": "buildDate" }
+				],
+				"aoColumnDefs": [
+                 {
+                     "aTargets": [7],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editStation('" + hid+"')>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteStation.do?hid="+ hid +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
+			
 		  })
 	 	(jQuery);
 

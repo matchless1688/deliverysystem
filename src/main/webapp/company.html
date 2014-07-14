@@ -479,44 +479,52 @@ body {
 		        }
 			});
 			
-			$.ajax({
-		        url:'/delivery/queryCompanyList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	company = msg[i];
-	                	status = company['status'];
-	                	statusCss = "label label-success";
+			$('#companyListTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryCompanyList.do",
+				"aoColumns": [
+					{ "mDataProp": "name" },
+					{ "mDataProp": "province" },
+					{ "mDataProp": "city" },
+					{ "mDataProp": "address" },
+					{ "mDataProp": "contact" },
+					{ "mDataProp": "telPhone" },
+					{ "mDataProp": "remark" }
+				],
+				"aoColumnDefs": [
+				 {
+				 	"aTargets": [7],
+                    "mDataProp": "status",
+                    "fnRender": function (data, type, full) {
+                     	var status = type;
+	                	var statusCss = "label label-success";
 	                	if(status != '0') {
 	                		statusCss = "label";
 	                		status = "InActive"
 	                	} else {
 	                		status = "Active";
 	                	}
-	                    $("#companyListTable tbody").append("<tr>"
-                            +"<td>"+ company['name'] +"</td>"
-                            +"<td>" + provinceArr[company['province']] +"</td>"
-                            +"<td>" + company['city'] +"</td>"
-                            +"<td class='center'>" + company['address'] + "</td>"
-                            +"<td class='center'>" + company['contact'] + "</td>"
-                            +"<td class='center'>" + company['telPhone'] + "</td>"
-                            +"<td class='center'>" + company['remark'] + "</td>"
-                            +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
-                            +"editCompany('" + company['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteCompany.do?hid="+ company['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			});
+                        return "<td class='center'><span class='" + statusCss + "'>" + status +"</td>";
+                     }
+				 },
+                 {
+                     "aTargets": [8],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editCompany('" + hid+"')>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteCompany.do?hid="+ hid +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
 
 			$("#province").chosen().change(function() {
 					var provinceSelect = $("#province").val();

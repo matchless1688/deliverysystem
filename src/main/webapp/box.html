@@ -434,21 +434,30 @@ body {
 		        }
 			});
 			
-			$.ajax({
-		        url:'/delivery/queryBoxList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	box = msg[i];
-	                	status = box['status'];
-	                	statusCss = "label label-success";
+			$('#boxListTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryBoxList.do",
+				"aoColumns": [
+					{ "mDataProp": "length" },
+					{ "mDataProp": "height" },
+					{ "mDataProp": "width" },
+					{ "mDataProp": "type" },
+					{ "mDataProp": "stationId" },
+					{ "mDataProp": "barCode" },
+					{ "mDataProp": "ownerPhone" }
+				],
+				"aoColumnDefs": [
+                 {
+ 				 	"aTargets": [7],
+                     "mDataProp": "status",
+                     "fnRender": function (data, type, full) {
+                      	var status = type;
+                      	statusCss = "label label-success";
 	                	if(status == '0') {
 	                		status = "空箱";
 	                	} else if(status == '1'){
@@ -458,24 +467,23 @@ body {
 	                		statusCss = "label label-important";
 	                		status = "错误";
 	                	}
-	                    $("#boxListTable tbody").append("<tr>"
-                            +"<td>"+ box['length'] +"</td>"
-                            +"<td>" + box['height'] +"</td>"
-                            +"<td>" + box['width'] +"</td>"
-                            +"<td>" + box['type'] +"</td>"
-                            +"<td class='center'>" + box['stationId'] + "</td>"
-                            +"<td class='center'>" + box['barCode'] + "</td>"
-                            +"<td class='center'>" + box['ownerPhone'] + "</td>"
-                            +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
-                            +"editBox('" + box['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteBox.do?hid="+ box['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			});
-
+                        return "<td class='center'><span class='" + statusCss + "'>" + status +"</td>";
+                      }
+ 				 },
+                 {
+                     "aTargets": [8],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editBox('" + hid+"')>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteBox.do?hid="+ hid +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
+			
 			$.ajax({
 		        url:'/delivery/queryStationList.do',
 		        type:'GET',

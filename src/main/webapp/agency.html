@@ -465,35 +465,37 @@ body {
 		        }
 			});
 			
-			$.ajax({
-		        url:'/delivery/queryAgencyList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	agency = msg[i];
-	                    $("#agencyListTable tbody").append("<tr>"
-                            +"<td>"+ agency['name'] +"</td>"
-                            +"<td>" + agency['parent'] +"</td>"
-                            +"<td>" + agency['region'] +"</td>"
-                            +"<td>" + agency['code'] +"</td>"
-                            +"<td class='center'>" + agency['address'] + "</td>"
-                            +"<td class='center'>" + agency['manager'] + "</td>"
-                            +"<td class='center'>" + agency['managerPhone'] + "</td>"
-                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
-                            +"editAgency('" + agency['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteAgency.do?hid="+ agency['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			});
+			$('#agencyListTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryAgencyList.do",
+				"aoColumns": [
+					{ "mDataProp": "name" },
+					{ "mDataProp": "parent" },
+					{ "mDataProp": "region" },
+					{ "mDataProp": "code" },
+					{ "mDataProp": "address" },
+					{ "mDataProp": "manager" },
+					{ "mDataProp": "managerPhone" }
+				],
+				"aoColumnDefs": [
+                 {
+                     "aTargets": [7],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editAgency('" + hid+"')>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteAgency.do?hid="+ hid +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
 
 			$.ajax({
 		        url:'/delivery/queryCompanyList.do',

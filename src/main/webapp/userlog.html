@@ -332,30 +332,33 @@ body {
 		        }
 			});
 			
-			$.ajax({
-		        url:'/delivery/queryTcpList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	tcp = msg[i];
-	                    $("#userLogTable tbody").append("<tr>"
-                            +"<td>"+ tcp['serialCode'] +"</td>"
-                            +"<td>" + tcp['tcpDirection'] +"</td>"
-                            +"<td>" + tcp['tcpReceive'] +"</td>"
-                            +"<td>" + tcp['tcpSend'] +"</td>"
-                            +"<td class='center'><a class='btn btn-danger' href='deleteTcp.do?hid="+ tcp['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			})
+			$('#userLogTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryTcpList.do",
+				"aoColumns": [
+					{ "mDataProp": "serialCode" },
+					{ "mDataProp": "tcpDirection" },
+					{ "mDataProp": "tcpReceive" },
+					{ "mDataProp": "tcpSend" }
+				],
+				"aoColumnDefs": [
+                 {
+                     "aTargets": [4],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-danger' href='deleteTcp.do?hid="+ hid +"'> "
+                        +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
+			
 		  })
 	 	(jQuery);
 	</script>

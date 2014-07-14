@@ -452,45 +452,53 @@ body {
 		        }
 			});
 			
-			$.ajax({
-		        url:'/delivery/queryExpressList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	express = msg[i];
-	                	status = express['status'];
-	                	statusCss = "label label-success";
+			$('#expressListTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryExpressList.do",
+				"aoColumns": [
+					{ "mDataProp": "barCode" },
+					{ "mDataProp": "tdjh" },
+					{ "mDataProp": "dateTime" },
+					{ "mDataProp": "deliTel" },
+					{ "mDataProp": "stationId" },
+					{ "mDataProp": "boxId" },
+					{ "mDataProp": "expressCompanyCode" },
+					{ "mDataProp": "ownerPhone" }
+				],
+				"aoColumnDefs": [
+                 {
+ 				 	"aTargets": [8],
+                     "mDataProp": "status",
+                     "fnRender": function (data, type, full) {
+                      	var status = type;
+                      	statusCss = "label label-success";
 	                	if(status != '0') {
 	                		statusCss = "label";
 	                		status = "InActive"
 	                	} else {
 	                		status = "Active";
 	                	}
-	                    $("#expressListTable tbody").append("<tr>"
-                            +"<td>"+ express['barCode'] +"</td>"
-                            +"<td>" + express['tdjh'] +"</td>"
-                            +"<td>" + express['dateTime'] +"</td>"
-                            +"<td>" + express['deliTel'] +"</td>"
-                            +"<td class='center'>" + express['stationId'] + "</td>"
-                            +"<td class='center'>" + express['boxId'] + "</td>"
-                            +"<td class='center'>" + express['expressCompanyCode'] + "</td>"
-                            +"<td class='center'>" + express['ownerPhone'] + "</td>"
-                            +"<td class='center'><span class='" + statusCss + "'>" + status +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='#' onclick="
-                            +"editExpress('" + express['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteExpress.do?hid="+ express['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			});
+                        return "<td class='center'><span class='" + statusCss + "'>" + status +"</td>";
+                      }
+ 				 },
+                 {
+                     "aTargets": [9],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editExpress('" + hid+"')>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteExpress.do?hid="+ hid +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
 
 			$.ajax({
 		        url:'/delivery/queryStationList.do',

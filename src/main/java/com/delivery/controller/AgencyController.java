@@ -1,7 +1,9 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +43,9 @@ public class AgencyController {
 			}
 			returnList.add(agency);
 		}
-		return JsonUtils.toJson(returnList);
+		Map<String, List<Agency>> map = new HashMap<String, List<Agency>>();
+		map.put("aaData", returnList);
+		return JsonUtils.toJson(map);
 	}
 	
 	@RequestMapping(value = "addAgency.do")

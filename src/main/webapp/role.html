@@ -392,31 +392,33 @@ body {
 		        }
 			});
 			
-			$.ajax({
-		        url:'/delivery/queryRoleList.do',
-		        type:'GET',
-		        cache:false,
-		        datatype:'json',
-		        success: function (msg)
-		        {
-		        	msg = JSON.parse(msg);
-	        		$("tbody tr").remove();
-	                
-	                for(i=0;i<msg.length;i++)
-	                {
-	                	role = msg[i];
-	                    $("#roleListTable tbody").append("<tr>"
-                            +"<td>"+ role['roleName'] +"</td>"
-                            +"<td>" + role['organization'] +"</td>"
-                            +"<td>" + role['authority'] +"</td>"
-                            +"<td class='center'><a class='btn btn-info' href='#'onclick="
-                            +"editRole('" + role['id']+"')>"
-                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteRole.do?hid="+ role['id'] +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>"
-                            +"</tr>");
-	                }
-		        }
-			});
+			$('#roleListTable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryRoleList.do",
+				"aoColumns": [
+					{ "mDataProp": "roleName" },
+					{ "mDataProp": "organization" },
+					{ "mDataProp": "authority" }
+				],
+				"aoColumnDefs": [
+                 {
+                     "aTargets": [3],
+                     "mDataProp": "id",
+                     "fnRender": function (data, type, full) {
+                     	var hid = type;
+                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+                            +"editRole('" + hid+"')>"
+                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteRole.do?hid="+ hid +"'> "
+                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+                     }
+                 }
+                ],
+			} );
 			
 			$.ajax({
 		        url:'/delivery/queryCompanyList.do',
