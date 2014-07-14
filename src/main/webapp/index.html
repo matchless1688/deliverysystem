@@ -416,6 +416,26 @@ body {
 
 	<script type="text/javascript"> 
 		(function ($) {
+			$('.datatable').dataTable({
+				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+				"sLengthMenu": "_MENU_ records per page"
+				},
+				'bLengthChange': true,
+				"sAjaxSource": "/delivery/queryUserList.do",
+				"aoColumns": [
+					{ "mDataProp": "companyId" },
+					{ "mDataProp": "departmentId" },
+					{ "mDataProp": "userName" },
+					{ "mDataProp": "pwd" },
+					{ "mDataProp": "telPhone" },
+					{ "mDataProp": "type" },
+					{ "mDataProp": "info" },
+					{ "mDataProp": "status" }
+				]
+			} );
+			
 			$.ajax({
 				url:'/delivery/querySession.do',
 		        type:'GET',
@@ -432,7 +452,7 @@ body {
 		        }
 			});
 
-			$.ajax({
+			/* $.ajax({
 		        url:'/delivery/queryUserList.do',
 		        type:'GET',
 		        cache:false,
@@ -469,7 +489,7 @@ body {
                             +"</tr>");
 	                }
 		        }
-			});
+			}); */
 			
 			$.ajax({
 		        url:'/delivery/queryRoleList.do',
