@@ -280,7 +280,7 @@ body {
 														<div class="control-group">
 															<label class="control-label" for="status">状态</label>
 															<div class="controls">
-																<select id="type" name="status">
+																<select id="status" name="status">
 																	<option value='0'>可用</option>
 																	<option value='1'>不可用</option>
 																	<option value='2'>未知</option>
@@ -508,6 +508,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
+		        	msg = msg['aaData'];
 		        	$("#station").html("");
 	                $("#station").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)
@@ -564,6 +565,15 @@ body {
 		        	$('#deliTel').val(msg['deliTel']);
 		        	$('#expressCompanyCode').val(msg['expressCompanyCode']);
 		        	$('#ownerPhone').val(msg['ownerPhone']);
+		        	$('#station').children("[value='"+ msg['stationId'] +"']").attr("selected", true);
+		        	$('#station').change();
+		        	$('#station').trigger("liszt:updated"); 
+		        	$('#box').children("[value='"+ msg['boxId'] +"']").attr("selected", true);
+		        	$('#box').change();
+		        	$('#box').trigger("liszt:updated"); 
+		        	$('#status').children("[value='"+ msg['status'] +"']").attr("selected", true);
+		        	$('#status').change();
+		        	$('#status').trigger("liszt:updated");
 		        	$('.nav-tabs a:last').tab('show');
 		        }
 			});

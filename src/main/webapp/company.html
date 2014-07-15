@@ -497,6 +497,13 @@ body {
 					{ "mDataProp": "remark" }
 				],
 				"aoColumnDefs": [
+				{
+				 	"aTargets": [1],
+                    "mDataProp": "province",
+                    "fnRender": function (data, type, full) {
+                        return "<td class='center'>" + provinceArr[type] +"</td>";
+                     }
+				 },
 				 {
 				 	"aTargets": [7],
                     "mDataProp": "status",
@@ -563,6 +570,12 @@ body {
 		        	$('#contact').val(msg['contact']);
 		        	$('#telPhone').val(msg['telPhone']);
 		        	$('#remark').val(msg['remark']);
+		        	$('#province').children("[value='"+ msg['province'] +"']").attr("selected", true);
+		        	$('#province').change();
+		        	$('#province').trigger("liszt:updated"); 
+		        	$('#city').children("[value='"+ msg['city'] +"']").attr("selected", true);
+		        	$('#city').change();
+		        	$('#city').trigger("liszt:updated"); 
 		        	$('.nav-tabs a:last').tab('show');
 		        }
 			});

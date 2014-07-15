@@ -428,6 +428,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
+		        	msg = msg['aaData'];
 		        	$("#organization").html("");
 	                $("#organization").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)
@@ -456,6 +457,9 @@ body {
 		        	$('#name').val(msg['roleName']);
 		        	$('#organization').val(msg['organization']);
 		        	$('#authority').val(msg['authority']);
+		        	$('#organization').children("[value='"+ msg['organization'] +"']").attr("selected", true);
+		        	$('#organization').change();
+		        	$('#organization').trigger("liszt:updated"); 
 		        	$('.nav-tabs a:last').tab('show');
 		        }
 			});

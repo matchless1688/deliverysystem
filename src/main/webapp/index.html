@@ -488,6 +488,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
+		        	msg = msg['aaData'];
 		        	$("#role").html("");
 	                $("#role").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)
@@ -509,6 +510,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
+		        	msg = msg['aaData'];
 		        	$("#company").html("");
 	                $("#company").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)
@@ -581,6 +583,15 @@ body {
 		        	$('#userId').val(msg['id']);
 		        	$('#userName').val(msg['userName']);
 		        	$('#phone').val(msg['telPhone']);
+		        	$('#company').children("[value='"+ msg['companyId'] +"']").attr("selected", true);
+		        	$('#company').change();
+		        	$('#company').trigger("liszt:updated"); 
+		        	$('#department').children("[value='"+ msg['departmentId'] +"']").attr("selected", true);
+		        	$('#department').change();
+		        	$('#department').trigger("liszt:updated"); 
+		        	$('#role').children("[value='"+ msg['type'] +"']").attr("selected", true);
+		        	$('#role').change();
+		        	$('#role').trigger("liszt:updated"); 
 		        	$('.nav-tabs a:last').tab('show');
 		        }
 			});
