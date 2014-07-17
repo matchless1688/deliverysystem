@@ -564,12 +564,12 @@ body {
 		        	msg = JSON.parse(msg);
 		        	$('#companyId').val(msg['id']);
 		        	$('#name').val(msg['name']);
-		        	$('#province').val(msg['province']);
-		        	$('#city').val(msg['city']);
 		        	$('#address').val(msg['address']);
 		        	$('#contact').val(msg['contact']);
 		        	$('#telPhone').val(msg['telPhone']);
-		        	$('#remark').val(msg['remark']);
+		        	var remarkArea = $('#remark').cleditor()[0];
+		        	$('#remark').html(msg['remark']);
+		        	remarkArea.updateFrame();
 		        	$('#province').children("[value='"+ msg['province'] +"']").attr("selected", true);
 		        	$('#province').change();
 		        	$('#province').trigger("liszt:updated"); 

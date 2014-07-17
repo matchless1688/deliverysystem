@@ -503,7 +503,7 @@ body {
 			});
 			
 			$.ajax({
-		        url:'/delivery/queryCompanyList.do?type=1',
+		        url:'/delivery/queryCompanyList.do',
 		        type:'GET',
 		        cache:false,
 		        datatype:'json',
@@ -592,6 +592,9 @@ body {
 		        	$('#role').children("[value='"+ msg['type'] +"']").attr("selected", true);
 		        	$('#role').change();
 		        	$('#role').trigger("liszt:updated"); 
+		        	var infoArea = $('#info').cleditor()[0];
+		        	$('#info').html(msg['info']);
+		        	infoArea.updateFrame();
 		        	$('.nav-tabs a:last').tab('show');
 		        }
 			});
