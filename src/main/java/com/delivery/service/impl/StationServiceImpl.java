@@ -3,6 +3,8 @@ package com.delivery.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.delivery.bo.Station;
@@ -33,5 +35,15 @@ public class StationServiceImpl implements StationService {
 	@Override
 	public Station queryStation(int id) {
 		return stationDaoInf.findOne(id);
+	}
+
+	@Override
+	public Page<Station> queryStationListByPage(Pageable page) {
+		return stationDaoInf.findAll(page);
+	}
+
+	@Override
+	public long count() {
+		return stationDaoInf.count();
 	}
 }

@@ -3,6 +3,8 @@ package com.delivery.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.delivery.bo.Role;
@@ -33,6 +35,16 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public Role queryRole(String id) {
 		return roleDaoInf.findOne(id);
+	}
+
+	@Override
+	public Page<Role> queryRoleListByPage(Pageable page) {
+		return roleDaoInf.findAll(page);
+	}
+
+	@Override
+	public long count() {
+		return roleDaoInf.count();
 	}
 
 }

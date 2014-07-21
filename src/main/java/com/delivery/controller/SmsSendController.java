@@ -1,11 +1,16 @@
 package com.delivery.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +30,28 @@ public class SmsSendController {
 	public String querySmsSendList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<SmsSend> smsSendList = smsSendService.querySmsSendList();
 		return JsonUtils.toJson(smsSendList);
+	}
+	
+	@RequestMapping(value = "querySmsSendListByPage.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String querySmsSendListByPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String sEcho = request.getParameter("sEcho");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		
+		PageRequest page = new PageRequest(Integer.valueOf(iDisplayStart) / Integer.valueOf(iDisplayLength), Integer.valueOf(iDisplayLength));
+		Page<SmsSend> smsSendPage = smsSendService.querySmsSendListByPage(page);
+		List<SmsSend> returnList = new ArrayList<SmsSend>();
+		for(SmsSend sms : smsSendPage) {
+			returnList.add(sms);
+		}
+		long count = smsSendService.count();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("aaData", returnList);
+		map.put("iTotalRecords", count);
+		map.put("iTotalDisplayRecords", count);
+		map.put("sEcho", sEcho);
+		return JsonUtils.toJson(map);
 	}
 	
 	@RequestMapping(value = "addSmsSend.do")

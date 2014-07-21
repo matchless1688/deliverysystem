@@ -3,6 +3,8 @@ package com.delivery.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.delivery.bo.Box;
@@ -38,6 +40,16 @@ public class BoxServiceImpl implements BoxService{
 	@Override
 	public List<Box> queryBoxByStationId(String stationId) {
 		return boxDaoInf.findByStationId(stationId);
+	}
+
+	@Override
+	public Page<Box> queryBoxListByPage(Pageable page) {
+		return boxDaoInf.findAll(page);
+	}
+
+	@Override
+	public long count() {
+		return boxDaoInf.count();
 	}
 
 }

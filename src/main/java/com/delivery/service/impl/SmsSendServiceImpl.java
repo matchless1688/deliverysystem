@@ -3,6 +3,8 @@ package com.delivery.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.delivery.bo.SmsSend;
@@ -33,6 +35,16 @@ public class SmsSendServiceImpl implements SmsSendService{
 	@Override
 	public SmsSend querySmsSend(int id) {
 		return smsSendDaoInf.findOne(id);
+	}
+
+	@Override
+	public Page<SmsSend> querySmsSendListByPage(Pageable page) {
+		return smsSendDaoInf.findAll(page);
+	}
+
+	@Override
+	public long count() {
+		return smsSendDaoInf.count();
 	}
 
 }

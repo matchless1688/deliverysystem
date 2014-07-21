@@ -2,6 +2,9 @@ package com.delivery.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.delivery.bo.SmsSend;
 
 public interface SmsSendService {
@@ -14,4 +17,7 @@ public interface SmsSendService {
 	
 	public SmsSend querySmsSend(int id);
 	
+	public Page<SmsSend> querySmsSendListByPage(Pageable page);
+	
+	public long count();
 }

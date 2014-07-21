@@ -1,9 +1,9 @@
 package com.delivery.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.delivery.bo.SmsSend;
 
-public interface SmsSendDaoInf extends CrudRepository<SmsSend, Integer>{
+public interface SmsSendDaoInf extends PagingAndSortingRepository<SmsSend, Integer>{
 
 }

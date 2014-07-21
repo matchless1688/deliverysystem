@@ -1,13 +1,17 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -79,6 +83,48 @@ public class UserController {
 			returnList.add(user);
 		}
 		return JsonUtils.toJson(returnList);
+	}
+	
+	@RequestMapping(value = "queryUserListByPage.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String queryUserListByPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String sEcho = request.getParameter("sEcho");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		
+		PageRequest page = new PageRequest(Integer.valueOf(iDisplayStart) / Integer.valueOf(iDisplayLength), Integer.valueOf(iDisplayLength));
+		Page<User> userList = userService.queryUserListByPage(page);
+		List<User> returnList = new ArrayList<User>();
+		for(User user : userList) {
+			if(StringUtils.isNotEmpty(user.getType())) {
+				Role role = roleService.queryRole(user.getType());
+				if(role != null) {
+					user.setType(role.getRoleName());
+				}
+			}
+			
+			if(StringUtils.isNotEmpty(user.getCompanyId())) {
+				Company company = companyService.queryCompany(Integer.valueOf(user.getCompanyId()));
+				if(company != null) {
+					user.setCompanyId(company.getName());
+				}
+			}
+			
+			if(StringUtils.isNotEmpty(user.getDepartmentId())) {
+				Agency department = agencyService.queryAgency(user.getDepartmentId());
+				if(department != null) {
+					user.setDepartmentId(department.getName());
+				}
+			}
+			returnList.add(user);
+		}
+		long count = userService.count();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("aaData", returnList);
+		map.put("iTotalRecords", count);
+		map.put("iTotalDisplayRecords", count);
+		map.put("sEcho", sEcho);
+		return JsonUtils.toJson(map);
 	}
 	
 	@RequestMapping(value = "addUser.do")

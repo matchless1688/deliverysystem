@@ -1,10 +1,10 @@
 package com.delivery.dao;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.delivery.bo.User;
 
-public interface UserDaoInf extends CrudRepository<User, String>{
+public interface UserDaoInf extends PagingAndSortingRepository<User, String>{
 
 	public User findByUserName(String userName);
 	

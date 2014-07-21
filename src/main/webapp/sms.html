@@ -343,9 +343,11 @@ body {
 				"oLanguage": {
 				"sLengthMenu": "_MENU_ records per page"
 				},
+				"bFilter": false,
 				'bLengthChange': true,
-				"sAjaxSource": "/delivery/querySmsSendList.do",
-				"sAjaxDataProp": "",
+				"bServerSide" : true,
+				"sAjaxSource": "/delivery/querySmsSendListByPage.do",
+				"sAjaxDataProp": "aaData",
 				"aoColumns": [
 					{ "mDataProp": "sn" },
 					{ "mDataProp": "type" },

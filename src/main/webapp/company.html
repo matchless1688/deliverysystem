@@ -485,9 +485,11 @@ body {
 				"oLanguage": {
 				"sLengthMenu": "_MENU_ records per page"
 				},
+				"bFilter": false,
 				'bLengthChange': true,
-				"sAjaxSource": "/delivery/queryCompanyList.do",
-				"sAjaxDataProp": "",
+				"bServerSide" : true,
+				"sAjaxSource": "/delivery/queryCompanyListByPage.do",
+				"sAjaxDataProp": "aaData",
 				"aoColumns": [
 					{ "mDataProp": "name" },
 					{ "mDataProp": "province" },

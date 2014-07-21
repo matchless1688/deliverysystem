@@ -3,6 +3,8 @@ package com.delivery.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.delivery.bo.User;
@@ -43,6 +45,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User queryUserByTelPhone(String phone) {
 		return userDaoInf.findByTelPhone(phone);
+	}
+
+	@Override
+	public Page<User> queryUserListByPage(Pageable page) {
+		return userDaoInf.findAll(page);
+	}
+
+	@Override
+	public long count() {
+		return userDaoInf.count();
 	}
 
 }

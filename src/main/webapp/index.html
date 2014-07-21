@@ -439,9 +439,11 @@ body {
 				"oLanguage": {
 				"sLengthMenu": "_MENU_ records per page"
 				},
+				"bFilter": false,
 				'bLengthChange': true,
-				"sAjaxSource": "/delivery/queryUserList.do",
-				"sAjaxDataProp": "",
+				"bServerSide" : true,
+				"sAjaxSource": "/delivery/queryUserListByPage.do",
+				"sAjaxDataProp": "aaData",
 				"aoColumns": [
 					{ "mDataProp": "companyId" },
 					{ "mDataProp": "departmentId" },

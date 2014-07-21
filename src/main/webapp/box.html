@@ -440,9 +440,11 @@ body {
 				"oLanguage": {
 				"sLengthMenu": "_MENU_ records per page"
 				},
+				"bFilter": false,
 				'bLengthChange': true,
-				"sAjaxSource": "/delivery/queryBoxList.do",
-				"sAjaxDataProp": "",
+				"bServerSide" : true,
+				"sAjaxSource": "/delivery/queryBoxListByPage.do",
+				"sAjaxDataProp": "aaData",
 				"aoColumns": [
 					{ "mDataProp": "length" },
 					{ "mDataProp": "height" },

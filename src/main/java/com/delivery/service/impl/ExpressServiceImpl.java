@@ -3,6 +3,8 @@ package com.delivery.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.delivery.bo.Express;
@@ -33,6 +35,16 @@ public class ExpressServiceImpl implements ExpressService {
 	@Override
 	public Express queryExpress(int id) {
 		return expressDaoInf.findOne(id);
+	}
+
+	@Override
+	public Page<Express> queryExpressListByPage(Pageable page) {
+		return expressDaoInf.findAll(page);
+	}
+
+	@Override
+	public long count() {
+		return expressDaoInf.count();
 	}
 
 }

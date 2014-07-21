@@ -3,6 +3,8 @@ package com.delivery.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.delivery.bo.Tcp;
@@ -33,6 +35,16 @@ public class TcpServiceImpl implements TcpService{
 	@Override
 	public Tcp queryTcp(int id) {
 		return tcpDaoInf.findOne(id);
+	}
+
+	@Override
+	public Page<Tcp> queryTcpListByPage(Pageable page) {
+		return tcpDaoInf.findAll(page);
+	}
+
+	@Override
+	public long count() {
+		return tcpDaoInf.count();
 	}
 
 }

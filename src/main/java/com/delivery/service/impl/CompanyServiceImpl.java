@@ -3,6 +3,8 @@ package com.delivery.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.delivery.bo.Company;
@@ -33,6 +35,16 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public Company queryCompany(int id) {
 		return companyDaoInf.findOne(id);
+	}
+
+	@Override
+	public Page<Company> queryCompanyListByPage(Pageable page) {
+		return companyDaoInf.findAll(page);
+	}
+
+	@Override
+	public long count() {
+		return companyDaoInf.count();
 	}
 
 }
