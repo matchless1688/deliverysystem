@@ -1,13 +1,17 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,6 +46,35 @@ public class AgencyController {
 			returnList.add(agency);
 		}
 		return JsonUtils.toJson(returnList);
+	}
+	
+	@RequestMapping(value = "queryAgencyListByPage.do", produces= {"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String queryAgencyListByPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String sEcho = request.getParameter("sEcho");
+		String iDisplayStart = request.getParameter("iDisplayStart");
+		String iDisplayLength = request.getParameter("iDisplayLength");
+		
+		PageRequest page = new PageRequest(Integer.valueOf(iDisplayStart) / Integer.valueOf(iDisplayLength), Integer.valueOf(iDisplayLength));
+		Page<Agency> agencyPage = agencyService.queryAgencyListByPage(page);
+		List<Agency> returnList = new ArrayList<Agency>();
+		for(Agency agency : agencyPage) {
+			if(StringUtils.isNotEmpty(agency.getParent())) {
+				Company company = companyService.queryCompany(Integer.valueOf(agency.getParent()));
+				if(company != null) {
+					agency.setParent(company.getName());
+				}
+			}
+			returnList.add(agency);
+		}
+		
+		long count = agencyService.count();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("aaData", returnList);
+		map.put("iTotalRecords", count);
+		map.put("iTotalDisplayRecords", count);
+		map.put("sEcho", sEcho);
+		return JsonUtils.toJson(map);
 	}
 	
 	@RequestMapping(value = "addAgency.do")

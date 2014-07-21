@@ -460,9 +460,11 @@ body {
 				"oLanguage": {
 				"sLengthMenu": "_MENU_ records per page"
 				},
+				"bFilter": false,
 				'bLengthChange': true,
-				"sAjaxSource": "/delivery/queryAgencyList.do",
-				"sAjaxDataProp": "",
+				"bServerSide" : true,
+				"sAjaxSource": "/delivery/queryAgencyListByPage.do",
+				"sAjaxDataProp": "aaData",
 				"aoColumns": [
 					{ "mDataProp": "name" },
 					{ "mDataProp": "parent" },
