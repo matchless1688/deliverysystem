@@ -460,6 +460,7 @@ body {
 				},
 				'bLengthChange': true,
 				"sAjaxSource": "/delivery/queryExpressList.do",
+				"sAjaxDataProp": "",
 				"aoColumns": [
 					{ "mDataProp": "barCode" },
 					{ "mDataProp": "tdjh" },
@@ -508,7 +509,6 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	msg = msg['aaData'];
 		        	$("#station").html("");
 	                $("#station").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)

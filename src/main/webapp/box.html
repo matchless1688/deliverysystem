@@ -442,6 +442,7 @@ body {
 				},
 				'bLengthChange': true,
 				"sAjaxSource": "/delivery/queryBoxList.do",
+				"sAjaxDataProp": "",
 				"aoColumns": [
 					{ "mDataProp": "length" },
 					{ "mDataProp": "height" },
@@ -492,7 +493,6 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	msg = msg['aaData'];
 		        	$("#station").html("");
 	                $("#station").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)

@@ -1,9 +1,7 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,9 +78,7 @@ public class UserController {
 			}
 			returnList.add(user);
 		}
-		Map<String, List<User>> map = new HashMap<String, List<User>>();
-		map.put("aaData", returnList);
-		return JsonUtils.toJson(map);
+		return JsonUtils.toJson(returnList);
 	}
 	
 	@RequestMapping(value = "addUser.do")

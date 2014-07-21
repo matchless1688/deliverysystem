@@ -462,6 +462,7 @@ body {
 				},
 				'bLengthChange': true,
 				"sAjaxSource": "/delivery/queryAgencyList.do",
+				"sAjaxDataProp": "",
 				"aoColumns": [
 					{ "mDataProp": "name" },
 					{ "mDataProp": "parent" },
@@ -494,7 +495,6 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	msg = msg['aaData'];
 		        	$("#company").html("");
 	                $("#company").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)

@@ -1,8 +1,6 @@
 package com.delivery.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +24,7 @@ public class TcpController {
 	@ResponseBody
 	public String queryTcpList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Tcp> tcpList = tcpService.queryTcpList();
-		Map<String, List<Tcp>> map = new HashMap<String, List<Tcp>>();
-		map.put("aaData", tcpList);
-		return JsonUtils.toJson(map);
+		return JsonUtils.toJson(tcpList);
 	}
 	
 	@RequestMapping(value = "addTcp.do")

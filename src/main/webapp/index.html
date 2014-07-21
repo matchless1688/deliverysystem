@@ -441,6 +441,7 @@ body {
 				},
 				'bLengthChange': true,
 				"sAjaxSource": "/delivery/queryUserList.do",
+				"sAjaxDataProp": "",
 				"aoColumns": [
 					{ "mDataProp": "companyId" },
 					{ "mDataProp": "departmentId" },
@@ -488,7 +489,6 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	msg = msg['aaData'];
 		        	$("#role").html("");
 	                $("#role").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)
@@ -510,7 +510,6 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	msg = msg['aaData'];
 		        	$("#company").html("");
 	                $("#company").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)

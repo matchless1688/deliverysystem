@@ -1,8 +1,6 @@
 package com.delivery.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,9 +26,7 @@ public class CompanyController {
 	@ResponseBody
 	public String queryCompanyList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Company> companyList = companyService.queryCompanyList();
-		Map<String, List<Company>> map = new HashMap<String, List<Company>>();
-		map.put("aaData", companyList);
-		return JsonUtils.toJson(map);
+		return JsonUtils.toJson(companyList);
 	}
 	
 	@RequestMapping(value = "addCompany.do")

@@ -400,6 +400,7 @@ body {
 				},
 				'bLengthChange': true,
 				"sAjaxSource": "/delivery/queryRoleList.do",
+				"sAjaxDataProp": "",
 				"aoColumns": [
 					{ "mDataProp": "roleName" },
 					{ "mDataProp": "organization" },
@@ -428,7 +429,6 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	msg = msg['aaData'];
 		        	$("#organization").html("");
 	                $("#organization").chosen("destroy");
 		        	for(i=0;i<msg.length;i++)

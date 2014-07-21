@@ -1,8 +1,6 @@
 package com.delivery.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,9 +26,7 @@ public class StationController {
 	@ResponseBody
 	public String queryStationList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Station> stationList = stationService.queryStationList();
-		Map<String, List<Station>> map = new HashMap<String, List<Station>>();
-		map.put("aaData", stationList);
-		return JsonUtils.toJson(map);
+		return JsonUtils.toJson(stationList);
 	}
 	
 	@RequestMapping(value = "addStation.do")

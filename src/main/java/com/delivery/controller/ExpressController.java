@@ -1,8 +1,6 @@
 package com.delivery.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +25,7 @@ public class ExpressController {
 	@ResponseBody
 	public String queryExpressList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<Express> expressList = expressService.queryExpressList();
-		Map<String, List<Express>> map = new HashMap<String, List<Express>>();
-		map.put("aaData", expressList);
-		return JsonUtils.toJson(map);
+		return JsonUtils.toJson(expressList);
 	}
 	
 	@RequestMapping(value = "addExpress.do")
