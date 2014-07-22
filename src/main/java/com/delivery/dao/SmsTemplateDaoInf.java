@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.delivery.bo.SmsTemplate;
 
-public interface SmsTemplateDaoInf extends CrudRepository<SmsTemplate, Integer>{
+public interface SmsTemplateDaoInf extends CrudRepository<SmsTemplate, String>{
 
 }

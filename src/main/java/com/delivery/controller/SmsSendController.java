@@ -61,7 +61,7 @@ public class SmsSendController {
 		SmsSend s = smsSendService.saveSmsSend(smsSend);
 		
 		response.sendRedirect("sms.html");
-		return String.valueOf(s.getId());
+		return s.getHid();
 	}
 	
 	@RequestMapping(value = "deleteSmsSend.do")
@@ -69,7 +69,7 @@ public class SmsSendController {
 	public String deleteSmsSend(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		SmsSend smsSend = new SmsSend();
-		smsSend.setId(Integer.valueOf(hid));
+		smsSend.setHid(hid);
 		smsSendService.deleteSmsSend(smsSend);
 		
 		response.sendRedirect("sms.html");
@@ -80,7 +80,7 @@ public class SmsSendController {
 	@ResponseBody
 	public String querySmsSend(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
-		SmsSend smsSend = smsSendService.querySmsSend(Integer.valueOf(hid));
+		SmsSend smsSend = smsSendService.querySmsSend(hid);
 		return JsonUtils.toJson(smsSend);
 	}
 }

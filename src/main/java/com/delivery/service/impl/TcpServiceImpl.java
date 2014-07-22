@@ -33,8 +33,8 @@ public class TcpServiceImpl implements TcpService{
 	}
 
 	@Override
-	public Tcp queryTcp(int id) {
-		return tcpDaoInf.findOne(id);
+	public Tcp queryTcp(String hid) {
+		return tcpDaoInf.findOne(hid);
 	}
 
 	@Override

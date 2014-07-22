@@ -61,7 +61,7 @@ public class TcpController {
 		Tcp t = tcpService.saveTcp(tcp);
 		
 		response.sendRedirect("userlog.html");
-		return String.valueOf(t.getId());
+		return t.getHid();
 	}
 	
 	@RequestMapping(value = "deleteTcp.do")
@@ -69,7 +69,7 @@ public class TcpController {
 	public String deleteTcp(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		Tcp tcp = new Tcp();
-		tcp.setId(Integer.valueOf(hid));
+		tcp.setHid(hid);
 		tcpService.deleteTcp(tcp);
 		
 		response.sendRedirect("userlog.html");
@@ -80,7 +80,7 @@ public class TcpController {
 	@ResponseBody
 	public String queryTcp(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
-		Tcp tcp = tcpService.queryTcp(Integer.valueOf(hid));
+		Tcp tcp = tcpService.queryTcp(hid);
 		return JsonUtils.toJson(tcp);
 	}
 }

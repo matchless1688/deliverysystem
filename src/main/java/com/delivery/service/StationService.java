@@ -15,7 +15,7 @@ public interface StationService {
 
 	public void deleteStation(Station station);
 	
-	public Station queryStation(int id);
+	public Station queryStation(String hid);
 	
 	public Page<Station> queryStationListByPage(Pageable page);
 	

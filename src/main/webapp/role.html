@@ -411,7 +411,7 @@ body {
 				"aoColumnDefs": [
                  {
                      "aTargets": [3],
-                     "mDataProp": "id",
+                     "mDataProp": "hid",
                      "fnRender": function (data, type, full) {
                      	var hid = type;
                         return "<td class='center'><a class='btn btn-info' href='#' onclick="
@@ -436,7 +436,7 @@ body {
 		        	for(i=0;i<msg.length;i++)
 	                {
 	                	company = msg[i];
-		        		$("#organization").append("<option value='"+company['id']+"'>"+company['name']+"</option>");
+		        		$("#organization").append("<option value='"+company['hid']+"'>"+company['name']+"</option>");
 		        	}
 	        		$("#organization").attr("multiple",false); 
 	        		$("#organization").trigger("liszt:updated");  
@@ -455,7 +455,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	$('#roleId').val(msg['id']);
+		        	$('#roleId').val(msg['hid']);
 		        	$('#name').val(msg['roleName']);
 		        	$('#organization').val(msg['organization']);
 		        	$('#authority').val(msg['authority']);

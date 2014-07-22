@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.delivery.bo.Station;
 import com.delivery.service.StationService;
 import com.delivery.utils.DateUtils;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.LastOprUtils;
 
 @Controller
 public class StationController {
@@ -77,8 +79,9 @@ public class StationController {
 			station.setTdjh(tdjh);
 			station.setStationId(stationKeyId);
 			station.setBuildDate(DateUtils.buildDateStr());
+			station.setLastUpdateOpr(LastOprUtils.getLastOpr());
 		} else {
-			station = stationService.queryStation(Integer.valueOf(stationId));
+			station = stationService.queryStation(stationId);
 			station.setAddress(address);
 			station.setName(name);
 			station.setBoxes(boxes);
@@ -86,12 +89,14 @@ public class StationController {
 			station.setTdjh(tdjh);
 			station.setStationId(stationKeyId);
 			station.setBuildDate(DateUtils.buildDateStr());
+			station.setLastUpdateOpr(LastOprUtils.getLastOpr());
+			station.setLastUpdateDt(new Date());
 		}
 		
 		Station s = stationService.saveStation(station);
 		
 		response.sendRedirect("station.html");
-		return String.valueOf(s.getId());
+		return s.getHid();
 	}
 	
 	@RequestMapping(value = "deleteStation.do")
@@ -99,7 +104,7 @@ public class StationController {
 	public String deleteStation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		Station station = new Station();
-		station.setId(Integer.valueOf(hid));
+		station.setHid(hid);
 		stationService.deleteStation(station);
 		
 		response.sendRedirect("station.html");
@@ -110,7 +115,7 @@ public class StationController {
 	@ResponseBody
 	public String queryStation(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
-		Station station = stationService.queryStation(Integer.valueOf(hid));
+		Station station = stationService.queryStation(hid);
 		return JsonUtils.toJson(station);
 	}
 }

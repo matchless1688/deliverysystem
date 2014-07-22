@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import com.delivery.bo.Company;
 import com.delivery.constants.Constants;
 import com.delivery.service.CompanyService;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.LastOprUtils;
 
 @Controller
 public class CompanyController {
@@ -79,8 +81,9 @@ public class CompanyController {
 			company.setTelPhone(telPhone);
 			company.setRemark(remark);
 			company.setStatus(Constants.STATUS_AVAILABLE);
+			company.setLastUpdateOpr(LastOprUtils.getLastOpr());
 		} else {
-			company = companyService.queryCompany(Integer.valueOf(companyId));
+			company = companyService.queryCompany(companyId);
 			company.setName(name);
 			company.setProvince(province);
 			company.setCity(city);
@@ -89,11 +92,13 @@ public class CompanyController {
 			company.setTelPhone(telPhone);
 			company.setRemark(remark);
 			company.setStatus(Constants.STATUS_AVAILABLE);
+			company.setLastUpdateOpr(LastOprUtils.getLastOpr());
+			company.setLastUpdateDt(new Date());
 		}
 		Company c = companyService.saveCompany(company);
 		
 		response.sendRedirect("company.html");
-		return String.valueOf(c.getId());
+		return c.getHid();
 	}
 	
 	@RequestMapping(value = "deleteCompany.do")
@@ -101,7 +106,7 @@ public class CompanyController {
 	public String deleteCompany(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		Company company = new Company();
-		company.setId(Integer.valueOf(hid));
+		company.setHid(hid);
 		companyService.deleteCompany(company);
 		
 		response.sendRedirect("company.html");
@@ -112,7 +117,7 @@ public class CompanyController {
 	@ResponseBody
 	public String queryCompany(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
-		Company company = companyService.queryCompany(Integer.valueOf(hid));
+		Company company = companyService.queryCompany(hid);
 		return JsonUtils.toJson(company);
 	}
 }

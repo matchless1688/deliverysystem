@@ -524,7 +524,7 @@ body {
 				 },
                  {
                      "aTargets": [8],
-                     "mDataProp": "id",
+                     "mDataProp": "hid",
                      "fnRender": function (data, type, full) {
                      	var hid = type;
                         return "<td class='center'><a class='btn btn-info' href='#' onclick="
@@ -565,7 +565,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	$('#companyId').val(msg['id']);
+		        	$('#companyId').val(msg['hid']);
 		        	$('#name').val(msg['name']);
 		        	$('#address').val(msg['address']);
 		        	$('#contact').val(msg['contact']);

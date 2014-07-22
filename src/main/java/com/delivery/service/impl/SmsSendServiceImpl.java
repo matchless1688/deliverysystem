@@ -33,8 +33,8 @@ public class SmsSendServiceImpl implements SmsSendService{
 	}
 
 	@Override
-	public SmsSend querySmsSend(int id) {
-		return smsSendDaoInf.findOne(id);
+	public SmsSend querySmsSend(String hid) {
+		return smsSendDaoInf.findOne(hid);
 	}
 
 	@Override

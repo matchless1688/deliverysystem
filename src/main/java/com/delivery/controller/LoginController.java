@@ -17,6 +17,7 @@ import com.delivery.bo.User;
 import com.delivery.exception.ApplicationException;
 import com.delivery.service.UserService;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.LastOprUtils;
 
 @Controller
 public class LoginController {
@@ -44,6 +45,7 @@ public class LoginController {
 				session.setAttribute(LOGIN_MESSAGE, "用户名或者密码错误.");
 			} else {
 				session.setAttribute(LOGIN_USER, user.getUserName());
+				LastOprUtils.setLastOpr(user.getUserName());
 				result = "index.html";
 			}
 		}
@@ -55,6 +57,7 @@ public class LoginController {
 	public void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 		session.removeAttribute(LOGIN_MESSAGE);
 		session.removeAttribute(LOGIN_USER);
+		LastOprUtils.clear();
 		response.sendRedirect("login.html");
 	}
 	

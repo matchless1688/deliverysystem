@@ -4,6 +4,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.delivery.bo.SmsSend;
 
-public interface SmsSendDaoInf extends PagingAndSortingRepository<SmsSend, Integer>{
+public interface SmsSendDaoInf extends PagingAndSortingRepository<SmsSend, String>{
 
 }

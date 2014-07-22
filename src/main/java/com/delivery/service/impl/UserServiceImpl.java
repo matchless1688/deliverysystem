@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User queryUser(String id) {
-		return userDaoInf.findOne(id);
+	public User queryUser(String hid) {
+		return userDaoInf.findOne(hid);
 	}
 
 	@Override

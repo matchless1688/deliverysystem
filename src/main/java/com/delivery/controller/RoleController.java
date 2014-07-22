@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.delivery.bo.Role;
 import com.delivery.service.CompanyService;
 import com.delivery.service.RoleService;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.LastOprUtils;
 
 @Controller
 public class RoleController {
@@ -38,7 +40,7 @@ public class RoleController {
 		List<Role> returnList = new ArrayList<Role>();
 		for(Role role : roleList) {
 			if(StringUtils.isNotEmpty(role.getOrganization())) {
-				Company company = companyService.queryCompany(Integer.valueOf(role.getOrganization()));
+				Company company = companyService.queryCompany(role.getOrganization());
 				if(company != null) {
 					role.setOrganization(company.getName());
 				}
@@ -60,7 +62,7 @@ public class RoleController {
 		List<Role> returnList = new ArrayList<Role>();
 		for(Role role : rolePage) {
 			if(StringUtils.isNotEmpty(role.getOrganization())) {
-				Company company = companyService.queryCompany(Integer.valueOf(role.getOrganization()));
+				Company company = companyService.queryCompany(role.getOrganization());
 				if(company != null) {
 					role.setOrganization(company.getName());
 				}
@@ -90,18 +92,20 @@ public class RoleController {
 			role.setRoleName(name);
 			role.setOrganization(organization);
 			role.setAuthority(authority);
+			role.setLastUpdateOpr(LastOprUtils.getLastOpr());
 		} else {
 			role = roleService.queryRole(roleId);
 			role.setRoleName(name);
 			role.setOrganization(organization);
 			role.setAuthority(authority);
-			
+			role.setLastUpdateOpr(LastOprUtils.getLastOpr());
+			role.setLastUpdateDt(new Date());
 		}
 		
 		Role r = roleService.saveRole(role);
 		
 		response.sendRedirect("role.html");
-		return r.getId();
+		return r.getHid();
 	}
 	
 	@RequestMapping(value = "deleteRole.do")
@@ -109,7 +113,7 @@ public class RoleController {
 	public String deleteRole(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		Role role = new Role();
-		role.setId(hid);
+		role.setHid(hid);
 		roleService.deleteRole(role);
 		
 		response.sendRedirect("role.html");

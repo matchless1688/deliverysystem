@@ -1,41 +1,29 @@
 package com.delivery.bo;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_tcpinfo")
-public class Tcp implements Serializable{
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name = "id", length = 64)
-	private int id;
+public class Tcp extends IdEntity{
 	
-	@Column(name = "SerialCode", length = 20)
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5406372825713344278L;
+
+	@Column(name = "serialCode", length = 20)
 	private String serialCode;
 	
-	@Column(name = "TcpDirection", length = 10)
+	@Column(name = "tcpDirection", length = 10)
 	private String tcpDirection;
 	
-	@Column(name = "TcpReceive", length = 300)
+	@Column(name = "tcpReceive", length = 300)
 	private String tcpReceive;
 	
-	@Column(name = "TcpSend", length = 300)
+	@Column(name = "tcpSend", length = 300)
 	private String tcpSend;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getSerialCode() {
 		return serialCode;

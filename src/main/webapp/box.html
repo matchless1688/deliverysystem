@@ -475,7 +475,7 @@ body {
  				 },
                  {
                      "aTargets": [8],
-                     "mDataProp": "id",
+                     "mDataProp": "hid",
                      "fnRender": function (data, type, full) {
                      	var hid = type;
                         return "<td class='center'><a class='btn btn-info' href='#' onclick="
@@ -500,7 +500,7 @@ body {
 		        	for(i=0;i<msg.length;i++)
 	                {
 	                	station = msg[i];
-		        		$("#station").append("<option value='"+station['id']+"'>"+station['name']+"</option>");
+		        		$("#station").append("<option value='"+station['hid']+"'>"+station['name']+"</option>");
 		        	}
 	        		$("#station").attr("multiple",false); 
 	        		$("#station").trigger("liszt:updated");  
@@ -520,7 +520,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	$('#boxId').val(msg['id']);
+		        	$('#boxId').val(msg['hid']);
 		        	$('#length').val(msg['length']);
 		        	$('#height').val(msg['height']);
 		        	$('#width').val(msg['width']);

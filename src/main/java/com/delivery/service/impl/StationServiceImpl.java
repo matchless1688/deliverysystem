@@ -33,8 +33,8 @@ public class StationServiceImpl implements StationService {
 	}
 
 	@Override
-	public Station queryStation(int id) {
-		return stationDaoInf.findOne(id);
+	public Station queryStation(String hid) {
+		return stationDaoInf.findOne(hid);
 	}
 
 	@Override

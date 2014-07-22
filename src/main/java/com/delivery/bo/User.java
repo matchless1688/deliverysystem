@@ -1,29 +1,20 @@
 package com.delivery.bo;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class User extends IdEntity {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5869760596015076795L;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	@Column(name = "Id", length = 32)
-	private String id;
-	
 	@Column(name = "userName", length = 20)
 	private String userName;
 	
@@ -101,12 +92,6 @@ public class User implements Serializable {
 	}
 	public void setSmsCodeDateTime(String smsCodeDateTime) {
 		this.smsCodeDateTime = smsCodeDateTime;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	public String getDepartmentId() {
 		return departmentId;

@@ -1,22 +1,18 @@
 package com.delivery.bo;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_smsteplate")
-public class SmsTemplate implements Serializable{
+public class SmsTemplate extends IdEntity{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5779784579151639897L;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "id", length = 5)
-	private int id;
-	
 	@Column(name = "part1", length = 100)
 	private String part1;
 	
@@ -34,14 +30,6 @@ public class SmsTemplate implements Serializable{
 	
 	@Column(name = "part6", length = 100)
 	private String part6;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getPart1() {
 		return part1;

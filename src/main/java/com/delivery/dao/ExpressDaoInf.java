@@ -4,6 +4,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.delivery.bo.Express;
 
-public interface ExpressDaoInf extends PagingAndSortingRepository<Express, Integer>{
+public interface ExpressDaoInf extends PagingAndSortingRepository<Express, String>{
 
 }

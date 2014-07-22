@@ -15,7 +15,7 @@ public interface BoxService {
 
 	public void deleteBox(Box box);
 	
-	public Box queryBox(int id);
+	public Box queryBox(String hid);
 	
 	public List<Box> queryBoxByStationId(String stationId);
 	

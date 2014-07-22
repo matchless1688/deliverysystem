@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 
 import com.delivery.bo.SmsSend;
 import com.delivery.bo.SmsTemplate;
+import com.delivery.constants.Constants;
 
 public class SmsUtils {
 
@@ -19,11 +20,12 @@ public class SmsUtils {
 	public static SmsSend send(String phone, String pwd,
 			SmsTemplate template) throws UnsupportedEncodingException {
 		SmsSend send = new SmsSend();
+		send.setStatus(Constants.STATUS_AVAILABLE);
 		StringBuilder sb = new StringBuilder();
 		
 		String sn = generateSN();
 		String context = template.getPart1() + phone + template.getPart2()
-				+ pwd + template.getPart3();
+				+ pwd + template.getPart3() + DateUtils.buildDateStr();
 		send.setSn(sn);
 		send.setContext(context);
 		send.setTelPhone(phone);

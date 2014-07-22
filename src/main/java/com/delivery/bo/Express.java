@@ -1,47 +1,43 @@
 package com.delivery.bo;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_expressinfo")
-public class Express implements Serializable{
+public class Express extends IdEntity{
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "ID", length = 20)
-	private int id;
-	
-	@Column(name = "BarCode", length = 20)
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3405778988647761415L;
+
+	@Column(name = "barCode", length = 20)
 	private String barCode;
 	
-	@Column(name = "TDJH", length = 6)
+	@Column(name = "tdjh", length = 6)
 	private String tdjh;
 	
-	@Column(name = "Status", length = 6)
+	@Column(name = "status", length = 6)
 	private String status;
 	
-	@Column(name = "Datetime", length = 20)
+	@Column(name = "dateTime", length = 20)
 	private String dateTime;
 	
-	@Column(name = "Deli_Tel", length = 20)
+	@Column(name = "deli_Tel", length = 20)
 	private String deliTel;
 	
-	@Column(name = "StationId", length = 32)
+	@Column(name = "stationId", length = 32)
 	private String stationId;
 	
-	@Column(name = "BoxId", length = 32)
+	@Column(name = "boxId", length = 32)
 	private String boxId;
 	
-	@Column(name = "ExpressCompanyCode", length = 32)
+	@Column(name = "expressCompanyCode", length = 32)
 	private String expressCompanyCode;
 	
-	@Column(name = "OwnerPhone", length = 20)
+	@Column(name = "ownerPhone", length = 20)
 	private String ownerPhone;
 	
 	public String getBarCode() {
@@ -91,12 +87,6 @@ public class Express implements Serializable{
 	}
 	public void setBoxId(String boxId) {
 		this.boxId = boxId;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getDateTime() {
 		return dateTime;

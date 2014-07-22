@@ -5,10 +5,9 @@ import java.util.Date;
 
 public class DateUtils {
 	
-	private static SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public static String buildDateStr() {
 		return sf.format(new Date());
 	}
-	
 }

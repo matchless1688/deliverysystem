@@ -33,8 +33,8 @@ public class ExpressServiceImpl implements ExpressService {
 	}
 
 	@Override
-	public Express queryExpress(int id) {
-		return expressDaoInf.findOne(id);
+	public Express queryExpress(String hid) {
+		return expressDaoInf.findOne(hid);
 	}
 
 	@Override

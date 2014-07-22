@@ -33,8 +33,8 @@ public class AgencyServiceImpl implements AgencyService{
 	}
 
 	@Override
-	public Agency queryAgency(String id) {
-		return agencyDaoInf.findOne(id);
+	public Agency queryAgency(String hid) {
+		return agencyDaoInf.findOne(hid);
 	}
 
 	@Override

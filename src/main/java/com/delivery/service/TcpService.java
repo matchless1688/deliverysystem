@@ -15,7 +15,7 @@ public interface TcpService {
 	
 	public void deleteTcp(Tcp tcp);
 	
-	public Tcp queryTcp(int id);
+	public Tcp queryTcp(String hid);
 	
 	public Page<Tcp> queryTcpListByPage(Pageable page);
 	

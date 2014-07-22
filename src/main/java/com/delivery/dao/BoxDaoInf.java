@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.delivery.bo.Box;
 
-public interface BoxDaoInf extends PagingAndSortingRepository<Box, Integer>{
+public interface BoxDaoInf extends PagingAndSortingRepository<Box, String>{
 
 	public List<Box> findByStationId(String stationId);
 }

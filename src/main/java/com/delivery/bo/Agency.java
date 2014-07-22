@@ -1,29 +1,20 @@
 package com.delivery.bo;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 
 
 @Entity
 @Table(name = "tb_agency")
-public class Agency implements Serializable {
+public class Agency extends IdEntity {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	@Column(name = "id", length = 32)
-	private String id;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4721335999167329230L;
+
 	@Column(name = "name", length = 300)
 	private String name;
 	
@@ -50,14 +41,6 @@ public class Agency implements Serializable {
 	
 	@Column(name = "parent", length = 200)
 	private String parent;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

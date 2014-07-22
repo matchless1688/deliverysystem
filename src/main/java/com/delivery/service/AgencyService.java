@@ -15,7 +15,7 @@ public interface AgencyService {
 	
 	public void deleteAgency(Agency agency);
 	
-	public Agency queryAgency(String id);
+	public Agency queryAgency(String hid);
 	
 	public List<Agency> queryAgencyByType(String type);
 	

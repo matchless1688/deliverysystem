@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.delivery.bo.Company;
 import com.delivery.service.AgencyService;
 import com.delivery.service.CompanyService;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.LastOprUtils;
 
 @Controller
 public class AgencyController {
@@ -38,7 +40,7 @@ public class AgencyController {
 		List<Agency> returnList = new ArrayList<Agency>();
 		for(Agency agency : agencyList) {
 			if(StringUtils.isNotEmpty(agency.getParent())) {
-				Company company = companyService.queryCompany(Integer.valueOf(agency.getParent()));
+				Company company = companyService.queryCompany(agency.getParent());
 				if(company != null) {
 					agency.setParent(company.getName());
 				}
@@ -60,7 +62,7 @@ public class AgencyController {
 		List<Agency> returnList = new ArrayList<Agency>();
 		for(Agency agency : agencyPage) {
 			if(StringUtils.isNotEmpty(agency.getParent())) {
-				Company company = companyService.queryCompany(Integer.valueOf(agency.getParent()));
+				Company company = companyService.queryCompany(agency.getParent());
 				if(company != null) {
 					agency.setParent(company.getName());
 				}
@@ -101,6 +103,7 @@ public class AgencyController {
 			agency.setAddress(address);
 			agency.setManager(manager);
 			agency.setManagerPhone(managerPhone);
+			agency.setLastUpdateOpr(LastOprUtils.getLastOpr());
 		} else {
 			agency = agencyService.queryAgency(agencyId);
 			agency.setParent(company);
@@ -111,12 +114,14 @@ public class AgencyController {
 			agency.setAddress(address);
 			agency.setManager(manager);
 			agency.setManagerPhone(managerPhone);
+			agency.setLastUpdateOpr(LastOprUtils.getLastOpr());
+			agency.setLastUpdateDt(new Date());
 		}
 	
 		Agency a = agencyService.saveAgency(agency);
 		
 		response.sendRedirect("agency.html");
-		return String.valueOf(a.getId());
+		return a.getHid();
 	}
 	
 	@RequestMapping(value = "deleteAgency.do")
@@ -124,7 +129,7 @@ public class AgencyController {
 	public String deleteAgency(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		Agency agency = new Agency();
-		agency.setId(hid);
+		agency.setHid(hid);
 		agencyService.deleteAgency(agency);
 		
 		response.sendRedirect("agency.html");

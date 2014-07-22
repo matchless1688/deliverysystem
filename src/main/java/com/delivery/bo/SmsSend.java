@@ -1,47 +1,35 @@
 package com.delivery.bo;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_smssent")
-public class SmsSend implements Serializable{
+public class SmsSend extends IdEntity{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -785493941841352834L;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "id", length = 10)
-	private int id;
-	
 	@Column(name = "sn", length = 20)
 	private String sn;
 	
 	@Column(name = "Type", length = 2)
 	private int type;
 	
-	@Column(name = "TelPhone", length = 11)
+	@Column(name = "telPhone", length = 11)
 	private String telPhone;
 	
 	@Column(name = "context", length = 200)
 	private String context;
 	
-	@Column(name = "Status", length = 50)
+	@Column(name = "status", length = 50)
 	private String status;
 	
-	@Column(name = "DeliveryConfirmation", length = 2)
+	@Column(name = "deliveryConfirmation", length = 2)
 	private String deliveryConfirmation;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getSn() {
 		return sn;

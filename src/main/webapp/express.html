@@ -491,7 +491,7 @@ body {
  				 },
                  {
                      "aTargets": [9],
-                     "mDataProp": "id",
+                     "mDataProp": "hid",
                      "fnRender": function (data, type, full) {
                      	var hid = type;
                         return "<td class='center'><a class='btn btn-info' href='#' onclick="
@@ -516,7 +516,7 @@ body {
 		        	for(i=0;i<msg.length;i++)
 	                {
 	                	station = msg[i];
-		        		$("#station").append("<option value='"+station['id']+"'>"+station['name']+"</option>");
+		        		$("#station").append("<option value='"+station['hid']+"'>"+station['name']+"</option>");
 		        	}
 	        		$("#station").attr("multiple",false); 
 	        		$("#station").trigger("liszt:updated");  
@@ -539,7 +539,7 @@ body {
 				        	for(i=0;i<msg.length;i++)
 			                {
 			                	box = msg[i];
-				        		$("#box").append("<option value='"+box['id']+"'>"+box['barCode']+"</option>");
+				        		$("#box").append("<option value='"+box['hid']+"'>"+box['barCode']+"</option>");
 				        	}
 			        		$("#box").attr("multiple",false); 
 			        		$("#box").trigger("liszt:updated");  
@@ -560,7 +560,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	$('#expressId').val(msg['id']);
+		        	$('#expressId').val(msg['hid']);
 		        	$('#barCode').val(msg['barCode']);
 		        	$('#tdjh').val(msg['tdjh']);
 		        	$('#dateTime').val(msg['dateTime']);

@@ -15,7 +15,7 @@ public interface SmsSendService {
 	
 	public void deleteSmsSend(SmsSend smsSend);
 	
-	public SmsSend querySmsSend(int id);
+	public SmsSend querySmsSend(String hid);
 	
 	public Page<SmsSend> querySmsSendListByPage(Pageable page);
 	

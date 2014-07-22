@@ -15,7 +15,7 @@ public interface ExpressService {
 
 	public void deleteExpress(Express express);
 	
-	public Express queryExpress(int id);
+	public Express queryExpress(String hid);
 
 	public Page<Express> queryExpressListByPage(Pageable page);
 	

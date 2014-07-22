@@ -15,7 +15,7 @@ public interface RoleService {
 	
 	public void deleteRole(Role role);
 	
-	public Role queryRole(String id);
+	public Role queryRole(String hid);
 	
 	public Page<Role> queryRoleListByPage(Pageable page);
 	

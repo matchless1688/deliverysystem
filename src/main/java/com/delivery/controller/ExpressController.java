@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.delivery.bo.Express;
 import com.delivery.service.ExpressService;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.LastOprUtils;
 
 @Controller
 public class ExpressController {
@@ -81,8 +83,9 @@ public class ExpressController {
 			express.setExpressCompanyCode(expressCompanyCode);
 			express.setOwnerPhone(ownerPhone);
 			express.setStatus(status);
+			express.setLastUpdateOpr(LastOprUtils.getLastOpr());
 		} else {
-			express = expressService.queryExpress(Integer.valueOf(expressId));
+			express = expressService.queryExpress(expressId);
 			express.setBarCode(barCode);
 			express.setTdjh(tdjh);
 			express.setDateTime(dateTime);
@@ -92,12 +95,14 @@ public class ExpressController {
 			express.setExpressCompanyCode(expressCompanyCode);
 			express.setOwnerPhone(ownerPhone);
 			express.setStatus(status);
+			express.setLastUpdateOpr(LastOprUtils.getLastOpr());
+			express.setLastUpdateDt(new Date());
 		}
 		
 		Express e = expressService.saveExpress(express);
 		
 		response.sendRedirect("express.html");
-		return String.valueOf(e.getId());
+		return e.getHid();
 	}
 	
 	@RequestMapping(value = "deleteExpress.do")
@@ -105,7 +110,7 @@ public class ExpressController {
 	public String deleteExpress(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		Express express = new Express();
-		express.setId(Integer.valueOf(hid));
+		express.setHid(hid);
 		expressService.deleteExpress(express);
 		
 		response.sendRedirect("express.html");
@@ -116,7 +121,7 @@ public class ExpressController {
 	@ResponseBody
 	public String queryExpress(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
-		Express express = expressService.queryExpress(Integer.valueOf(hid));
+		Express express = expressService.queryExpress(hid);
 		return JsonUtils.toJson(express);
 	}
 }

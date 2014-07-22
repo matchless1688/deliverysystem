@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ import com.delivery.service.RoleService;
 import com.delivery.service.UserService;
 import com.delivery.utils.CommonUtils;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.LastOprUtils;
 import com.delivery.utils.SmsUtils;
 
 @Controller
@@ -68,7 +70,7 @@ public class UserController {
 			}
 			
 			if(StringUtils.isNotEmpty(user.getCompanyId())) {
-				Company company = companyService.queryCompany(Integer.valueOf(user.getCompanyId()));
+				Company company = companyService.queryCompany(user.getCompanyId());
 				if(company != null) {
 					user.setCompanyId(company.getName());
 				}
@@ -104,7 +106,7 @@ public class UserController {
 			}
 			
 			if(StringUtils.isNotEmpty(user.getCompanyId())) {
-				Company company = companyService.queryCompany(Integer.valueOf(user.getCompanyId()));
+				Company company = companyService.queryCompany(user.getCompanyId());
 				if(company != null) {
 					user.setCompanyId(company.getName());
 				}
@@ -148,9 +150,10 @@ public class UserController {
 			user.setPwd(CommonUtils.genPwdBasedOnTel(phone));
 			user.setType(type);
 			user.setInfo(info);
+			user.setLastUpdateOpr(LastOprUtils.getLastOpr());
 			user = userService.saveUser(user);
 			if(user != null) {
-				SmsTemplate template = smsTemplateDaoInf.findOne(4);
+				SmsTemplate template = smsTemplateDaoInf.findOne("4");
 				if(template != null) {
 					SmsSend send = SmsUtils.send(user.getTelPhone(), user.getPwd(), template);
 					smsSendDaoInf.save(send);
@@ -166,11 +169,13 @@ public class UserController {
 			user.setPwd(CommonUtils.genPwdBasedOnTel(phone));
 			user.setType(type);
 			user.setInfo(info);
+			user.setLastUpdateOpr(LastOprUtils.getLastOpr());
+			user.setLastUpdateDt(new Date());
 			user = userService.saveUser(user);
 		}
 		
 		response.sendRedirect("index.html");
-		return String.valueOf(user.getId());
+		return user.getHid();
 	}
 	
 	@RequestMapping(value = "deleteUser.do")
@@ -178,7 +183,7 @@ public class UserController {
 	public String deleteUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		User user = new User();
-		user.setId(hid);
+		user.setHid(hid);
 		userService.deleteUser(user);
 		
 		response.sendRedirect("index.html");

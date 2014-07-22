@@ -15,7 +15,7 @@ public interface CompanyService {
 	
 	public void deleteCompany(Company company);
 	
-	public Company queryCompany(int id);
+	public Company queryCompany(String hid);
 	
 	public Page<Company> queryCompanyListByPage(Pageable page);
 	

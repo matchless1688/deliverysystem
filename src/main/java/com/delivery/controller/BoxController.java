@@ -1,6 +1,7 @@
 package com.delivery.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.bo.Box;
 import com.delivery.bo.Station;
+import com.delivery.constants.Constants;
 import com.delivery.service.BoxService;
 import com.delivery.service.StationService;
 import com.delivery.utils.JsonUtils;
+import com.delivery.utils.LastOprUtils;
 
 @Controller
 public class BoxController {
@@ -38,7 +41,7 @@ public class BoxController {
 		List<Box> returnList = new ArrayList<Box>();
 		for(Box box : boxList) {
 			if(StringUtils.isNotEmpty(box.getStationId())) {
-				Station station = stationService.queryStation(Integer.valueOf(box.getStationId()));
+				Station station = stationService.queryStation(box.getStationId());
 				if(station != null) {
 					box.setStationId(station.getName());
 				}
@@ -60,7 +63,7 @@ public class BoxController {
 		List<Box> returnList = new ArrayList<Box>();
 		for(Box box : boxPage) {
 			if(StringUtils.isNotEmpty(box.getStationId())) {
-				Station station = stationService.queryStation(Integer.valueOf(box.getStationId()));
+				Station station = stationService.queryStation(box.getStationId());
 				if(station != null) {
 					box.setStationId(station.getName());
 				}
@@ -98,8 +101,10 @@ public class BoxController {
 			box.setBarCode(barCode);
 			box.setOwnerPhone(ownerPhone);
 			box.setStatus(status);
+			box.setType(Constants.STATUS_AVAILABLE);
+			box.setLastUpdateOpr(LastOprUtils.getLastOpr());
 		} else {
-			box = boxService.queryBox(Integer.valueOf(boxId));
+			box = boxService.queryBox(boxId);
 			box.setLength(length);
 			box.setHeight(height);
 			box.setWidth(width);
@@ -107,11 +112,14 @@ public class BoxController {
 			box.setBarCode(barCode);
 			box.setOwnerPhone(ownerPhone);
 			box.setStatus(status);
+			box.setType(Constants.STATUS_AVAILABLE);
+			box.setLastUpdateOpr(LastOprUtils.getLastOpr());
+			box.setLastUpdateDt(new Date());
 		}
 		Box b = boxService.saveBox(box);
 		
 		response.sendRedirect("box.html");
-		return String.valueOf(b.getId());
+		return b.getHid();
 	}
 	
 	@RequestMapping(value = "deleteBox.do")
@@ -119,7 +127,7 @@ public class BoxController {
 	public String deleteBox(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
 		Box box = new Box();
-		box.setId(Integer.valueOf(hid));
+		box.setHid(hid);
 		boxService.deleteBox(box);
 		
 		response.sendRedirect("box.html");
@@ -130,7 +138,7 @@ public class BoxController {
 	@ResponseBody
 	public String queryBox(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String hid = request.getParameter("hid");
-		Box box = boxService.queryBox(Integer.valueOf(hid));
+		Box box = boxService.queryBox(hid);
 		return JsonUtils.toJson(box);
 	}
 	

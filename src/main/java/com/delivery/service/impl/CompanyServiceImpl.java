@@ -33,8 +33,8 @@ public class CompanyServiceImpl implements CompanyService{
 	}
 
 	@Override
-	public Company queryCompany(int id) {
-		return companyDaoInf.findOne(id);
+	public Company queryCompany(String hid) {
+		return companyDaoInf.findOne(hid);
 	}
 
 	@Override

@@ -33,8 +33,8 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public Role queryRole(String id) {
-		return roleDaoInf.findOne(id);
+	public Role queryRole(String hid) {
+		return roleDaoInf.findOne(hid);
 	}
 
 	@Override

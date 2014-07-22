@@ -1,41 +1,37 @@
 package com.delivery.bo;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_stations")
-public class Station implements Serializable{
+public class Station extends IdEntity{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8249378374144347745L;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "id", length = 32)
-	private int id;
-	
-	@Column(name = "StationId", length = 100)
+	@Column(name = "stationId", length = 100)
 	private String stationId;
 	
-	@Column(name = "Address", length = 100)
+	@Column(name = "address", length = 100)
 	private String address;
 	
-	@Column(name = "StationName", length = 20)
+	@Column(name = "stationName", length = 20)
 	private String name;
 	
-	@Column(name = "Boxes", length = 4)
+	@Column(name = "boxes", length = 4)
 	private String boxes;
 	
-	@Column(name = "TDJH", length = 100)
+	@Column(name = "tdjh", length = 100)
 	private String tdjh;
 	
-	@Column(name = "TDD", length = 100)
+	@Column(name = "tdd", length = 100)
 	private String tdd;
 	
-	@Column(name = "BuildDate", length = 100)
+	@Column(name = "buildDate", length = 100)
 	private String buildDate;
 	
 	public String getAddress() {
@@ -79,11 +75,5 @@ public class Station implements Serializable{
 	}
 	public void setStationId(String stationId) {
 		this.stationId = stationId;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 }

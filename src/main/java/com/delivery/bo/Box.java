@@ -1,47 +1,43 @@
 package com.delivery.bo;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_boxesinfo")
-public class Box implements Serializable{
+public class Box extends IdEntity{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -373475183290601758L;
 
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "id", length = 10)
-	private int id;
-	
-	@Column(name = "Length", length = 6)
+	@Column(name = "length", length = 6)
 	private String length;
 	
-	@Column(name = "Higth", length = 6)
+	@Column(name = "higth", length = 6)
 	private String height;
 	
-	@Column(name = "Width", length = 6)
+	@Column(name = "width", length = 6)
 	private String width;
 	
-	@Column(name = "Status", length = 2)
+	@Column(name = "status", length = 2)
 	private String status;
 	
-	@Column(name = "Type", length = 2)
+	@Column(name = "type", length = 2)
 	private String type;
 	
-	@Column(name = "StationId", length = 32)
+	@Column(name = "stationId", length = 32)
 	private String stationId;
 	
-	@Column(name = "BarCode", length = 30)
+	@Column(name = "barCode", length = 30)
 	private String barCode;
 	
-	@Column(name = "OwnerPhone", length = 11)
+	@Column(name = "ownerPhone", length = 11)
 	private String ownerPhone;
 	
-	@Column(name = "Pwd", length = 6)
+	@Column(name = "pwd", length = 6)
 	private String pwd;
 	
 	public String getLength() {
@@ -79,12 +75,6 @@ public class Box implements Serializable{
 	}
 	public void setStationId(String stationId) {
 		this.stationId = stationId;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getBarCode() {
 		return barCode;

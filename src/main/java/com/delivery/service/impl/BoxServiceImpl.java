@@ -33,8 +33,8 @@ public class BoxServiceImpl implements BoxService{
 	}
 
 	@Override
-	public Box queryBox(int id) {
-		return boxDaoInf.findOne(id);
+	public Box queryBox(String hid) {
+		return boxDaoInf.findOne(hid);
 	}
 
 	@Override

@@ -471,7 +471,7 @@ body {
 				 },
                  {
                      "aTargets": [8],
-                     "mDataProp": "id",
+                     "mDataProp": "hid",
                      "fnRender": function (data, type, full) {
                      	var hid = type;
                         return "<td class='center'><a class='btn btn-info' href='#' onclick="
@@ -496,7 +496,7 @@ body {
 		        	for(i=0;i<msg.length;i++)
 	                {
 	                	role = msg[i];
-		        		$("#role").append("<option value='"+role['id']+"'>"+role['roleName']+"</option>");
+		        		$("#role").append("<option value='"+role['hid']+"'>"+role['roleName']+"</option>");
 		        	}
 		        	$("#role").attr("multiple",false); 
 	        		$("#role").trigger("liszt:updated");  
@@ -517,7 +517,7 @@ body {
 		        	for(i=0;i<msg.length;i++)
 	                {
 	                	company = msg[i];
-		        		$("#company").append("<option value='"+company['id']+"'>"+company['name']+"</option>");
+		        		$("#company").append("<option value='"+company['hid']+"'>"+company['name']+"</option>");
 		        	}
 		        	$("#company").attr("multiple",false); 
 	        		$("#company").trigger("liszt:updated");  
@@ -540,7 +540,7 @@ body {
 				        	for(i=0;i<msg.length;i++)
 			                {
 			                	agency = msg[i];
-				        		$("#department").append("<option value='"+agency['id']+"'>"+agency['name']+"</option>");
+				        		$("#department").append("<option value='"+agency['hid']+"'>"+agency['name']+"</option>");
 				        	}
 				        	$("#department").attr("multiple",false); 
 			        		$("#department").trigger("liszt:updated");  
@@ -581,7 +581,7 @@ body {
 		        success: function (msg)
 		        {
 		        	msg = JSON.parse(msg);
-		        	$('#userId').val(msg['id']);
+		        	$('#userId').val(msg['hid']);
 		        	$('#userName').val(msg['userName']);
 		        	$('#phone').val(msg['telPhone']);
 		        	$('#company').children("[value='"+ msg['companyId'] +"']").attr("selected", true);
