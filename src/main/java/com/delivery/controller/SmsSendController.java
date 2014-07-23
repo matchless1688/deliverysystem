@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,7 +41,8 @@ public class SmsSendController {
 		String iDisplayStart = request.getParameter("iDisplayStart");
 		String iDisplayLength = request.getParameter("iDisplayLength");
 		
-		PageRequest page = new PageRequest(Integer.valueOf(iDisplayStart) / Integer.valueOf(iDisplayLength), Integer.valueOf(iDisplayLength));
+		Sort sort = new Sort(Direction.DESC, "createDt");
+		PageRequest page = new PageRequest(Integer.valueOf(iDisplayStart) / Integer.valueOf(iDisplayLength), Integer.valueOf(iDisplayLength), sort);
 		Page<SmsSend> smsSendPage = smsSendService.querySmsSendListByPage(page);
 		List<SmsSend> returnList = new ArrayList<SmsSend>();
 		for(SmsSend sms : smsSendPage) {

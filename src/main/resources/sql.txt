@@ -1,3 +1,4 @@
+drop table if exists tb_agency;
 CREATE TABLE `tb_agency` (
   `hid` varchar(32) NOT NULL,
   `name` varchar(300) DEFAULT NULL,
@@ -9,12 +10,13 @@ CREATE TABLE `tb_agency` (
   `managerPhone` varchar(20) DEFAULT NULL,
   `remark` varchar(200) DEFAULT NULL,
   `parent` varchar(32) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_boxesinfo;
 CREATE TABLE `tb_boxesinfo` (
   `hid` varchar(32) NOT NULL,
   `boxId` varchar(10) DEFAULT NULL,
@@ -27,12 +29,13 @@ CREATE TABLE `tb_boxesinfo` (
   `barCode` varchar(30) DEFAULT NULL,
   `ownerPhone` varchar(11) DEFAULT NULL,
   `pwd` varchar(6) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_company;
 CREATE TABLE `tb_company` (
   `hid` varchar(32) NOT NULL,
   `companyName` varchar(30) DEFAULT NULL,
@@ -43,12 +46,13 @@ CREATE TABLE `tb_company` (
   `contact` varchar(20) DEFAULT NULL,
   `telPhone` varchar(20) DEFAULT NULL,
   `remark` varchar(200) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_expressinfo;
 CREATE TABLE `tb_expressinfo` (
   `hid` varchar(32) NOT NULL,
   `barCode` varchar(30) DEFAULT NULL,
@@ -60,23 +64,25 @@ CREATE TABLE `tb_expressinfo` (
   `boxId` varchar(3) DEFAULT NULL,
   `expressCompanyCode` varchar(10) DEFAULT NULL,
   `ownerPhone` varchar(11) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_role;
 CREATE TABLE `tb_role` (
   `hid` varchar(32) NOT NULL,
   `roleName` varchar(30) DEFAULT NULL,
   `organization` varchar(50) DEFAULT NULL,
   `authority` varchar(50) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_smssent;
 CREATE TABLE `tb_smssent` (
   `hid` varchar(32) NOT NULL,
   `sn` varchar(20) DEFAULT NULL,
@@ -85,26 +91,28 @@ CREATE TABLE `tb_smssent` (
   `context` varchar(200) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   `deliveryConfirmation` varchar(2) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_smsteplate;
 CREATE TABLE `tb_smsteplate` (
-  `hid` varchar(32) NOT NULL,
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `part1` varchar(100) DEFAULT NULL,
   `part2` varchar(100) DEFAULT NULL,
   `part3` varchar(100) DEFAULT NULL,
   `part4` varchar(100) DEFAULT NULL,
   `part5` varchar(100) DEFAULT NULL,
   `part6` varchar(100) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`hid`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_stations;
 CREATE TABLE `tb_stations` (
   `hid` varchar(32) NOT NULL,
   `stationID` varchar(32) DEFAULT NULL,
@@ -113,25 +121,27 @@ CREATE TABLE `tb_stations` (
   `boxes` varchar(4) DEFAULT NULL,
   `tdjh` varchar(100) DEFAULT NULL,
   `tdd` varchar(100) DEFAULT NULL,
-  `buildDate` varchar(15) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `buildDate` varchar(20) DEFAULT NULL,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_tcpinfo;
 CREATE TABLE `tb_tcpinfo` (
   `hid` varchar(32) NOT NULL,
   `serialCode` varchar(20) DEFAULT NULL,
   `tcpDirection` varchar(10) DEFAULT NULL,
   `tcpReceive` varchar(300) DEFAULT NULL,
   `tcpSend` varchar(300) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists tb_user;
 CREATE TABLE `tb_user` (
   `hid` varchar(32) NOT NULL,
   `userName` varchar(20) DEFAULT NULL,
@@ -144,7 +154,7 @@ CREATE TABLE `tb_user` (
   `smsVerifyCode` varchar(6) DEFAULT NULL,
   `smsCodeDateTime` varchar(6) DEFAULT NULL,
   `departmentId` varchar(32) DEFAULT NULL,
-  `last_update_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update_dt` timestamp DEFAULT 0,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`hid`)

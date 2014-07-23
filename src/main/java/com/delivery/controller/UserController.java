@@ -153,7 +153,7 @@ public class UserController {
 			user.setLastUpdateOpr(LastOprUtils.getLastOpr());
 			user = userService.saveUser(user);
 			if(user != null) {
-				SmsTemplate template = smsTemplateDaoInf.findOne("4");
+				SmsTemplate template = smsTemplateDaoInf.findOne(4);
 				if(template != null) {
 					SmsSend send = SmsUtils.send(user.getTelPhone(), user.getPwd(), template);
 					smsSendDaoInf.save(send);
