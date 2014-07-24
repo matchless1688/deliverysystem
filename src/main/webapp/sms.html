@@ -181,12 +181,14 @@ body {
 												<th>短信内容</th>
 												<th>状态</th>
 												<th>发送确认码</th>
+												<th>发送时间</th>
 												<th>操作</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td></td>
+												<td class="center"></td>
 												<td class="center"></td>
 												<td class="center"></td>
 												<td class="center"></td>
@@ -341,7 +343,7 @@ body {
 				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
 				"sPaginationType": "bootstrap",
 				"oLanguage": {
-				"sLengthMenu": "_MENU_ records per page"
+					"sLengthMenu": "_MENU_ 条每页"
 				},
 				"bFilter": false,
 				'bLengthChange': true,
@@ -354,11 +356,12 @@ body {
 					{ "mDataProp": "telPhone" },
 					{ "mDataProp": "context" },
 					{ "mDataProp": "status" },
-					{ "mDataProp": "deliveryConfirmation" }
+					{ "mDataProp": "deliveryConfirmation" },
+					{ "mDataProp": "createDt"}
 				],
 				"aoColumnDefs": [
                  {
-                     "aTargets": [6],
+                     "aTargets": [7],
                      "mDataProp": "hid",
                      "fnRender": function (data, type, full) {
                      	var hid = type;

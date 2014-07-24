@@ -182,7 +182,7 @@ body {
 										</div>
 									</div>
 									<div class="control-group" style="float:left;margin-left:10px">
-										<label class="control-label" for="qryBarCode">BarCode</label>
+										<label class="control-label" for="qryBarCode">单号</label>
 										<div class="controls">
 											<input class="input-xlarge focused" style="width:100px" id="qryBarCode"
 												type="text"  name="qryBarCode">
@@ -192,8 +192,8 @@ body {
 										<label class="control-label" for="qryStatus">状态</label>
 										<div class="controls">
 											<select id="qryStatus" name="qryStatus" style="width:100px">
-												<option value='0'>现有快件</option>
-												<option value='1'>历史快件</option>
+												<option value='0'>历史快件</option>
+												<option value='1'>现有快件</option>
 											</select>
 										</div>
 									</div>
@@ -210,10 +210,10 @@ body {
 													class="table table-striped table-bordered bootstrap-datatable datatable" id="expressListTable">
 													<thead>
 														<tr>
-															<th>BarCode</th>
-															<th>TDJH</th>
+															<th>单号</th>
+															<th>投递局号</th>
 															<th>日期</th>
-															<th>Deli_Tel</th>
+															<th>快递员手机</th>
 															<th>储物柜</th>
 															<th>箱子</th>
 															<th>快件公司</th>
@@ -263,14 +263,14 @@ body {
 													<fieldset>
 														<input type="hidden" id="expressId" name="expressId" />
 														<div class="control-group">
-															<label class="control-label" for="barCode">BarCode</label>
+															<label class="control-label" for="barCode">单号</label>
 															<div class="controls">
 																<input class="input-xlarge focused" id="barCode"
 																	type="text"  name="barCode">
 															</div>
 														</div>
 														<div class="control-group">
-															<label class="control-label" for="tdjh">TDJH</label>
+															<label class="control-label" for="tdjh">投递局号</label>
 															<div class="controls">
 																<input class="input-xlarge focused" id="tdjh"
 																	type="text"  name="tdjh">
@@ -284,7 +284,7 @@ body {
 															</div>
 														</div>
 														<div class="control-group">
-															<label class="control-label" for="deliTel">Deli_Tel</label>
+															<label class="control-label" for="deliTel">快递员手机</label>
 															<div class="controls">
 																<input class="input-xlarge focused" id="deliTel"
 																	type="text"  name="deliTel">
@@ -485,7 +485,7 @@ body {
 				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
 				"sPaginationType": "bootstrap",
 				"oLanguage": {
-				"sLengthMenu": "_MENU_ records per page"
+					"sLengthMenu": "_MENU_ 条每页"
 				},
 				"bFilter": false,
 				'bLengthChange': true,
@@ -623,18 +623,19 @@ body {
 	 		var phone = $('#qryPhone').val();
 	 		var barCode = $('#qryBarCode').val();
 	 		var status = $('#qryStatus').val();
+	 		if(status == '0' && phone == '' && barCode == '') {
+	 			return;
+	 		}
 	 		$('#expressListTable').dataTable({
 				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
 				"sPaginationType": "bootstrap",
 				"oLanguage": {
-				"sLengthMenu": "_MENU_ records per page"
+					"sLengthMenu": "_MENU_ 条每页"
 				},
-				"bFilter": false,
 				'bLengthChange': true,
-				"bServerSide" : true,
 				"bDestroy" : true,
-				"sAjaxSource": "/delivery/queryExpressListByPage.do?phone=" + phone + "&barCode" + barCode + "&status=" + status,
-				"sAjaxDataProp": "aaData",
+				"sAjaxSource": "/delivery/queryExpressList.do?phone=" + phone + "&barCode=" + barCode + "&status=" + status,
+				"sAjaxDataProp": "",
 				"aoColumns": [
 					{ "mDataProp": "barCode" },
 					{ "mDataProp": "tdjh" },

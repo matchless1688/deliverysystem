@@ -17,8 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.delivery.bo.Box;
 import com.delivery.bo.Express;
+import com.delivery.service.BoxService;
 import com.delivery.service.ExpressService;
+import com.delivery.service.StationService;
 import com.delivery.utils.JsonUtils;
 import com.delivery.utils.LastOprUtils;
 
@@ -28,11 +31,33 @@ public class ExpressController {
 	@Autowired
 	private ExpressService expressService;
 	
+	@Autowired
+	private StationService stationService;
+	
+	@Autowired
+	private BoxService boxService;
+	
 	@RequestMapping(value = "queryExpressList.do", produces= {"text/plain;charset=UTF-8"})
 	@ResponseBody
 	public String queryExpressList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<Express> expressList = expressService.queryExpressList();
-		return JsonUtils.toJson(expressList);
+		String phone = request.getParameter("phone");
+		String barCode = request.getParameter("barCode");
+		String status = request.getParameter("status");
+		List<Express> returnList = new ArrayList<Express>();
+		
+		if(status.equals("0")) {//history express
+			returnList = expressService.queryExpressList(phone, barCode);
+		} else {
+			List<Box> fullBoxList = boxService.queryBoxListByStatus(status);
+			for(Box box : fullBoxList) {
+				String boxBarCode = box.getBarCode();
+				Express exp = expressService.queryExpressByBarCode(boxBarCode);
+				if(exp != null) {
+					returnList.add(exp);
+				}
+			}
+		}
+		return JsonUtils.toJson(returnList);
 	}
 	
 	@RequestMapping(value = "queryExpressListByPage.do", produces= {"text/plain;charset=UTF-8"})

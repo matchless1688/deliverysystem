@@ -40,6 +40,9 @@ public class Box extends IdEntity{
 	@Column(name = "pwd", length = 6)
 	private String pwd;
 	
+	@Column(name = "boxId", length = 10)
+	private String boxId;
+	
 	public String getLength() {
 		return length;
 	}
@@ -93,5 +96,11 @@ public class Box extends IdEntity{
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+	public String getBoxId() {
+		return boxId;
+	}
+	public void setBoxId(String boxId) {
+		this.boxId = boxId;
 	}
 }

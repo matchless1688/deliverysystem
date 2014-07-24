@@ -21,5 +21,7 @@ public interface BoxService {
 	
 	public Page<Box> queryBoxListByPage(Pageable page);
 	
+	public List<Box> queryBoxListByStatus(String status);
+	
 	public long count();
 }

@@ -52,4 +52,9 @@ public class BoxServiceImpl implements BoxService{
 		return boxDaoInf.count();
 	}
 
+	@Override
+	public List<Box> queryBoxListByStatus(String status) {
+		return boxDaoInf.findByStatus(status);
+	}
+
 }

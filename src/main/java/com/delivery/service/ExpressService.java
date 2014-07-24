@@ -9,7 +9,7 @@ import com.delivery.bo.Express;
 
 public interface ExpressService {
 
-	public List<Express> queryExpressList();
+	public List<Express> queryExpressList(String phone, String barCode);
 
 	public Express saveExpress(Express express);
 
@@ -18,6 +18,8 @@ public interface ExpressService {
 	public Express queryExpress(String hid);
 
 	public Page<Express> queryExpressListByPage(Pageable page);
+	
+	public Express queryExpressByBarCode(String barCode);
 	
 	public long count();
 }
