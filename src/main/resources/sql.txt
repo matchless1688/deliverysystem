@@ -86,6 +86,7 @@ drop table if exists tb_smssent;
 CREATE TABLE `tb_smssent` (
   `hid` varchar(32) NOT NULL,
   `sn` varchar(20) DEFAULT NULL,
+  `dateTime` varchar(30) DEFAULT NULL,
   `type` int(2) DEFAULT NULL,
   `telPhone` varchar(11) DEFAULT NULL,
   `context` varchar(200) DEFAULT NULL,

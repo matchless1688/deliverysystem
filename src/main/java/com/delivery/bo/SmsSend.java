@@ -16,6 +16,9 @@ public class SmsSend extends IdEntity{
 	@Column(name = "sn", length = 20)
 	private String sn;
 	
+	@Column(name = "dateTime", length = 30)
+	private String dateTime;
+	
 	@Column(name = "Type", length = 2)
 	private int type;
 	
@@ -77,5 +80,13 @@ public class SmsSend extends IdEntity{
 
 	public void setDeliveryConfirmation(String deliveryConfirmation) {
 		this.deliveryConfirmation = deliveryConfirmation;
+	}
+
+	public String getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
 }
