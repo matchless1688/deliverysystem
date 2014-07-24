@@ -122,6 +122,8 @@ CREATE TABLE `tb_stations` (
   `tdjh` varchar(100) DEFAULT NULL,
   `tdd` varchar(100) DEFAULT NULL,
   `buildDate` varchar(20) DEFAULT NULL,
+  `ipAddress` varchar(30) DEFAULT NULL,
+  `latestConnection` varchar(30) DEFAULT NULL,
   `last_update_dt` timestamp DEFAULT NULL,
   `create_dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update_opr` varchar(64) DEFAULT NULL,

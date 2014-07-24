@@ -31,8 +31,14 @@ public class Station extends IdEntity{
 	@Column(name = "tdd", length = 100)
 	private String tdd;
 	
-	@Column(name = "buildDate", length = 100)
+	@Column(name = "buildDate", length = 20)
 	private String buildDate;
+	
+	@Column(name = "ipAddress", length = 30)
+	private String ipAddress;
+	
+	@Column(name = "latestConnection", length = 30)
+	private String latestConnection;
 	
 	public String getAddress() {
 		return address;
@@ -75,5 +81,17 @@ public class Station extends IdEntity{
 	}
 	public void setStationId(String stationId) {
 		this.stationId = stationId;
+	}
+	public String getIpAddress() {
+		return ipAddress;
+	}
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+	public String getLatestConnection() {
+		return latestConnection;
+	}
+	public void setLatestConnection(String latestConnection) {
+		this.latestConnection = latestConnection;
 	}
 }
