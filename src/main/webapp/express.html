@@ -624,65 +624,124 @@ body {
 	 		var barCode = $('#qryBarCode').val();
 	 		var status = $('#qryStatus').val();
 	 		if(status == '0' && phone == '' && barCode == '') {
-	 			return;
+	 			$('#expressListTable').dataTable({
+					"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+					"sPaginationType": "bootstrap",
+					"oLanguage": {
+						"sLengthMenu": "_MENU_ 条每页"
+					},
+					"bFilter": false,
+					'bLengthChange': true,
+					"bServerSide" : true,
+					"bDestroy" : true,
+					"sAjaxSource": "/delivery/queryExpressListByPage.do",
+					"sAjaxDataProp": "aaData",
+					"aoColumns": [
+						{ "mDataProp": "barCode" },
+						{ "mDataProp": "tdjh" },
+						{ "mDataProp": "dateTime" },
+						{ "mDataProp": "deliTel" },
+						{ "mDataProp": "stationId" },
+						{ "mDataProp": "boxId" },
+						{ "mDataProp": "expressCompanyCode" },
+						{ "mDataProp": "ownerPhone" }
+					],
+					"aoColumnDefs": [
+	                 {
+	 				 	"aTargets": [8],
+	                     "mDataProp": "status",
+	                     "fnRender": function (data, type, full) {
+	                      	var status = type;
+	                      	statusCss = "label label-success";
+		                	if(status == '0') {
+		                		statusCss = "label";
+		                		status = "状态未知";
+		                	} else if(status == '1') {
+		                		status = "存件";
+		                	} else if(status == '2') {
+		                		statusCss = "label";
+		                		status = "超期";
+		                	} else if(status == '3') {
+		                		status = "用户取件";
+		                	} else if(status == '4') {
+		                		statusCss = "label";
+		                		status = "快递员取回";
+		                	}
+	                        return "<td class='center'><span class='" + statusCss + "'>" + status +"</td>";
+	                      }
+	 				 },
+	                 {
+	                     "aTargets": [9],
+	                     "mDataProp": "hid",
+	                     "fnRender": function (data, type, full) {
+	                     	var hid = type;
+	                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+	                            +"editExpress('" + hid+"')>"
+	                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteExpress.do?hid="+ hid +"'> "
+	                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+	                     }
+	                 }
+	                ],
+				} );
+	 		} else {
+		 		$('#expressListTable').dataTable({
+					"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+					"sPaginationType": "bootstrap",
+					"oLanguage": {
+						"sLengthMenu": "_MENU_ 条每页"
+					},
+					'bLengthChange': true,
+					"bDestroy" : true,
+					"sAjaxSource": "/delivery/queryExpressList.do?phone=" + phone + "&barCode=" + barCode + "&status=" + status,
+					"sAjaxDataProp": "",
+					"aoColumns": [
+						{ "mDataProp": "barCode" },
+						{ "mDataProp": "tdjh" },
+						{ "mDataProp": "dateTime" },
+						{ "mDataProp": "deliTel" },
+						{ "mDataProp": "stationId" },
+						{ "mDataProp": "boxId" },
+						{ "mDataProp": "expressCompanyCode" },
+						{ "mDataProp": "ownerPhone" }
+					],
+					"aoColumnDefs": [
+	                 {
+	 				 	"aTargets": [8],
+	                     "mDataProp": "status",
+	                     "fnRender": function (data, type, full) {
+	                      	var status = type;
+	                      	statusCss = "label label-success";
+		                	if(status == '0') {
+		                		statusCss = "label";
+		                		status = "状态未知";
+		                	} else if(status == '1') {
+		                		status = "存件";
+		                	} else if(status == '2') {
+		                		statusCss = "label";
+		                		status = "超期";
+		                	} else if(status == '3') {
+		                		status = "用户取件";
+		                	} else if(status == '4') {
+		                		statusCss = "label";
+		                		status = "快递员取回";
+		                	}
+	                        return "<td class='center'><span class='" + statusCss + "'>" + status +"</td>";
+	                      }
+	 				 },
+	                 {
+	                     "aTargets": [9],
+	                     "mDataProp": "hid",
+	                     "fnRender": function (data, type, full) {
+	                     	var hid = type;
+	                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
+	                            +"editExpress('" + hid+"')>"
+	                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteExpress.do?hid="+ hid +"'> "
+	                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
+	                     }
+	                 }
+	                ],
+				} );
 	 		}
-	 		$('#expressListTable').dataTable({
-				"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {
-					"sLengthMenu": "_MENU_ 条每页"
-				},
-				'bLengthChange': true,
-				"bDestroy" : true,
-				"sAjaxSource": "/delivery/queryExpressList.do?phone=" + phone + "&barCode=" + barCode + "&status=" + status,
-				"sAjaxDataProp": "",
-				"aoColumns": [
-					{ "mDataProp": "barCode" },
-					{ "mDataProp": "tdjh" },
-					{ "mDataProp": "dateTime" },
-					{ "mDataProp": "deliTel" },
-					{ "mDataProp": "stationId" },
-					{ "mDataProp": "boxId" },
-					{ "mDataProp": "expressCompanyCode" },
-					{ "mDataProp": "ownerPhone" }
-				],
-				"aoColumnDefs": [
-                 {
- 				 	"aTargets": [8],
-                     "mDataProp": "status",
-                     "fnRender": function (data, type, full) {
-                      	var status = type;
-                      	statusCss = "label label-success";
-	                	if(status == '0') {
-	                		statusCss = "label";
-	                		status = "状态未知";
-	                	} else if(status == '1') {
-	                		status = "存件";
-	                	} else if(status == '2') {
-	                		statusCss = "label";
-	                		status = "超期";
-	                	} else if(status == '3') {
-	                		status = "用户取件";
-	                	} else if(status == '4') {
-	                		statusCss = "label";
-	                		status = "快递员取回";
-	                	}
-                        return "<td class='center'><span class='" + statusCss + "'>" + status +"</td>";
-                      }
- 				 },
-                 {
-                     "aTargets": [9],
-                     "mDataProp": "hid",
-                     "fnRender": function (data, type, full) {
-                     	var hid = type;
-                        return "<td class='center'><a class='btn btn-info' href='#' onclick="
-                            +"editExpress('" + hid+"')>"
-                            +"<i class='icon-edit icon-white'></i> 修改</a><a class='btn btn-danger' href='deleteExpress.do?hid="+ hid +"'> "
-                            +"<i class='icon-trash icon-white'></i> 删除</a></td>";
-                     }
-                 }
-                ],
-			} );
 	 	}
 	</script>
 </body>

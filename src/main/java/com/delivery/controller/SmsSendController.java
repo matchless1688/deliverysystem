@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.delivery.bo.SmsSend;
 import com.delivery.service.SmsSendService;
+import com.delivery.utils.DateUtils;
 import com.delivery.utils.JsonUtils;
 
 @Controller
@@ -46,6 +47,7 @@ public class SmsSendController {
 		Page<SmsSend> smsSendPage = smsSendService.querySmsSendListByPage(page);
 		List<SmsSend> returnList = new ArrayList<SmsSend>();
 		for(SmsSend sms : smsSendPage) {
+			sms.setDateTime(DateUtils.buildDateStr(sms.getCreateDt()));
 			returnList.add(sms);
 		}
 		long count = smsSendService.count();

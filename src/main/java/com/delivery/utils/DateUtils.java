@@ -10,4 +10,8 @@ public class DateUtils {
 	public static String buildDateStr() {
 		return sf.format(new Date());
 	}
+	
+	public static String buildDateStr(Date date) {
+		return sf.format(date);
+	}
 }
