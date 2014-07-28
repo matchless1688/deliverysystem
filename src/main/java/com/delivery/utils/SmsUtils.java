@@ -25,7 +25,7 @@ public class SmsUtils {
 		
 		String sn = generateSN();
 		String context = template.getPart1() + phone + template.getPart2()
-				+ pwd + template.getPart3() + DateUtils.buildDateStr();
+				+ pwd + template.getPart3();
 		send.setSn(sn);
 		send.setContext(context);
 		send.setTelPhone(phone);
